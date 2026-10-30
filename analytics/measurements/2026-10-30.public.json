@@ -13,11 +13,25 @@
   "pushed_at": "2026-10-14T08:01:10Z"
  },
  "org": {
-  "public_repos": 0,
+  "public_repos": 2,
   "followers": 0
  },
+ "org_repos": {
+  "notes": {
+   "stars": 0,
+   "watchers": 0,
+   "forks": 0,
+   "pushed_at": "2026-10-30T23:54:02Z"
+  },
+  ".github": {
+   "stars": 0,
+   "watchers": 0,
+   "forks": 0,
+   "pushed_at": "2026-10-30T23:54:04Z"
+  }
+ },
  "repos_named_ucompute": {
-  "total": 19,
+  "total": 21,
   "names": [
    "13lucky13/DoUCompute",
    "ChangeXuan/AMachineryUComputer-Swift",
@@ -36,6 +50,8 @@
    "div0rce/ucompute-growth",
    "thewillyhuman-archive/UComputerArchitecture",
    "uComputeMe0100110/uComputeMe0100110",
+   "ucompute/.github",
+   "ucompute/notes",
    "uplus-io/ucompute",
    "winsonwen/ucomputersa-backend"
   ]
@@ -48,7 +64,7 @@
  },
  "new_mentions": 0,
  "routine_health": {
-  "last_cloud_daily": "None",
+  "last_cloud_daily": "2026-10-30",
   "overdue": false
  }
 }
