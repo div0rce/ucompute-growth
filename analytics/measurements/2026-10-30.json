@@ -22,5 +22,11 @@
     "ucompute.org_http": "200",
     "sitemap_urls": 1
   },
-  "notes": "Public repo holds only LICENSE and a superseded handoff; the site is the frozen prelaunch page with no analytics (owner rule). Clone counts include bots and the project itself."
+  "notes": "Public repo holds only LICENSE and a superseded handoff; the site is the frozen prelaunch page with no analytics (owner rule). Clone counts include bots and the project itself.",
+  "cloud_daily_attempt": {
+    "at": "2026-10-30T23:55Z",
+    "site": "not measured: curl https://ucompute.org/ -> curl: (56) CONNECT tunnel failed, response 403",
+    "public_repo": "not measured: api.github.com/repos/div0rce/ucompute -> 'GitHub access to this repository is not enabled for this session' (OWNER-ASKS 8)",
+    "note": "values above are from the local baseline.sh run at 23:44 UTC; the cloud run measured nothing"
+  }
 }

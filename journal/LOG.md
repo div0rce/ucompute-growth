@@ -44,3 +44,14 @@ Append-only, newest at the bottom. Each entry: date (UTC), who (local session / 
 - Owner progress observed: GitHub org `ucompute` (ask 1 done); `ucompute.org` MX now Cloudflare Email Routing (ask 2 likely in progress; address not yet given). No grant line yet (ask 3), so nothing is AUTHORIZED.
 - Measurement: `scripts/baseline.sh` re-run 23:44 UTC: public repo 0 stars, 14-day views 5 (2 unique), clones 10 (8 unique); site 200, one sitemap URL.
 
+
+## 2026-10-30 — cloud daily (first successful daily run, 23:45 UTC)
+- Recovered: `git pull` fast-forwarded to fa93f45; no earlier cloud daily entry today. Self-test and strict lint passed (6 files, 0 findings).
+- Milestone check: `evidence/upstream/SYNC.md` unchanged (synced 2026-10-30T05:55Z, engineering 29c0c8e); no claim changes.
+- Channel check: nothing AUTHORIZED in `channels/REGISTRY.md`; nothing published.
+- Pipeline: new piece `content/ready/2026-11-03-what-0000-exposes.md` ("What binding a local AI server to 0.0.0.0 exposes, and a sixty-second self-check"; SEARCH.md rank-1 page). Re-read primary sources this run: Ollama FAQ (via github.com: "Ollama binds 127.0.0.1 port 11434 by default…"), llama-server README (`--host` 127.0.0.1, `--port` 9931, `--api-key` none). Cisco, Elastic, LM Studio and Ollama-auth quotes come from `research/` (read 2026-10-30) because those hosts are blocked here. UCompute sentences copied from the registry with qualifiers. Lint findings fixed ("any mac" substring in "many machines"; a sample LAN address matched the IP identity pattern). Strict lint: 7 files, 0 findings.
+- Monitoring: two dated rows in `pipeline/OPPORTUNITIES.md` (Ollama CVE-2026-7482 "Bleeding Llama"; DEF CON 34 llama.cpp memory-safety bugs), both secondary and marked unverified.
+- Measurement: **failure (expected, OWNER-ASKS 8)**: `curl https://ucompute.org/` → `curl: (56) CONNECT tunnel failed, response 403`; `api.github.com/repos/div0rce/ucompute` → "GitHub access to this repository is not enabled for this session". Recorded as "not measured" in `analytics/measurements/2026-10-30.json` (`cloud_daily_attempt`); local values untouched.
+- Also blocked (WebFetch `getaddrinfo ENOTFOUND`): docs.ollama.com, lmstudio.ai, blogs.cisco.com, www.elastic.co. Added to OWNER-ASKS 8 as hosts to allow.
+- Measurement note: on rebase, main had gained a GitHub Actions measurement (`scripts/measure_public.py`, `analytics/measurements/2026-10-30.public.json`, commit d9c7386); that is now the cloud measurement path, so OWNER-ASKS 8 measurement part may be moot (next run to confirm).
+- Experiments: none moved (X-05 data now arrives via the Actions measurement; the rest wait on a channel).
