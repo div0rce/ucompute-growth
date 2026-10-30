@@ -11,4 +11,4 @@ Format: id · hypothesis · metric and threshold · method · cost · status · 
 | X-05 | Baseline drift: does the public repository get any organic traffic before publication? | 14-day views and uniques from `scripts/baseline.sh`, weekly | passive, running | running (baseline 2026-10-30: 6 views / 3 uniques, 27 clones / 21 uniques, mostly automated) |
 
 ## Decisions 2026-W44 (2026-10-30, cloud weekly)
-All five retained; none abandoned (no result yet). X-04: variant A ("pair your own devices, choose where a request runs") to be replaced by a revoke / default-deny headline before the test runs, because three 2026 competitors now use the routing sentence (`research/COMPETITORS.md`). X-05: second datapoint not taken; cloud runs cannot reach the sources (OWNER-ASKS 8).
+All five retained; none abandoned (no result yet). X-04: variant A ("pair your own devices, choose where a request runs") to be replaced by a default-deny / audit headline before the test runs, because three 2026 competitors now use the routing sentence (`research/COMPETITORS.md`). X-05: second datapoint not taken; cloud runs cannot reach the sources (OWNER-ASKS 8).
