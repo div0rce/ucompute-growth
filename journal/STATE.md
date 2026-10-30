@@ -7,7 +7,7 @@ Updated: 2026-10-30 (founding session, in progress)
 - Evidence mirror: `evidence/upstream/` at engineering 29c0c8e (wp04/fix-pass), website ce71dc1 (stage-snapshot), snapshot 2026-10-23b draft 3.
 - Product truth: development builds only; private alpha 0.1.1 candidate 2 behind access control (D-031); no public release, source, channel or cohort.
 - Channels: none AUTHORIZED. Publication path today = Website handoff (`handoffs/2026-10-30-website-engineering-notes.md`).
-- Research: workflow running; outputs land in `research/` and `distribution/COMMUNITIES.md`.
+- Research: INTERRUPTED (usage limit, 2026-10-30 06:10 UTC). 3 of 9 lens reports landed in `research/raw/` (local-AI developers, multi-device developers, competitors); 6 lenses, the adversarial verification, `research/POSITIONING.md`, `AUDIENCES.md`, `COMPETITORS.md`, `SEARCH.md`, `BARRIERS.md` and `distribution/COMMUNITIES.md` do not exist yet. The workflow scripts are saved in `scripts/workflows/research.js` and `draft-review.js`; a local Claude Code session re-runs them with the Workflow tool (resume ids: research wf_fc367b96-c01, review wf_c2a9b28e-210). A cloud daily run without the Workflow tool does the same work directly: one lens per run from the LENSES list in `scripts/workflows/research.js`, written to `research/raw/<key>.md`, then the synthesis files once all nine exist.
 - Scheduling: two cloud routines created 2026-10-30 (ids below). Local evidence-sync task: blocked by permission (OWNER-ASKS 7).
 
 ## Routine ids
@@ -16,8 +16,8 @@ Updated: 2026-10-30 (founding session, in progress)
 - first runs: daily 2026-10-30 13:06 UTC, weekly 2026-11-02 14:05 UTC; verify with `RemoteTrigger list_runs` or the routine page, then record in LOG.md
 
 ## Next actions (ranked)
-0. Four drafts in `content/drafts/` are under fact-check and reader review (findings land in `journal/LOG.md` as 'draft review'); do not move them to `content/ready/` until that entry exists and its fixes are applied.
-1. Finish the research synthesis review; fix anything the critic flagged; commit.
+0. Four drafts in `content/drafts/` still need the fact-check and reader review (`scripts/workflows/draft-review.js`; the review was interrupted before any finding was recorded). Do it first, apply fixes, lint, then move them to `content/ready/`.
+1. Finish the research: the six missing lenses, verification, synthesis (see Research above), then `distribution/COMMUNITIES.md`.
 2. Draft and lint the first three engineering notes (`content/CALENDAR.md`), move to `content/ready/`.
 3. Write `content/community-answers.md` from the research (truthful answers to the recurring questions).
 4. Weekly report skeleton for 2026-W44 on Monday 2026-11-02.
