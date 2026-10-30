@@ -117,6 +117,12 @@
    "text": "UCompute runs models through a pinned release of llama.cpp (MIT), downloaded on first use and verified against its published hash; UCompute does not write its own inference kernels.",
    "qualifier": "",
    "evidence": "engineering README; ADR-0002; snapshot 3.1"
+  },
+  "audit-detail": {
+   "label": "verified",
+   "text": "The audit trail is a file of JSON lines with a timestamp, an event kind, the other device's id and structured fields (ids, sizes, reasons, durations). The writer refuses fields named prompt, content, messages, api_key, private_key or pkcs8 and any string over 2 KiB; the file rotates at 8 MiB with three rotated files kept and an audit_rotated line that states the dropped bytes; owner actions and revocations are copied to a separately rotated security trail; refused-connection lines are capped at 20 per minute with the rest counted.",
+   "qualifier": "Mechanics held by automated tests on one computer (development build, October 2026); the absence of prompt text in the logs was checked in the two-machine runs (claim audit). On Windows the files carry the profile folder's access rights; second-account access is untested.",
+   "evidence": "engineering ADR-0003 section 9.11; crates/ucompute-observability; THREAT_MODEL M3-26, M3-27, M3-28, M3-08; snapshot 3.2 audit row, 3.3 F-06-01 row"
   }
  },
  "numbers": {
