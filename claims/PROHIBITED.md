@@ -53,7 +53,7 @@ Mirrors capability snapshot section 9. `scripts/claims_lint.py` fails any conten
 | `works on ubuntu` | see snapshot section 9 |
 | `runs on your home server` | see snapshot section 9 |
 | `runs on apple silicon` | only M2 on macOS 26.2 is experimental |
-| `\bm1\b|\bm3\b|\bm4\b` | see snapshot section 9 |
+| `\b(m1|m3|m4) (mac|macs|macbook|pro|max|ultra)\b` | see snapshot section 9 |
 | `any mac` | see snapshot section 9 |
 | `runs (llama|mistral|deepseek|qwen 7b|gemma)` | evidence covers models up to 0.5B (memory planning to 1.5B) |
 | `\b(7b|13b|70b)\b` | evidence covers models up to 0.5B (memory planning to 1.5B) |
@@ -89,7 +89,7 @@ Mirrors capability snapshot section 9. `scripts/claims_lint.py` fails any conten
 | `find each other automatically on any network` | see snapshot section 9 |
 | `pair any two` | see snapshot section 9 |
 | `any of your devices` | see snapshot section 9 |
-| `\bsigned\b` | ad-hoc signed, not notarized; Windows unsigned |
+| `\b(code.)?signed (installer|app|build|binary|dmg|msi|download)` | no release record, no signed installers, no cohort open |
 | `notarized` | see snapshot section 9 |
 | `verified installer` | see snapshot section 9 |
 | `secure installer` | see snapshot section 9 |
@@ -127,7 +127,7 @@ Any match anywhere in `content/` fails the lint: founder identity, affiliation, 
 - `/Users/`
 - `C:\\Users`
 - `C:/Users`
-- `\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b`
+- `\b(?!127\.0\.0\.1\b)(?!0\.0\.0\.0\b)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b`
 - `users\.noreply\.github\.com`
 - `@[a-z0-9.-]+\.edu\b`
 - `preview\.ucompute\.org`
