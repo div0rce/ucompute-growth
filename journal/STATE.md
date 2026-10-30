@@ -1,31 +1,31 @@
 # State
 
-Updated: 2026-10-30 11:55 UTC (founding session, resumed again)
+Updated: 2026-10-30 23:45 UTC (founding session, day one closing)
 
 ## Where things stand
-- Workspace: private repo `ucompute-growth`, pushed. Charter, runbook, claims registry + lint, channel registry, owner asks, pipeline, experiments, analytics baseline exist.
+- Workspace: private repo `ucompute-growth`, pushed. Charter, runbook, claims registry (20 claims incl. `audit-detail`) + lint, channel registry, owner asks, pipeline, experiments, analytics baseline, handoffs.
 - Evidence mirror: `evidence/upstream/` at engineering 29c0c8e (wp04/fix-pass), website ce71dc1 (stage-snapshot), snapshot 2026-10-23b draft 3.
 - Product truth: development builds only; private alpha 0.1.1 candidate 2 behind access control (D-031); no public release, source, channel or cohort.
-- Content: four pieces REVIEWED and READY in `content/ready/` (2026-10-30); the website handoff lists them.
-- Channels: none AUTHORIZED. Publication path today = Website handoff (`handoffs/2026-10-30-website-engineering-notes.md`).
-- Weekly report: `analytics/weekly/2026-W44.md` (first report; strategy change: lead with default-deny + prompt-free audit; revoke is parity with NVIDIA PAIR, not "whole request on one device"). Competitor facts consolidated in `research/COMPETITORS.md`.
-- Measurement from the cloud is blocked (ucompute.org outside the environment's allowed domains; public repo outside GitHub scope): OWNER-ASKS 8. Cloud runs write "not measured", never a guess.
-- Lint: strict mode now exempts `INDEX.md`/`README.md` from the front-matter requirement (still pattern-checked); `content/ready content/published --strict` passes.
-- Research: INTERRUPTED a second time (usage limit, 2026-10-30 11:50 UTC). Raw lens reports now in `research/raw/`: local-AI developers, multi-device developers, AI app builders, homelab/self-hosting, OSS infra and researchers, competitors (plus the cloud re-check). Still missing: `channels-platform-rules`, `search-demand`, `adoption-barriers`, the adversarial verification, and the synthesis files `research/POSITIONING.md`, `AUDIENCES.md`, `SEARCH.md`, `BARRIERS.md`, `distribution/COMMUNITIES.md`. A local session resumes with the Workflow tool (`scripts/workflows/research.js`, resume id wf_fc367b96-c01); the cloud daily does the same work directly, one lens per run, then the synthesis.
-- Scheduling: two cloud routines created 2026-10-30 (ids below). Local evidence-sync task: blocked by permission (OWNER-ASKS 7).
+- Research: COMPLETE for the founding milestone. Nine raw lenses in `research/raw/`; synthesis in `research/POSITIONING.md`, `AUDIENCES.md`, `COMPETITORS.md` (cloud re-check), `SEARCH.md`, `BARRIERS.md`; channel database `distribution/COMMUNITIES.md`. Positioning: default-deny off-device policy + prompt-free audit log lead; whole-request is a limitation statement; revoke is parity. Primary audience multi-device developers; secondary local-AI developers.
+- Content: FIVE pieces reviewed and READY in `content/ready/` (pairing, RPC backend, memory fit, OpenAI base URL, audit log); `content/community-answers.md` in progress (first version being written 2026-10-30 evening). The website handoff lists the five pieces.
+- Channels: none AUTHORIZED. The GitHub organization `ucompute` exists (owner, 2026-10-30 16:56 UTC; this account is admin) and awaits the owner's grant line (OWNER-ASKS 3). First accounts to ask for: Bluesky (`@ucompute.org` handle), Fosstodon, dev.to organization (all need the project mailbox, OWNER-ASKS 2).
+- Measurement from the cloud is blocked (OWNER-ASKS 8); local `scripts/baseline.sh` works. Routines share the account's usage limit: both 2026-10-30 daily slots were rejected while the founding session ran.
+- Scheduling: three cloud routines (ids below). Local evidence-sync task blocked by permission (OWNER-ASKS 7); local sessions run `./scripts/sync_evidence.sh` by hand.
 
 ## Routine ids
-- daily: `trig_018xkiTyQqoEVCLHrVgXYwWz` (cron 0 13 * * * UTC, model claude-opus-5-5, source div0rce/ucompute-growth, no connectors) — https://claude.ai/code/routines/trig_018xkiTyQqoEVCLHrVgXYwWz
-- weekly: `trig_01Xxy1PgCyyTQAent7Ddfz2Q` (cron 0 14 * * 1 UTC, same config) — https://claude.ai/code/routines/trig_01Xxy1PgCyyTQAent7Ddfz2Q
-- first runs: daily 2026-10-30 13:06 UTC, weekly 2026-11-02 14:05 UTC; verify with `RemoteTrigger list_runs` or the routine page, then record in LOG.md
+- daily: `trig_018xkiTyQqoEVCLHrVgXYwWz` (cron 0 13 * * * UTC, claude-opus-5-5, source div0rce/ucompute-growth, no connectors, idempotent) — https://claude.ai/code/routines/trig_018xkiTyQqoEVCLHrVgXYwWz
+- daily retry: `trig_01Hr6VmMMhkG7RQZxahnrmRN` (cron 0 21 * * * UTC, same prompt) — https://claude.ai/code/routines/trig_01Hr6VmMMhkG7RQZxahnrmRN
+- weekly: `trig_01Xxy1PgCyyTQAent7Ddfz2Q` (cron 0 14 * * 1 UTC) — https://claude.ai/code/routines/trig_01Xxy1PgCyyTQAent7Ddfz2Q; verified end to end by a manual run on 2026-10-30 (W44 report).
+- Health: no successful scheduled daily run yet (both 2026-10-30 slots rate-limited). First unattended test: 2026-10-31 13:07 UTC.
 
 ## Next actions (ranked, for the daily runs)
-0. **Cloud daily, today (2026-10-30) only:** the founding session resumed at 11:55 UTC and is finishing the research (three lenses, synthesis files, `distribution/COMMUNITIES.md`) and `content/community-answers.md` itself; do NOT write under `research/`, `distribution/` or `content/` today. Do: monitoring into `pipeline/OPPORTUNITIES.md`; measurement ("not measured" until OWNER-ASKS 8); routine-health note; log and push. From 2026-10-31 the normal list below applies.
-1. From 2026-10-31: routine health check (a "cloud daily" entry per day in LOG.md; a missing one for 2 days is a failure to record and to put in OWNER-ASKS).
-2. Channel check every run: publish from `content/ready/` only when `channels/REGISTRY.md` shows an AUTHORIZED row with the owner's words.
-3. If the research synthesis exists (`research/POSITIONING.md`), re-read the four ready pieces against it and against `research/COMPETITORS.md` §Implications; adjust leads where they contradict (default-deny and prompt-free audit lead; revoke is parity; "whole request on one device" is a limitation statement), keep the lint clean, log the edits.
-4. (merged into 0)
-5. Next pieces after community answers (one per run, research-led): a search page per cluster in `research/SEARCH.md`; a Windows firewall consent explainer (claim `windows-firewall`); a "what the audit log records" note (claim `audit`).
-6. Watch `evidence/upstream/` for the final capability snapshot and the Windows post-fix run (local sessions sync; cloud runs use the mirror).
-7. Held drafts: source-publication announcement and release communication (only when the gates move).
-8. Weekly report `analytics/weekly/2026-W45.md` on Monday 2026-11-02 (the scheduled weekly fire).
+0. Routine health: if `journal/LOG.md` has no "cloud daily" entry by 2026-11-01 21:30 UTC, record a failure here and in OWNER-ASKS ("check the routines at https://claude.ai/code/routines"), with the run log's error.
+1. Channel check every run: publish from `content/ready/` only when `channels/REGISTRY.md` shows an AUTHORIZED row quoting the owner's words. When the GitHub organization is granted: draft the organization profile README (disambiguation wording in `research/SEARCH.md` §5.4; claims-clean; lint) into `content/ready/`, then publish per the registry procedure.
+2. Finish `content/community-answers.md` if it is not yet `status: ready` (write from `research/AUDIENCES.md` §3 recurring questions; strict lint).
+3. Next pieces, one per run, from `research/SEARCH.md` §4 and `research/BARRIERS.md` §4.1, in this order: (a) "What binding a local AI server to 0.0.0.0 exposes, and a sixty-second self-check" (claims `local-only`, `transport`, `device-sees-prompt`; quote exposure counts with their scanner and filter, never as a UCompute comparison); (b) "What 'verified' means: SHA-256 before the engine opens the file" (`catalog-fit`, `engine`); (c) "Windows: the firewall consent step" (`windows-firewall`, `platforms`). Each: draft → fact-check against `evidence/upstream/` and the engineering sources named in the registry → lint → ready.
+4. Handoffs from `research/BARRIERS.md` §4.2 and §4.3: write the two most valuable as dated files in `handoffs/` (docs proposals to Website; asks to Engineering), one sentence of ask each, evidence attached.
+5. Experiments: X-04 variants are revised; X-02 and X-04 stay blocked on a channel. Record in `experiments/BACKLOG.md` anything learned.
+6. Monitoring into `pipeline/OPPORTUNITIES.md`; measurement ("not measured" from the cloud until OWNER-ASKS 8).
+7. Watch `evidence/upstream/` for the final capability snapshot and the Windows post-fix run (local sessions sync; cloud runs use the mirror).
+8. Held drafts: source-publication announcement and release communication (only when the gates move).
+9. Weekly report `analytics/weekly/2026-W45.md` on Monday 2026-11-02 14:05 UTC.
