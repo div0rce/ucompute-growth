@@ -22,3 +22,6 @@ Each file's front matter (`claims:`, `sources:`) is source-side material and mus
 **Measurement.** If the owner permits a first-party, cookie-free measure (Cloudflare Web Analytics server-side, or Pages request logs), Growth will use it; otherwise Google Search Console on the domain (owner-verified, free) is enough for search impressions. No third-party scripts, consistent with the site's rule.
 
 **Not asked.** No change to the prelaunch page, no download or sign-up language, no repository links while the source is unpublished.
+
+**Update 2026-10-30 23:54 UTC.** The notes are now public at https://github.com/ucompute/notes (with an Atom feed). If the website adds `/notes/`, the site copy should become canonical and the GitHub copies will point to it; until then the GitHub copies are the public versions.
+

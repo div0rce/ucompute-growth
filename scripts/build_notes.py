@@ -15,8 +15,9 @@ BASE = "https://github.com/ucompute/notes/blob/main/"
 TYPES = {"engineering-note", "explainer", "comparison", "search-page"}
 FRONT = re.compile(r"^---\n(.*?)\n---\n", re.S)
 FOOTER = ("\n---\n\n*Published by the UCompute project. This note was drafted and checked by UCompute's automated "
-          "growth workstream against the project's engineering evidence; corrections are welcome as issues on this "
-          "repository. UCompute is in development. There is no public release or download yet.*\n")
+          "growth workstream against the project's engineering evidence. Please do not post suspected security problems "
+          "publicly; a private reporting route will be listed here when it exists. UCompute is in development. There is no "
+          "public release or download yet.*\n")
 
 def parse(text):
     m = FRONT.match(text)

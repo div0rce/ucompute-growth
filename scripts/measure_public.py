@@ -56,6 +56,12 @@ def org():
     _, d = get("https://api.github.com/orgs/ucompute", gh_headers())
     return {k: d.get(k) for k in ("public_repos", "followers")}
 
+def published():
+    """Stars, watchers and forks of every public repository in the organization (published since 2026-10-31)."""
+    _, repos = get("https://api.github.com/orgs/ucompute/repos?type=public&per_page=100", gh_headers())
+    return {r["name"]: {"stars": r["stargazers_count"], "watchers": r["watchers_count"], "forks": r["forks_count"],
+                        "pushed_at": r["pushed_at"]} for r in repos}
+
 def name_repos():
     _, d = get("https://api.github.com/search/repositories?q=ucompute+in:name", gh_headers())
     return {"total": d.get("total_count"), "names": sorted(i["full_name"] for i in d.get("items", []))}
@@ -78,7 +84,7 @@ def bsky():
 def main():
     today = dt.datetime.now(dt.timezone.utc).date()
     out = {"date": today.isoformat(), "source": "github-actions measure_public.py",
-           "site": safe(site), "public_repo": safe(repo), "org": safe(org),
+           "site": safe(site), "public_repo": safe(repo), "org": safe(org), "org_repos": safe(published),
            "repos_named_ucompute": safe(name_repos), "hn": safe(hn), "bsky": safe(bsky)}
     mdir = ROOT / "analytics" / "measurements"; mdir.mkdir(parents=True, exist_ok=True)
     mentions = ROOT / "analytics" / "mentions.jsonl"

@@ -64,7 +64,6 @@ A paired device could try to use that rotation against you: flood you with reque
 - It does not hide your prompt from the device that runs it. The device that runs your request processes your prompt. Pair only devices you control or trust. The audit trail tells you that a request went to that device; it cannot tell you what the device did with it.
 - It does not record local-only work. Your prompts and responses stay on your device unless you pair another device and choose to run a request there. Local-only mode refuses every off-device request. Downloading a model or the engine uses the internet.
 - It is not a forensic archive. What is dropped at rotation is reported, not recovered.
-- During a flood of refused connections, the per-minute cap is one shared window: other refusals in that minute are counted, not written.
 - There is one serving device per request. Each request runs whole on one device; UCompute does not split a model across devices (tested with development builds between one Mac and one Windows laptop and between that Mac and one Linux computer; the full scope is below).
 
 ## Where this has run

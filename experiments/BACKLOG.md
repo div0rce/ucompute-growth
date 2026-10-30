@@ -12,3 +12,8 @@ Format: id · hypothesis · metric and threshold · method · cost · status · 
 
 ## Decisions 2026-W44 (2026-10-30, cloud weekly)
 All five retained; none abandoned (no result yet). X-04: variant A ("pair your own devices, choose where a request runs") to be replaced by a default-deny / audit headline before the test runs, because three 2026 competitors now use the routing sentence (`research/COMPETITORS.md`). X-05: second datapoint not taken; cloud runs cannot reach the sources (OWNER-ASKS 8).
+
+## 2026-10-30 23:54 UTC: first publication
+- X-03 started: the pairing explainer and five other notes are public at https://github.com/ucompute/notes. Metric: inbound mentions (exact-match Hacker News and Bluesky, `analytics/mentions.jsonl`) and stars/watchers/forks on `ucompute/notes` (`org_repos` in the daily `*.public.json`), read at 7 and 30 days (2026-11-07, 2026-11-30). Baseline at publication: 0 everywhere. No distribution beyond the organization yet, so a null result at 7 days is expected and says the channel alone does not create discovery.
+- X-05 extended to the organization's repositories.
+

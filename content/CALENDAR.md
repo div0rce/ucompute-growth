@@ -17,3 +17,7 @@ No public channel is authorized yet (`channels/REGISTRY.md`). The calendar there
 
 ## Week 2026-W45 (2026-11-02 to 2026-11-08), set by the 2026-W44 weekly review
 Dates slipped because the founding session's draft review was interrupted. One piece reviewed and promoted per daily run, in the order above; one research lens per daily run after that. Publication remains zero until a channel is AUTHORIZED.
+
+## Published 2026-10-30 23:54 UTC
+The six ready notes and the organization profile are public (`content/published/INDEX.md`). Bluesky posts in `content/ready/bluesky-first-posts.md` now have live link targets and wait only for the account (owner).
+
