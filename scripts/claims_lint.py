@@ -22,7 +22,7 @@ NEGATED = re.compile(r"\b(not|never|no|without|rather than|instead of|unverified
 TOKS = re.compile(r"\btok(ens)?\s*/\s*s\b|\btokens per second\b", re.I)
 FRONT = re.compile(r"^---\n(.*?)\n---", re.S)
 EXTS = {".md", ".txt", ".html", ".json", ".yaml", ".yml"}
-INDEXES = {"INDEX.md", "README.md"}  # pipeline bookkeeping, not publishable pieces: still pattern-checked
+INDEXES = {"INDEX.md", "README.md", "CALENDAR.md", "community-answers.md"}  # pipeline bookkeeping, not publishable pieces: still pattern-checked
 
 def files(paths):
     for p in paths:
