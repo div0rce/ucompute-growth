@@ -4,7 +4,7 @@ title: What UCompute's audit log records, and what it never records
 type: engineering-note
 audience: multi-device-developers, homelab-selfhosting, oss-infra
 channel_intent: website-handoff (Engineering notes), later syndication with canonical link
-claims: [audit, audit-detail, local-only, device-sees-prompt, mesh-pair-choose, no-release, license]
+claims: [audit, audit-detail, local-only, device-sees-prompt, mesh-pair-choose, engine, no-release, license]
 status: ready
 review: fact-check applied 2026-10-30 (journal/LOG.md)
 sources: engineering ADR-0003 sections 9.10, 9.11 and 9.15 (audit, audit-before-send, known limits), crates/ucompute-observability/src/lib.rs (forbidden field keys, size bound, rotation constants, security kinds, reader merge, bundle redaction), docs/security/THREAT_MODEL.md rows M3-08, M3-26, M3-27, M3-28 and secure default SD-08, capability snapshot 2026-10-23b claim 10 and sections 3.2 and 3.3
@@ -14,11 +14,11 @@ sources: engineering ADR-0003 sections 9.10, 9.11 and 9.15 (audit, audit-before-
 
 *Development build, October 2026. UCompute is in development. There is no public release or download yet. The mechanics below are held by automated tests on one computer; the absence of prompt text in the logs was checked in the two-machine runs listed at the end.*
 
-If you let a second device run your prompts, two questions follow: what did I send where, and did any of it end up in a log? UCompute answers the first with an audit trail and the second with rules the audit code enforces on itself. Audit logs record each off-device request without the prompt or the response.
+If you let a second device on your local network run your prompts, two questions follow: what did I send where, and did any of it end up in a log? UCompute answers the first with an audit trail and the second with rules the audit code enforces on itself. Audit logs record each off-device request without the prompt or the response.
 
 ## What is recorded
 
-The audit trail lives in the data directory as `logs/audit.jsonl`: one JSON object per line with a UTC timestamp, an event kind, the other device's id where one is involved, and structured fields: ids, sizes, reasons, durations. On macOS and Linux the file is created readable only by the user account that owns it; on Windows it carries the access rights of the user's profile folder, and access from a second Windows account has not been tested. A sent request looks like this (shape, not a real record):
+The audit trail lives in the data directory as `logs/audit.jsonl`: one JSON object per line with a UTC timestamp, an event kind, the other device's id where one is involved, and structured fields: ids, sizes, reasons, durations. On macOS, and on the Linux development build (Linux is a planned platform, not a supported one), the file is created readable only by the user account that owns it; on Windows it carries the access rights of the user's profile folder, and access from a second Windows account has not been tested. A sent request looks like this (shape, not a real record):
 
 ```json
 {"ts_utc":"2026-10-30T12:00:00Z","kind":"remote_request","peer_id":"<device id>",
@@ -53,7 +53,7 @@ The audit code builds its fields from ids, sizes, reasons and durations and neve
 
 In the two-machine runs that checked it, the audit logs on both devices contained no prompt or response text. The project's stated rule goes further, no prompt in engine logs, API logs, metrics, error messages or run records, but today only the audit log and the diagnostics bundle are held by tests; the rest is a design rule with its tests still to come.
 
-## Why the trail is bounded, and why a flood cannot erase the important part
+## Why the trail is bounded, and why a peer flood cannot rotate away owner actions and revocations
 
 `audit.jsonl` rotates at 8 MiB into `audit.1.jsonl` through `audit.3.jsonl`, so a trail is bounded at roughly 32 MiB. An unbounded log is a disk-filling attack; the cost of the bound is that long history is dropped, and the design makes the drop visible: every new file begins with an `audit_rotated` line that states the dropped bytes.
 
@@ -71,4 +71,4 @@ A paired device could try to use that rotation against you: flood you with reque
 
 Development builds, October 2026. Pairing and remote requests ran between one Apple M2 Mac (macOS 26.2) and one Windows 11 laptop (Intel Arc 140V) on the same Wi-Fi network or phone hotspot, and between that Mac and one Linux desktop computer (Ubuntu, processor only, a development build of the background program compiled and started by hand; no app or installer) on a home Wi-Fi network. In both pairs pairing has been shown starting from either device; with the Linux computer it went through the devices' background programs rather than an app window, and pairing started in the Mac app's window has been shown only with an earlier version of the app. Linux is a planned platform, not a supported one. Pairing between two Macs is not yet shown to work. The audit logs of both devices were scanned for prompt or response text after those runs and held none. The refusal of content-bearing fields, the rotation behaviour, the security trail surviving a request flood, and the redaction of the diagnostics bundle are held by automated tests on one computer.
 
-UCompute's code is licensed under Apache-2.0. The source has not been published yet.
+UCompute runs models through a pinned release of llama.cpp (MIT; b11609 in the October 2026 development builds), downloaded on first use and verified against a pinned SHA-256 hash; UCompute does not write its own inference kernels. UCompute's code is licensed under Apache-2.0. The source has not been published yet.

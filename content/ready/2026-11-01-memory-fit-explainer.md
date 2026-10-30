@@ -54,7 +54,7 @@ Measured on that Mac (macOS 26.2, development build) across fourteen model, cont
 
 **Nothing above 1.5 billion parameters has been measured yet.** The KV and compute terms are linear in the model's dimensions, so they should extrapolate, but the baseline and the headroom have not been checked at larger sizes. Treat the estimate for larger models as an estimate.
 
-One Linux desktop computer (processor only; Linux is a planned platform, and this is a development measurement on one machine) measured a much smaller tokenizer and baseline overhead, about 390 bytes per vocabulary entry and a 20 MiB baseline, and the estimate uses those figures there. Windows is not yet separately measured and uses the macOS figures as a placeholder; which direction that errs on Windows has not been checked.
+One Linux desktop computer (processor only; Linux is a planned platform, and this is a development measurement on one machine) measured a much smaller tokenizer and baseline overhead, about 390 bytes per vocabulary entry and a 20 MiB baseline; the development build carries those figures for Linux, but they are outside the calibrated claim, which covers Apple Silicon Macs. Windows is not yet separately measured and uses the macOS figures as a placeholder; which direction that errs on Windows has not been checked.
 
 ## What this does not claim
 
@@ -62,4 +62,4 @@ One Linux desktop computer (processor only; Linux is a planned platform, and thi
 - It has been calibrated on one engine release and on models up to 1.5 billion parameters.
 - No platform is declared supported yet. macOS 26.2 on Apple M2 and Windows 11 on an Intel Core Ultra 7 258V with Arc 140V are experimental; Linux, other GPUs and phones (as clients) are planned.
 
-UCompute runs models through a pinned release of llama.cpp, fetched on first run and verified against a pinned SHA-256 hash; the inference engine is llama.cpp, not UCompute's own code. UCompute's code is licensed under Apache-2.0. The source has not been published yet.
+UCompute runs models through a pinned release of llama.cpp (MIT; b11609 in the October 2026 development builds, the release the constants above were measured against), downloaded on first use and verified against a pinned SHA-256 hash; UCompute does not write its own inference kernels. UCompute's code is licensed under Apache-2.0. The source has not been published yet.

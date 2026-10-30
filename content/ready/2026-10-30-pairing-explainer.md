@@ -1,22 +1,22 @@
 ---
 id: 2026-10-30-pairing-explainer
-title: How two UCompute devices pair: the six-digit code, the keys and the revoke
+title: How two UCompute devices pair, allow, audit and revoke: the six-digit code and the pinned keys
 type: engineering-note
 audience: multi-device-developers, oss-infra
 channel_intent: website-handoff (Engineering notes), later syndication with canonical link
-claims: [mesh-pair-choose, transport, revocation, local-only, device-sees-prompt, audit, connect-by-address, platforms, no-release, license]
+claims: [mesh-pair-choose, transport, revocation, local-only, device-sees-prompt, audit, connect-by-address, engine, platforms, no-release, license]
 status: ready
 review: fact-check and reader review applied 2026-10-30 (journal/LOG.md "draft review")
 sources: engineering ADR-0003 section 9 (implementation notes), docs/security/THREAT_MODEL.md sections 2.13 and 4, capability snapshot 2026-10-23b sections 3.2, 3.3, 8 and 9 (all read-only, mirrored in evidence/upstream/)
 ---
 
-# How two UCompute devices pair: the six-digit code, the keys and the revoke
+# How two UCompute devices pair, allow, audit and revoke: the six-digit code and the pinned keys
 
 *Development build, October 2026. UCompute is in development. There is no public release or download yet. This note describes behaviour as built in development builds. The protocol mechanics (the pairing confirmation, the relay check, the lockout, no session resumption, the revocation rules) are verified by automated tests on one computer; pairing, remote execution, revocation and connect-by-address have also run between the two-machine pairs listed at the end.*
 
-You have a laptop and a second computer. You want a prompt typed on the laptop to run on the other machine. The usual way to do this with a local model server is to bind it to every network interface and point the laptop at the other machine's address. That works, and it also means anything on the network that can reach that port can send prompts, read answers, and often load models. UCompute Mesh takes a different route: two devices pair once with a short code, every later connection is mutually authenticated and encrypted, and either device can cut the other off with one action.
+You have a laptop and a second computer. You want a prompt typed on the laptop to run on the other machine. The usual way to do this with a local model server is to bind it to every network interface and point the laptop at the other machine's address. That works, and it also means the port is the whole trust boundary: any client on the network that can reach it can send prompts and read answers. UCompute Mesh takes a different route: two devices pair once with a short code; a paired device still refuses every off-device request until you allow it; each off-device request it does run is recorded without the prompt or the response; and you can revoke a device at any time.
 
-UCompute Mesh lets you pair your own devices with a short code and choose which one runs a request. Each request runs whole on one device; UCompute does not split a model across devices. (Tested with development builds between one Mac and one Windows laptop, and between that Mac and one Linux computer; the exact scope is listed under "Where this has run".)
+UCompute Mesh lets you pair your own devices with a short code and choose which one runs a request. Each request runs whole on one device; UCompute does not split a model across devices. (Tested with development builds between one Mac and one Windows laptop, and between that Mac and one Linux computer, all on the same local network; the exact scope is listed under "Where this has run".)
 
 ## Every device has one key
 
@@ -61,7 +61,7 @@ Once both devices hold each other's keys, every connection between them is a mut
 - **No session resumption.** TLS 1.3 resumption would skip the client-key check on reconnect, which is exactly where a revoked device would try to return. UCompute issues no tickets and keeps no session cache, so every connection is a full handshake against the current pin list.
 - **No 0-RTT, no plaintext path.** There is no unencrypted peer transport and no downgrade negotiation; TLS 1.3 only.
 - **Address validation before cryptography.** The peer endpoint used after pairing answers an unvalidated source with a QUIC Retry first, so spoofed packets never reach the TLS handshake. (The pairing endpoint instead relies on its one-at-a-time loop and lockout.)
-- **A refusal is only believed from the device itself.** For a short time after the handshake, QUIC still accepts packets of the Initial type, whose keys derive from public information, so a close carried that way can be forged on the path. UCompute therefore treats any close or alert that arrives before the dialler has read the other device's own hello on the control stream as unproven: the dialler reports that the device at that address did not prove its identity, and tries the next address. Every address is a hint; the key is the identity. This is also why paired devices can reconnect by address on networks that block discovery: an address alone is never trusted.
+- **A refusal is only believed from the device itself.** For a short time after the handshake, QUIC still accepts packets of the Initial type, whose keys derive from public information, so a close carried that way can be forged on the path. UCompute therefore treats any close or alert that arrives before the dialler has read the other device's own hello on the control stream as unproven: the dialler reports that the device at that address did not prove its identity, and tries the next address. Every address is a hint; the key is the identity. This is also why paired devices can reconnect by address on networks that block discovery (shown between one Mac and one Windows laptop on the same campus network, with development builds): an address alone is never trusted.
 - **Your device will not send work to a device you have not paired.**
 
 Traffic between paired devices is encrypted and both ends are authenticated: QUIC with TLS 1.3 and device keys pinned at pairing. A packet capture that checked for readable prompt text ran on one computer; a capture between two machines has not been done yet.
@@ -77,7 +77,7 @@ A pinned key proves which device is on the other end. It does not decide whether
 
 Audit logs record each off-device request without the prompt or the response. The audit line for a sent request is written before the request leaves the device; if it cannot be written, nothing is sent.
 
-## Revocation: one action, immediate effect
+## Revocation: a signed record, and what the two-machine runs measured
 
 You can revoke a paired device at any time. A revocation is a signed record naming the target device, with a per-issuer sequence number. A receiving device accepts it only if the issuer is itself pinned there and not revoked, the signature verifies under the issuer's key, and the issuer and the target share a group there, so a stranger cannot cut off your devices. When a device re-pairs with a target it had revoked, it marks its own earlier records as superseded, so a replay of a revocation it has already seen cannot undo the re-pair (a record it never saw can still re-revoke; that is a known limit, and it fails closed). Every open connection to the revoked device closes at once, its key is refused inside the next handshake, and because there is no session resumption, there is no cached ticket to come back with. Other devices in the shared group receive the record over their existing connections and again on every reconnect until they confirm it.
 
@@ -105,4 +105,4 @@ Development builds, October 2026:
 
 No platform is declared supported yet. macOS 26.2 on Apple M2 and Windows 11 on an Intel Core Ultra 7 258V with Arc 140V are experimental; Linux, other GPUs and phones (as clients) are planned.
 
-UCompute's code is licensed under Apache-2.0. The source has not been published yet. When it is, this note will link to the modules and the tests that hold each rule above in place.
+UCompute runs models through a pinned release of llama.cpp (MIT; b11609 in the October 2026 development builds), downloaded on first use and verified against a pinned SHA-256 hash; UCompute does not write its own inference kernels. UCompute's code is licensed under Apache-2.0. The source has not been published yet. When it is, this note will link to the modules and the tests that hold each rule above in place.

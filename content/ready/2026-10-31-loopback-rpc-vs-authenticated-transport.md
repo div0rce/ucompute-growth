@@ -1,6 +1,6 @@
 ---
 id: 2026-10-31-loopback-rpc-vs-authenticated-transport
-title: llama.cpp's RPC backend is not a network transport, and what UCompute does instead
+title: What llama.cpp's own README says about its RPC backend, and what UCompute does instead
 type: comparison
 audience: local-ai-developers, oss-infra
 channel_intent: website-handoff (Engineering notes), later syndication with canonical link
@@ -10,7 +10,7 @@ review: fact-check and reader review applied 2026-10-30 (journal/LOG.md "draft r
 sources: https://github.com/ggml-org/llama.cpp/blob/master/tools/rpc/README.md (read 2026-10-30); https://github.com/ggml-org/llama.cpp/blob/master/SECURITY.md (read 2026-10-30); CVE-2026-34159 record at https://cveawg.mitre.org/api/cve/CVE-2026-34159 and advisory https://github.com/ggml-org/llama.cpp/security/advisories/GHSA-j8rj-fmpv-wcxw (read 2026-10-30; fixed in b8492; UCompute pins b11609 per engineering catalog/backends.json); engineering docs/security/THREAT_MODEL.md section 3 (secure defaults) and 2.13; ADR-0002 (supervised engine, pinned archives); capability snapshot 2026-10-23b sections 5, 8 and 9
 ---
 
-# llama.cpp's RPC backend is not a network transport, and what UCompute does instead
+# What llama.cpp's own README says about its RPC backend, and what UCompute does instead
 
 *Development build, October 2026. UCompute is in development. There is no public release or download yet.*
 
@@ -38,15 +38,15 @@ and
 
 > "Encrypt your data if sending it over the network."
 
-The RPC protocol is an unencrypted wire format for moving tensors and compute commands between two processes that trust each other completely. It has no authentication and no notion of which device is allowed to talk to which. Its authors call it insecure, and they are right to.
+Read together, the two documents describe a tool for two processes that trust each other on a network nobody else can reach: encrypt the data yourself, and never expose the port. That is the boundary its authors drew, in their words, and this note takes them at it.
 
-## What "insecure" has meant in practice
+## The advisory the project published
 
-On 1 April 2026 the project published CVE-2026-34159 (CVSS 3.1 base score 9.8, critical): in RPC builds before b8492, a tensor deserialization path skipped bounds validation, and an unauthenticated attacker with TCP access to the RPC server port could read and write the process's memory and, combined with pointer leaks from other RPC messages, run code on the host. The fix shipped in b8492. The point is not that llama.cpp is careless; the project fixed it and documented it. The point is that for this component, "whoever can reach the port" is the whole threat model, exactly as the README says. (The release UCompute pins is later than that fix, and UCompute does not use the RPC backend today, as described below.)
+The project's advisory GHSA-j8rj-fmpv-wcxw is dated 26 March 2026, and the CVE record (CVE-2026-34159, CVSS 3.1 base score 9.8, critical) 1 April 2026: in RPC builds up to b7991, a tensor deserialization path skipped bounds validation, and an unauthenticated attacker with TCP access to the RPC server port could read and write the process's memory and, combined with pointer leaks from other RPC messages, run code on the host. The CVE record names b8492 as the fixed build. The project found it, fixed it and documented it. What the advisory shows is that for this component, "whoever can reach the port" is the whole threat model, exactly as the README says. (The release UCompute pins, b11609, is later than that fix, and the Mesh path does not use the RPC backend, as described below.)
 
-## The trap for the two-computer setup
+## What the warning means for a two-computer setup
 
-The same command that makes the RPC backend work on an isolated lab network also works on a home network, a shared flat, a dorm or an office. A port that accepts tensor uploads and compute commands from any source on the network is a large attack surface, and putting it on the LAN is exactly what the README tells you not to do. Wrapping it in a VPN helps with eavesdropping but still leaves every device inside that VPN able to drive the server.
+The same command that makes the RPC backend work on an isolated lab network also works on a home network, a shared flat, a dorm or an office. A port that accepts tensor uploads and compute commands from any source on the network is what the README is warning about, and a home network, a shared flat, a dorm or an office is not the isolated segment it assumes. Wrapping it in a VPN helps with eavesdropping but still leaves every device inside that VPN able to drive the server.
 
 ## What UCompute does instead
 
@@ -54,13 +54,13 @@ UCompute keeps the engine local and puts the network behind a separate, authenti
 
 - **Engine ports never leave the machine.** UCompute runs llama.cpp's server as a supervised child process bound to loopback, with a random per-process API key. There is no setting to expose that port.
 - **The only path between devices is authenticated and encrypted.** Traffic between paired devices is encrypted and both ends are authenticated: QUIC with TLS 1.3 and device keys pinned at pairing. Your device will not send work to a device you have not paired. There is no plaintext peer transport and no downgrade negotiation. A packet capture on one host showed no readable prompt text; a two-host capture has not been done yet.
-- **A request runs whole on one device.** UCompute Mesh lets you pair your own devices with a short code and choose which one runs a request. Each request runs whole on one device; UCompute does not split a model across devices. The Mesh path does not use the RPC backend: what crosses the network is a request to a paired device, which runs it entirely on its own engine and streams the result back. (Tested with development builds between one Mac and one Windows laptop, and between that Mac and one Linux computer; the scope is listed under "Where this has run".)
-- **So if a model does not fit on either machine alone, UCompute does not solve that today.** The RPC backend does, with the exposure described above.
+- **The Mesh path does not use the RPC backend.** UCompute Mesh lets you pair your own devices with a short code and choose which one runs a request. What crosses the network is a request to a paired device, which runs it entirely on its own engine and streams the result back. Each request runs whole on one device; UCompute does not split a model across devices, so a model has to fit the device you choose. (Tested with development builds between one Mac and one Windows laptop, and between that Mac and one Linux computer, on the same local network; the scope is listed under "Where this has run".)
+- **So if a model does not fit on either machine alone, UCompute does not solve that today;** the RPC backend does, under the conditions its README sets.
 - **The device that runs your request processes your prompt. Pair only devices you control or trust.** Encryption protects the traffic from observers on the network, not from the endpoint.
 
 ## Planned, with no date
 
-Running one model across several devices, an opt-in open network (UCompute Swarm), compute credits and an optional managed service (UCompute Cloud) are planned and undated. None of these exists today. The engineering design that has been written for splitting one model between two devices keeps both ends of the RPC connection on loopback and carries the bytes only inside the same authenticated connection that pairing established, with policy checks on both devices. It is a design under test on one computer, not a feature. This note will be updated when that changes.
+Running one model across several devices is planned, with no date. It does not exist today. The engineering design that has been written for splitting one model between two devices keeps both ends of the RPC connection on loopback and carries the bytes only inside the same authenticated connection that pairing established, with policy checks on both devices. It is a design under test on one computer, not a feature. This note will be updated when that changes.
 
 ## If you want to use the RPC backend anyway
 
