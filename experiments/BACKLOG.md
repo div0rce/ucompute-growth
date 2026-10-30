@@ -9,3 +9,6 @@ Format: id · hypothesis · metric and threshold · method · cost · status · 
 | X-03 | A one-page "pairing and revocation" explainer answers a recurring real question (laptop uses desktop GPU safely) well enough that community members link it | number of inbound links/mentions in 60 days | publish, then watch referrers (GitHub referrers API, site analytics) | blocked: publication |
 | X-04 | Positioning test: "pair your own devices, choose where a request runs" vs. "local-first AI runner" headline | click-through on two variants of the same post | authorized channel A/B | blocked: channel |
 | X-05 | Baseline drift: does the public repository get any organic traffic before publication? | 14-day views and uniques from `scripts/baseline.sh`, weekly | passive, running | running (baseline 2026-10-30: 6 views / 3 uniques, 27 clones / 21 uniques, mostly automated) |
+
+## Decisions 2026-W44 (2026-10-30, cloud weekly)
+All five retained; none abandoned (no result yet). X-04: variant A ("pair your own devices, choose where a request runs") to be replaced by a revoke / default-deny headline before the test runs, because three 2026 competitors now use the routing sentence (`research/COMPETITORS.md`). X-05: second datapoint not taken; cloud runs cannot reach the sources (OWNER-ASKS 8).

@@ -22,6 +22,9 @@ Status vocabulary: AUTHORIZED · PREREQUISITE (owner action needed; listed in `j
 | Product Hunt | REJECTED for now | Nothing publicly usable | Revisit at public release |
 | Claude.ai artifacts | REJECTED as a public channel | Private by default, not a developer channel | — |
 
+## Weekly review 2026-W44 (2026-10-30, cloud weekly)
+No status changed: no owner grant exists, so nothing is AUTHORIZED. No platform rules were re-read this week (the `channels-platform-rules` research lens has not run yet; it is next week's first research item), so no rule-based status change is justified. Evidence that did arrive (competitor and audience research in `research/raw/`) confirms the ranking of the PREREQUISITE channels: the multi-device and local-AI audiences are found in r/LocalLLaMA, r/selfhosted, Hacker News comment threads and dev.to write-ups, which keeps Reddit, dev.to/Hashnode and HN (human-submitted) as the highest-fit channels once something is publicly usable. The ucompute.org HANDOFF remains the only publication path. `distribution/COMMUNITIES.md` does not exist yet; it is written after the platform-rules lens.
+
 ## Publishing procedure (when a channel is AUTHORIZED)
 1. The piece sits in `content/ready/` with `claims:` front matter and passes `python3 scripts/claims_lint.py content/ready --strict`.
 2. Check the channel's rule row in `distribution/COMMUNITIES.md` (frequency, disclosure, format).

@@ -22,6 +22,7 @@ NEGATED = re.compile(r"\b(not|never|no|without|rather than|instead of|unverified
 TOKS = re.compile(r"\btok(ens)?\s*/\s*s\b|\btokens per second\b", re.I)
 FRONT = re.compile(r"^---\n(.*?)\n---", re.S)
 EXTS = {".md", ".txt", ".html", ".json", ".yaml", ".yml"}
+INDEXES = {"INDEX.md", "README.md"}  # pipeline bookkeeping, not publishable pieces: still pattern-checked
 
 def files(paths):
     for p in paths:
@@ -43,7 +44,7 @@ def lint(path, strict):
     for c in declared:
         if c not in REG["claims"]:
             out.append(f"{path}:1: unknown claim id '{c}'")
-    if strict and not declared:
+    if strict and not declared and path.name not in INDEXES:
         out.append(f"{path}:1: strict: no `claims:` front matter")
     paragraphs, para, start = [], [], 1
     for i, line in enumerate(text.splitlines(), 1):
