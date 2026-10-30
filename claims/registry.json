@@ -199,7 +199,7 @@
   "runs on your home server",
   "runs on apple silicon",
   "\\b(m1|m3|m4) (mac|macs|macbook|pro|max|ultra)\\b",
-  "any mac",
+  "\\bany (mac|macs|macbook)\\b",
   "runs (llama|mistral|deepseek|qwen 7b|gemma)",
   "\\b(7b|13b|70b)\\b",
   "x faster|\\d+(\\.\\d+)?[x×] faster",

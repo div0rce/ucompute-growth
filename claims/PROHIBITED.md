@@ -54,7 +54,7 @@ Mirrors capability snapshot section 9. `scripts/claims_lint.py` fails any conten
 | `runs on your home server` | see snapshot section 9 |
 | `runs on apple silicon` | only M2 on macOS 26.2 is experimental |
 | `\b(m1|m3|m4) (mac|macs|macbook|pro|max|ultra)\b` | see snapshot section 9 |
-| `any mac` | see snapshot section 9 |
+| `\bany (mac|macs|macbook)\b` | see snapshot section 9 |
 | `runs (llama|mistral|deepseek|qwen 7b|gemma)` | evidence covers models up to 0.5B (memory planning to 1.5B) |
 | `\b(7b|13b|70b)\b` | evidence covers models up to 0.5B (memory planning to 1.5B) |
 | `x faster|\d+(\.\d+)?[x×] faster` | all tok/s figures are path checks on tiny models |
