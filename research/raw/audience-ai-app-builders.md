@@ -2,312 +2,294 @@
 
 Lens: `audience-ai-app-builders`
 Prepared for: UCompute internal strategy repository
-Research date: 2026-10-30
-Method: WebSearch (standard + extended) to locate pages, WebFetch to read primary pages. Every factual claim below carries the URL that was actually read. Items that could not be read from a primary source are marked **unverified**. No statistics are invented; where a source gives a number, the number is the source's claim, not ours.
+Research date: 2026-10-30 (this is a re-run; the previous version of this file was replaced so that every URL cited below is one that was actually read in this session)
+Method: WebSearch (standard + extended) to locate pages, WebFetch to read primary pages. Every factual claim carries the URL that was read. Anything that could not be read from a primary source is marked **unverified**. No statistics are invented; a number in this report is the cited source's claim, not ours.
 
-Context constraints honoured: UCompute has no public release, no public cohort, no authorized waitlist, $0 paid budget, anonymous founder (never named), and the project speaks only as "UCompute". Mesh runs a whole request on one device; it is not pooling or distributed inference.
+Context constraints honoured: UCompute has no public release, no public cohort, no authorized waitlist, $0 paid budget, an anonymous founder (never named), and speaks only as "UCompute". Mesh runs a whole request on one device; it is not pooling, not model splitting, not distributed inference. Tool calling is not verified. Linux ran CPU-only in tests. Nothing below should be read as a claim about UCompute beyond the context block supplied with this task.
 
 ---
 
 ## 0. Executive summary
 
-1. **"Point your OpenAI client at a different base URL" is table stakes, not a differentiator.** The official OpenAI Python SDK documents `base_url` / `OPENAI_BASE_URL`; Vercel AI SDK ships `@ai-sdk/openai-compatible`; LangChain's `ChatOpenAI` reads `OPENAI_BASE_URL`; LlamaIndex ships `OpenAILike(api_base=...)`. Every competitor in this space (Ollama, LM Studio, Jan, llama-server, LocalAI, vLLM, Docker Model Runner, llama.app) already advertises this. UCompute's OpenAI-compatible API is a precondition for being considered, not a reason to be chosen.
-2. **The field got materially more crowded in 2026 from the top.** GGML (llama.cpp's creators) joined Hugging Face on 2026-02-20; on 2026-05-29 the llama.cpp project launched llama.app with a one-line installer and a unified `llama` binary (`llama serve` == `llama-server`); Hugging Face's "Use this model" dropdown now lists 18 local apps; Docker ships Docker Model Runner with OpenAI- and Ollama-compatible APIs. A new entrant built on llama.cpp will be asked "why not `llama serve`?" on day one.
-3. **Discovery happens in four places, none of which UCompute is in yet:** (a) framework/provider docs (AI SDK, LangChain, LlamaIndex, Continue, Open WebUI) that name specific servers; (b) Hugging Face model pages via the local-apps registry (PR to `huggingface.js`); (c) GitHub lists (Ollama README's ~155 community integrations, `awesome-local-ai`, the `openai-compatible` topic with 6,655 repos); (d) SEO comparison articles whose fixed comparison matrix (port, auth default, concurrency, OpenAI-parameter coverage, GUI vs headless, open-source status, wrapper overhead) is effectively the audience's evaluation checklist.
-4. **What earns attention on Hacker News in this niche is a concrete, reproducible hardware claim plus deep author engagement**, not a feature list: a Show HN running Gemma 4 26B in ~2 GB RAM on M-series Macs drew 919 points/342 comments (2026-07-29); "LM Studio headless CLI + Claude Code" drew 407/103; "Ollama violating llama.cpp license" drew 202/68 and shows this audience actively polices engine attribution. UCompute's pinned-and-credited llama.cpp engine, memory-fit check, and checksummed downloads line up with what this audience rewards; its unverified tool calling and CPU-only Linux line up with what it punishes.
-5. **Channel rules are strict and mostly incompatible with brand/automated posting.** Show HN rejects landing pages and waitlists outright, so UCompute cannot Show HN until a public build exists. HN forbids automated posting, vote soliciting, and AI-generated text. Lobsters is invite-only; accounts under 70 days cannot self-promote, and self-promotion must stay under ~25% of activity. DEV disallows content primarily for promotion/backlinks and bot-generated comments, and requires AI disclosure. Hashnode bans unsolicited/bulk promotion. r/LocalLLaMA (third-party summary, Reddit itself unreachable from this environment) enforces a 10% self-promotion limit and a 5-subreddit-karma minimum to post. TLDR AI (claims 1.1-1.15M subscribers) has no free submission path; Console.dev and Latent Space accept email tips.
+1. **"Change the base URL" is table stakes, not a differentiator.** The official OpenAI Python SDK takes `base_url` or `OPENAI_BASE_URL` (https://github.com/openai/openai-python); LangChain's `ChatOpenAI` reads `base_url`, `OPENAI_API_BASE` and `OPENAI_BASE_URL` (https://docs.langchain.com/oss/python/integrations/chat/openai); LlamaIndex ships `OpenAILike(api_base=...)` (https://developers.llamaindex.ai/python/framework-api-reference/llms/openai_like/); Vercel AI SDK ships `@ai-sdk/openai-compatible` (https://ai-sdk.dev/providers/openai-compatible-providers); the OpenAI Agents SDK has `set_default_openai_client()` and `OpenAIChatCompletionsModel` (https://openai.github.io/openai-agents-python/models/). Every local server in the comparison set already advertises exactly this. UCompute's OpenAI-compatible API is the price of admission, not the pitch.
+2. **The comparison set is fixed and the evaluation matrix is public.** Builders are taught to compare Ollama (port 11434), LM Studio (1234), llama.cpp `llama-server`, vLLM (8000) and LocalAI/Jan on: default port, auth default, concurrency default, OpenAI-parameter coverage, GUI vs headless, open-source status, and hardware target (https://cohorte.co/blog/local-llm-openai-compatible-server; https://futureagi.com/blog/best-ollama-local-llm-alternatives-2026/; https://daily.dev/blog/running-llms-locally-ollama-llama-cpp-self-hosted-ai-developers/). A new entrant is slotted into that matrix whether it likes it or not.
+3. **The top of the field consolidated in 2026.** The llama.cpp team and Hugging Face now ship "Llama" (llama.app): a menu-bar/tray app for Mac and Windows with a one-line installer, `llama serve`, and an OpenAI-compatible API on `localhost:9931/v1` (https://llama.app; https://huggingface.co/docs/hub/local-apps). The llama.cpp server itself now defaults to port 9931, ships a web UI, `--jinja` on by default, continuous batching on by default, and an Anthropic-Messages-compatible route (https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md). Ollama reports "over 8.9 million developers every month" and raised a $65M Series B on 2026-07-09 (https://techcrunch.com/?p=3140214). Docker ships Model Runner with OpenAI- and Ollama-compatible APIs on llama.cpp (https://docs.docker.com/ai/model-runner/). A llama.cpp-based newcomer will be asked "why not `llama serve`?" on day one.
+4. **Discovery happens in four kinds of place, and UCompute is in none of them yet:** (a) framework and tool docs that name specific servers (AI SDK LM Studio guide, Zed, Continue, Open WebUI, CrewAI, LiteLLM); (b) the Hugging Face "Use this model" dropdown, fed by a PR to `local-apps.ts` in `huggingface.js` (25 apps today; requirement: deeplinks and cross-platform "if possible") (https://github.com/huggingface/huggingface.js/blob/main/packages/tasks/src/local-apps.ts); (c) GitHub lists: the Ollama README's ~150 community integrations ("Open a pull request") (https://github.com/ollama/ollama), `awesome-local-ai` (~2.0k stars) (https://github.com/janhq/awesome-local-ai), the `openai-compatible` topic (6,669 repos) (https://github.com/topics/openai-compatible); (d) SEO comparison articles and HN threads.
+5. **What this audience rewards on HN is a concrete, reproducible hardware claim plus honest engineering detail; what it punishes is naming that over-promises, missing attribution, and AI-written prose.** "Open-source engine running Gemma 4 26B in 2 GB RAM on any M-series Mac" drew 919 points / 342 comments on 2026-07-29 (https://news.ycombinator.com/item?id=49098510). "Running Gemma 4 locally with LM Studio's new headless CLI and Claude Code" drew 407 / 103 (https://news.ycombinator.com/item?id=47651540). "Ollama violating llama.cpp license for over a year" drew 202 / 68 on 2025-05-16 and the attribution grievance resurfaced in the 2026 funding thread (https://news.ycombinator.com/item?id=44003741; https://news.ycombinator.com/item?id=48846153). "Show HN: LocalGPT" (331 / 153) was criticised for a "local-first" name while defaulting to a cloud key (https://news.ycombinator.com/item?id=46930391). UCompute's pinned, credited llama.cpp engine, memory-fit check and SHA-256 verified downloads align with what is rewarded; unverified tool calling and CPU-only Linux align with what is interrogated.
+6. **Channel rules are strict and mostly incompatible with brand or automated posting.** Show HN requires something people can try without signing up, and excludes landing pages and fundraisers (https://news.ycombinator.com/showhn.html); HN forbids automated posting, vote solicitation and generated text (https://news.ycombinator.com/newsguidelines.html). Lobsters is invite-only; self-promo is barred for the first 70 days and must stay under a quarter of activity (https://lobste.rs/about). DEV bars content designed primarily for promotion or backlinks and bans bot-generated comments (https://dev.to/terms; https://dev.to/guidelines-for-ai-assisted-articles-on-dev). Hashnode bans automated/bulk posting and "using the platform primarily for self-promotion" (https://hashnode.com/code-of-conduct). daily.dev rejects company blogs as sources and rejects AI-generated or programmatic content (https://docs.daily.dev/content-guidelines/). TLDR AI (claims 1.1-1.15M subscribers) has no free submission path (https://advertise.tldr.tech). Latent Space takes tips at tips@latent.space (https://www.latent.space/about); Console takes suggestions at hello@console.dev and does not sell reviews (https://console.dev/about). r/LocalLLaMA rules could not be read from Reddit in this environment; a third-party summary (**unverified**) reports a 5-karma minimum and a 10% self-promotion guideline (https://spacestationlabs.ai/subreddits/localllama).
 
 ---
 
-## 1. Who this audience is and what they are trying to do
+## 1. Who the audience is and why they want a local backend
 
-Evidence for motivations comes from how the platforms they already use describe the local option:
+### 1.1 Stated motivations
 
-- Hugging Face's "Use AI Models Locally" doc frames local inference around four benefits: **privacy** ("You won't be sending your data to a remote server"), **speed**, **control**, and **cost** ("without paying for an API provider"). Source: https://huggingface.co/docs/hub/local-apps
-- The LM Studio provider guide in the Vercel AI SDK docs shows the typical app-builder workflow: install `@ai-sdk/openai-compatible`, set `baseURL: 'http://localhost:1234/v1'`, call `generateText`/`streamText`/`embed`, with `maxRetries: 0` so the app fails fast if the local server is not running. Source: https://ai-sdk.dev/providers/openai-compatible-providers/lmstudio
-- The HN thread on "Running Gemma 4 locally with LM Studio's new headless CLI and Claude Code" (407 points, 103 comments) shows what builders in 2026 actually do with a local server: front coding agents (Claude Code, OpenCode, Pi) with a local OpenAI- or Anthropic-compatible endpoint to avoid API cost; run the server headless on a remote machine and drive it from a laptop ("an amazing workflow"); and fight with memory fit (MoE weights still need to be resident), context-window defaults that break tool calling, and models too slow for serious agentic coding. Source: https://news.ycombinator.com/item?id=47651540
-- The September 2026 Cohorte comparison gives the decision tree this audience is being taught: one developer on a laptop -> Ollama or LM Studio; small internal team -> raise Ollama parallelism or LM Studio; customer-facing traffic -> vLLM/SGLang; batch/evals/embeddings -> vLLM; embedded/edge/unusual hardware -> llama.cpp directly; Apple Silicon single user -> LM Studio or Ollama. It also tells readers to "test each OpenAI parameter your pipeline depends on by checking the response body, not the status code." Source: https://cohorte.co/blog/local-llm-openai-compatible-server
-- Sub-segments visible in the sources: coding-agent users (Continue, Cline, Claude Code, Pi, Hermes Agent, OpenClaw appear in HF's local-apps page and HN threads), Apple Silicon developers (every HN thread above centres on M-series Macs), students/indie developers optimizing for $0 API spend (the "Claude Code For Free: Local Setup with Ollama + Qwen" style of post on DEV's #ollama tag). Sources: https://huggingface.co/docs/hub/local-apps ; https://dev.to/t/ollama
+- Hugging Face frames local inference around four benefits: **Privacy** ("You won't be sending your data to a remote server"), **Speed** ("Your hardware is the limiting factor"), **Control** ("configure models to your liking"), and **Cost** ("without paying for an API provider"). Source: https://huggingface.co/docs/hub/local-apps
+- daily.dev's developer guide (published 2026-03-24, modified 2026-06-10) lists the same set plus two: privacy (proprietary code, regulated data), cost (per-token fees at volume), **offline / air-gapped** use, latency (no network round trip), and customization (weights, quantization, inference parameters). Source: https://daily.dev/blog/running-llms-locally-ollama-llama-cpp-self-hosted-ai-developers/
+- In practice (HN, 2026) the dominant use is **fronting coding agents with a local endpoint to avoid API cost**: commenters run Claude Code, OpenCode, Pi, Codex and Zed against `llama-server`, Ollama (`ollama launch claude`) or LM Studio; they run the server headless on a remote machine and drive it from a laptop; they treat local models as fine for "daily private work" with cloud models reserved for hard tasks. Source: https://news.ycombinator.com/item?id=47651540
 
----
+### 1.2 Sub-segments visible in the sources
 
-## 2. Where they look for "local OpenAI-compatible server" options
-
-### 2.1 Framework and SDK documentation (highest intent)
-
-| Framework | What the doc says | Which local servers it names | Source |
-|---|---|---|---|
-| OpenAI Python SDK | README documents `base_url=` on the client and the `OPENAI_BASE_URL` env var | none (generic) | https://github.com/openai/openai-python |
-| Vercel AI SDK | `@ai-sdk/openai-compatible`, `createOpenAICompatible({ name, baseURL, apiKey })`; dedicated guides for LM Studio, NIM, ModelRush, Cheaper Inference, Heroku, Clarifai, NEAR AI Cloud, TopxAI, Synthorai. "LM Studio is the only one that runs locally." Ollama is served by two community providers (`ollama-ai-provider-v2`, `ai-sdk-ollama`), not by Vercel. | LM Studio (official guide); Ollama (community) | https://ai-sdk.dev/providers/openai-compatible-providers ; https://ai-sdk.dev/providers/openai-compatible-providers/lmstudio ; https://ai-sdk.dev/providers/community-providers/ollama |
-| LangChain (Python) | `ChatOpenAI` accepts `base_url`; resolution order explicit `base_url`/`openai_api_base` -> `OPENAI_API_BASE` -> `OPENAI_BASE_URL`. When `OPENAI_BASE_URL` is set, `stream_usage` defaults off "because many non-OpenAI endpoints don't support streaming token usage." States `ChatOpenAI` targets only official OpenAI specs and points vLLM/LiteLLM/OpenRouter/DeepSeek users to provider-specific packages. Separate `langchain-ollama` package exists with tool calling, structured output, streaming marked supported. | vLLM, LiteLLM, OpenRouter, DeepSeek (links); Ollama via `langchain-ollama` | https://docs.langchain.com/oss/python/integrations/chat/openai ; https://docs.langchain.com/oss/python/integrations/chat/ollama |
-| LlamaIndex | `OpenAILike` is "a thin wrapper around the OpenAI LLM class" for "third-party tools that expose an OpenAI-compatible API"; args `api_base`, `api_key` (any placeholder), `is_chat_model` (default False), `is_function_calling_model` (default False), `context_window` (default 3900). | none (generic) | https://developers.llamaindex.ai/python/framework-api-reference/llms/openai_like/ |
-
-Implication: a new server is discoverable in these docs only if (a) it gets a named guide (Vercel has a dedicated LM Studio page) or (b) it appears in the "compatible providers" lists. Both are PR/relationship work, not spend.
-
-### 2.2 Consumer-tool documentation (coding assistants, chat UIs, agents)
-
-- **Continue** (IDE assistant): for OpenAI-compatible servers keep `provider: openai` and set `apiBase: http://localhost:8000/v1`; `useLegacyCompletionsEndpoint: true` forces `/completions`. Named compatible providers: KoboldCpp, text-gen-webui, FastChat, LocalAI, llama-cpp-python, TensorRT-LLM, vLLM, BerriAI/litellm, Tetrate Agent Router Service. Source: https://docs.continue.dev/customize/model-providers/top-level/openai
-- **Open WebUI**: connections added under Settings -> Admin -> Connections with a URL and optional key; models auto-detected. Lists Ollama, llama.cpp, vLLM, and (in its OpenAI-Compatible Providers guide) LM Studio, LocalAI, Docker Model Runner, Lemonade. Source: https://docs.openwebui.com/getting-started/quick-start/connect-a-provider/
-- **Agents on the HF local-apps page**: Pi, Hermes Agent, and OpenClaw snippets all start with "Start a local OpenAI-compatible server: `llama serve -hf ...`" then set `base_url http://127.0.0.1:8080/v1`. Source: https://huggingface.co/docs/hub/local-apps
-
-### 2.3 Hugging Face model pages (the "Use this model" dropdown)
-
-- Hub users enable local apps in settings; model pages then show a "Use this model" dropdown listing only apps compatible with that file type (GGUF -> llama.cpp/Ollama/etc.). Currently listed: Llama (llama.app), llama.cpp, LM Studio, Jan, Atomic Chat, Unsloth Desktop, Ollama, vLLM, SGLang, MLX LM, Docker Model Runner, Lemonade, Pi, Hermes Agent, OpenClaw, Draw Things, DiffusionBee, JoyFusion (18 apps). Source: https://huggingface.co/docs/hub/local-apps
-- Getting listed is a pull request to `huggingface/huggingface.js` (`packages/tasks/src/model-libraries.ts` for libraries, with optional snippets in `model-libraries-snippets.ts`); the guide requires at least one model on the Hub tagged with the library name before opening the PR. The local-apps page links to this same integration guide for "If you're building a local app." Source: https://huggingface.co/docs/hub/models-adding-libraries
-
-### 2.4 GitHub lists and topics
-
-- `ollama/ollama` README (185k stars shown, MIT) has a "Community Integrations" section inviting PRs, roughly 155 entries across Chat Interfaces, Code Editors & Development, Libraries & SDKs, Frameworks & Agents, RAG, Bots, Terminal, Productivity, Observability, Database & Embeddings, Infrastructure. Community links: Discord, X, r/ollama. Source: https://github.com/ollama/ollama
-- `janhq/awesome-local-ai` (~2.0k stars) categorizes inference engines (llama.cpp, Cortex, ollama, vLLM, SGLang), inference UIs, platforms, developer tools; "Your contributions are always welcome!" Source: https://github.com/janhq/awesome-local-ai
-- GitHub topic `openai-compatible` shows 6,655 public repositories; top entries include an AI gateway (bifrost, 9.2k), an on-device Apple Intelligence server (apfel, 6.5k), a pure-Rust GGUF engine (shimmy, 6k), and an MLX server for Apple Silicon (Rapid-MLX, 4.1k). Source: https://github.com/topics/openai-compatible
-
-### 2.5 SEO comparison articles (what Google returns)
-
-Searching "local OpenAI-compatible server comparison Ollama LM Studio llama-server LocalAI vLLM Jan 2026" returned 2026 comparison posts from Cohorte, InventiveHQ, SitePoint, FutureAGI, Pinggy, BetterStack, and Techsy. Two were read in full (Cohorte, InventiveHQ); SitePoint returned HTTP 403 and is **unverified**. Sources read: https://cohorte.co/blog/local-llm-openai-compatible-server ; https://inventivehq.com/blog/ollama-vs-lm-studio-vs-llama-cpp
-
-### 2.6 DEV tag pages (tutorial churn)
-
-DEV's #ollama tag on 2026-10-27..30 shows daily posts: Ollama release notes, "How to Use a Remote Ollama or llama.cpp Server From a Desktop AI App on Linux in 2026", "Claude Code For Free: Local Setup with Ollama + Qwen", disk-cleanup guides for Ollama/LM Studio, KV-cache quantization benchmarks, and an "OpenAI-Compatible" Docker relay guide in trending. Source: https://dev.to/t/ollama
-
----
-
-## 3. What they compare (the de facto evaluation matrix)
-
-### 3.1 The competitors, from their own docs
-
-| Tool | Default endpoint | OpenAI surface documented | Notable documented limits / notes | License (per source) | Source |
-|---|---|---|---|---|---|
-| **Ollama** | `http://localhost:11434/v1/` (key ignored) | chat completions, legacy completions, models, embeddings, audio speech/transcription, Responses (non-stateful only) | No `logprobs`, `tool_choice`, `logit_bias`, `user`, `n` in chat; images must be base64; context size cannot be set via OpenAI API (needs Modelfile `num_ctx`); tools expecting `gpt-3.5-turbo` need `ollama cp` | MIT (GitHub) | https://docs.ollama.com/openai ; https://github.com/ollama/ollama |
-| **LM Studio** | `http://localhost:1234/v1` | `GET /v1/models`; `POST /v1/responses`, `/v1/decisions`, `/v1/chat/completions`, `/v1/embeddings`, `/v1/completions`; "Codex works because LM Studio implements POST /v1/responses" | Page lists no limitations; points to Discord `#developers`. Not open source (per InventiveHQ). 0.4 added a standalone daemon (per Cohorte). | proprietary (per comparison articles) | https://lmstudio.ai/docs/app/api/endpoints/openai ; https://inventivehq.com/blog/ollama-vs-lm-studio-vs-llama-cpp ; https://cohorte.co/blog/local-llm-openai-compatible-server |
-| **llama.cpp `llama-server`** | README read on 2026-10-30 states default port **9931** on 127.0.0.1 (note: Cohorte, Sept 2026, says 8080; HF snippets use 8080 -- treat the exact default as in flux) | "OpenAI API compatible chat completions, responses, and embeddings routes"; `/v1/completions`; `/v1/models` with `multimodal` capability flag | Streaming via SSE; parallel decoding + continuous batching; speculative decoding; function calling for "~any model"; built-in server tools and MCP support marked experimental and "shouldn't be enabled in untrusted environments"; multimodal experimental | MIT (project) | https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md |
-| **llama.app / unified `llama` binary** (new, 2026) | `localhost:9931/v1` per llama.app site | OpenAI-compatible plus Anthropic-compatible endpoints "for apps, editors, and coding agents"; `llama serve` is the same as `llama-server` | Menu bar app (Mac) / tray app (Windows); Linux CLI only; auto settings for hardware; one-click model installs; optional Tailscale remote access; models unload after 5 min idle; "By the llama.cpp team and Hugging Face". Announced 2026-05-29 as "an early first iteration". | "Open source" (no license named on page) | https://llama.app ; https://github.com/ggml-org/llama.cpp/discussions/23875 |
-| **Jan** | `http://127.0.0.1:1337/v1` | chat completions; "drop-in replacement for cloud APIs" | Needs a local model to start; CORS on by default; empty API key disables auth (not recommended when binding `0.0.0.0`); Intel Macs not supported by bundled llama.cpp as of v0.8.5; MLX requires Apple Silicon; optional server-side MCP tool execution | open source (per HF page) | https://docs.jan.ai/desktop/api-server ; https://huggingface.co/docs/hub/local-apps |
-| **LocalAI** | (router) | "Drop-in replacement for most upstream APIs"; also speaks Anthropic, Ollama, ElevenLabs APIs | Router over llama.cpp, vLLM, SGLang, MLX, whisper, diffusers etc.; CPU-first with optional CUDA/ROCm/SYCL/Metal/Vulkan; P2P/federation/worker pools; self-reported ~49,963 GitHub stars (inconsistent elsewhere on page), 263 contributors, 3,187 Discord members | MIT | https://localai.io/ |
-| **vLLM** | `vllm serve <model>` (port not stated on page) | `/v1/completions`, `/v1/chat/completions`, `/v1/responses`, `/v1/embeddings`, `/v1/audio/*`, plus Anthropic messages, Cohere embed/rerank, pooling, scoring, metrics | Chat needs a chat template; "production-grade serving" is attributed to Ray Serve LLM, not the bare server | Apache-2.0 (project; not restated on page) | https://docs.vllm.ai/en/latest/serving/online_serving/ |
-| **Docker Model Runner** | (not stated) | "OpenAI- and Ollama-compatible APIs" | GGUF via llama.cpp (default, all platforms); Safetensors via vLLM (NVIDIA, Linux/WSL2) and Diffusers; Windows/macOS/Linux GPU matrix; packages models as OCI artifacts | n/a | https://docs.docker.com/ai/model-runner/ |
-| **Shimmy** (small entrant case) | n/a | chat/text completions, streaming, models; "works with OpenAI SDKs" | Pure-Rust WebGPU GGUF engine, "no Python, no llama.cpp"; ~6.0k stars; "As Featured On" two HN front pages + a newsletter; GitHub Sponsors $5-$500/mo; README inconsistent on MIT vs Apache-2.0 | MIT (badge) | https://github.com/Michael-A-Kuykendall/shimmy |
-
-### 3.2 The comparison dimensions the audience is taught to use
-
-From the two 2026 comparison articles read in full:
-
-- **Role in the stack**: engine (llama.cpp) vs experience layer (Ollama, LM Studio) vs serving system (vLLM). Source: https://cohorte.co/blog/local-llm-openai-compatible-server
-- **Default concurrency**: Ollama one request per model (queue up to 512); LM Studio four concurrent predictions; llama.cpp continuous batching; vLLM `--max-num-seqs`. Same source.
-- **Default port and bind address**; **authentication off by default, any key accepted** in all four. Same source.
-- **OpenAI parameter coverage**: Ollama documents unsupported `tool_choice`, `logit_bias`, `user`, `n`; llama.cpp needs `--jinja` for function calling; "Many parameters are undocumented for LM Studio and llama.cpp." Same source.
-- **Interface** (CLI/GUI/library/server), **engine** (llama.cpp vs MLX), **wrapper overhead vs raw llama.cpp** (InventiveHQ measured ~10% throughput cost for Ollama on an RTX 5060 Ti and M3 Max), **multi-user support**, **default context length**, **MLX support**, **open-source status** (LM Studio flagged as not open source). Source: https://inventivehq.com/blog/ollama-vs-lm-studio-vs-llama-cpp
-- **Hardware fit** is called "the main constraint on the experience." Same source.
-
-### 3.3 What the audience punishes and rewards (Hacker News evidence)
-
-- **Engine attribution is policed.** "Ollama violating llama.cpp license for over a year" (2025-05-16, 202 points, 68 comments) centred on whether a README link satisfies the MIT notice requirement; commenters accused Ollama of having "long downplayed its reliance on llama.cpp." Source: https://news.ycombinator.com/item?id=44003741
-- **A concrete, reproducible hardware/memory claim with an experiment log wins.** Show HN TurboFieldfare (2026-07-29, 919 points, 342 comments): "Gemma 4 26B in 2 GB RAM on any M-series Mac" via expert streaming from SSD; author answered deep technical questions (`pread` vs `mmap`), users reproduced numbers on other Macs; skeptics pressed on page-cache accounting, speed (<30 tok/s), and "llama.cpp with mmap could also do this." An "experimental OpenAI-compatible server with streaming and tool calls" was mentioned but not discussed. Source: https://news.ycombinator.com/item?id=49098510
-- **Headless + coding agent + cost is the current hot use case**; pain points are tool-call loops, context defaults, and memory fit. Source: https://news.ycombinator.com/item?id=47651540
-- **Incumbent launch history**: "LM Studio - Discover, download, and run local LLMs" 461 points (2023); "LM Studio 0.3" 241 (2024); "MCP in LM Studio" 240 (2025); "LM Studio 0.4" 239 (2026); "LM Studio Bionic" 331 (2026). Source: https://hn.algolia.com/api/v1/search?query=%22LM%20Studio%22&tags=story&hitsPerPage=15
-- LocalAI's only clearly-related HN hit of note: "Continue with LocalAI: An alternative to GitHub's Copilot that runs locally" 116 points (2023) -- i.e. its traction came via an integration story, not a standalone launch. Source: https://hn.algolia.com/api/v1/search?query=LocalAI&tags=story&hitsPerPage=15
-- Most Show HN posts that merely mention "local OpenAI-compatible API" as a feature of some other app score 1-11 points. Source: https://hn.algolia.com/api/v1/search?query=%22OpenAI%20compatible%22%20local&tags=show_hn&hitsPerPage=30
-
-### 3.4 How UCompute maps onto this matrix (honest read)
-
-| Audience checklist item | UCompute today (per brief) | Read |
+| Segment | What they integrate with | Evidence |
 |---|---|---|
-| OpenAI-compatible chat + streaming + cancellation | Yes (dev builds) | table stakes met |
-| `/v1/models`, `/v1/embeddings`, `/v1/responses`, Anthropic `/v1/messages` | Not stated in brief | **gap to confirm**; LM Studio, llama-server, llama.app, vLLM, LocalAI all now expose Responses and/or Anthropic routes, and HN commenters cite Anthropic-compat as why Claude Code "works without errors" |
-| Tool calling that works | "tool calling verified: NOT built" | **gap**; every coding-agent integration (Continue, Pi, Hermes, OpenClaw, Claude Code) depends on it |
-| Headless/daemon mode | Linux ran a CPU-only daemon in tests; macOS/Windows unclear | partial |
-| Engine attribution | Pinned llama.cpp b11609 | **strength** if surfaced prominently (license notice in binary + README + UI) |
-| Memory-fit check before load | Yes | **strength**; matches a recurring HN pain point |
-| Verified downloads with license shown | SHA-256 + license display | **strength**; no competitor doc read above advertises this |
-| Remote/other-device access | Mesh: pair devices on LAN with short code, choose device, QUIC+TLS 1.3 pinned keys, revoke, local-only default, audit logs without prompt text, connect by address when mDNS blocked | **differentiated vs the status quo** (Jan warns about `0.0.0.0` with no auth; comparison articles note all four incumbents ship auth off; llama.app offers Tailscale) -- but must be framed as "run it on my other machine securely", never as pooling |
-| Linux GPU | CPU-only daemon in tests | **gap** for the HN/Linux crowd |
-| Open source, source available | Apache-2.0 repo holds only a LICENSE | **credibility gap** until source lands; "open-source" claims without code will be challenged |
-| Hugging Face "Use this model" listing | None | opportunity (PR) |
+| Vercel AI SDK / TypeScript app builders | `@ai-sdk/openai-compatible` with `baseURL: 'http://localhost:1234/v1'`, `maxRetries: 0` so the app fails fast if the local server is down; `generateText`, `streamText`, `embed`, `embedMany` | https://ai-sdk.dev/providers/openai-compatible-providers/lmstudio |
+| LangChain (Python) users | `ChatOpenAI(base_url=...)`, or `OPENAI_API_BASE` / `OPENAI_BASE_URL`; docs warn that `ChatOpenAI` targets only the official OpenAI spec and that providers which extend it (OpenRouter, LiteLLM, vLLM, DeepSeek) should use a provider-specific package | https://docs.langchain.com/oss/python/integrations/chat/openai |
+| LlamaIndex users | `OpenAILike(api_base=..., api_key="some random string", is_chat_model=True, is_function_calling_model=False, context_window=...)`; `OpenAILikeResponses` for servers implementing the Responses API | https://developers.llamaindex.ai/python/framework-api-reference/llms/openai_like/ |
+| OpenAI Agents SDK users | `set_default_openai_client(AsyncOpenAI(base_url=..., api_key=...))`; `set_default_openai_api("chat_completions")` because "many other LLM providers still do not support" the Responses API (404s otherwise); long list of Chat-Completions caveats (silently dropped fields, structured-output gaps, unreliable streamed tool calls) | https://openai.github.io/openai-agents-python/models/ |
+| CrewAI users | `ollama/` prefix with `base_url="http://localhost:11434"`; generic `openai/<model>` with a local `/v1` base_url and a dummy `api_key` ("required, but you can use any text"); LM Studio, llama.cpp and vLLM not mentioned on the page | https://docs.crewai.com/en/concepts/llms |
+| LiteLLM users (gateway in front of any backend) | `openai/<model>` + `api_base` ending in `/v1`; API key always required (placeholder for local); dedicated `hosted_vllm` and `llamafile` providers avoid the placeholder | https://docs.litellm.ai/docs/providers/openai_compatible |
+| Editor / agent users | Zed auto-discovers `llama serve` and Ollama models, supports LM Studio (`lms server start`) and generic OpenAI-compatible endpoints; Continue uses `provider: llama.cpp` with `apiBase: http://localhost:8080`; Open WebUI adds `http://localhost:1234/v1` under Admin -> Settings -> Connections | https://zed.dev/docs/ai/use-a-local-model.md; https://docs.continue.dev/customize/model-providers/more/llamacpp; https://docs.openwebui.com/alternatives/lm-studio.md |
+| Indie / "local-first" app authors | Ship an app that talks to "any OpenAI- or Anthropic-compatible endpoint" and let users point it at Ollama; get criticised when the default requires a cloud key | https://news.ycombinator.com/item?id=46930391 |
+| Students / hobbyists | Not separately evidenced by a primary source in this research. **Unverified** as a distinct channel. |
+
+### 1.3 Recurring pain points (what they ask about)
+
+- **Memory fit.** MoE models cut compute per token but not resident memory; expert offload to system RAM is a partial workaround; unified-memory machines (Apple Silicon, Strix Halo) are "the practical option". Source: https://news.ycombinator.com/item?id=47651540. The 919-point Show HN was about exactly this (streaming experts from SSD to run a 26B model in ~2 GB) and the skeptics' first question was memory accounting (page cache). Source: https://news.ycombinator.com/item?id=49098510
+- **Tool calling / chat templates.** Gemma 4 getting stuck in tool-call loops; failures attributed to chat templates; Ollama's default context length needing to be raised for tool calling to work. Source: https://news.ycombinator.com/item?id=47651540. Zed sends `num_ctx` with a 4096 default and tells users to raise it. Source: https://zed.dev/docs/ai/use-a-local-model.md
+- **Silently ignored OpenAI parameters.** Ollama documents `tool_choice`, `logit_bias`, `user`, `n`, `logprobs` and image URLs as unsupported on chat completions (https://docs.ollama.com/openai); vLLM ignores `user` and does not support `suffix` (https://docs.vllm.ai/en/latest/serving/online_serving/). Cohorte's advice: "Assert on the response body, not the status code, since unsupported parameters often still return 200." (https://cohorte.co/blog/local-llm-openai-compatible-server)
+- **Dummy API keys.** Nearly every framework needs a non-empty key even when the server ignores it (LlamaIndex, LiteLLM, CrewAI, Ollama's "required but ignored"). Sources: https://developers.llamaindex.ai/python/framework-api-reference/llms/openai_like/; https://docs.litellm.ai/docs/providers/openai_compatible; https://docs.crewai.com/en/concepts/llms; https://docs.ollama.com/openai
+- **Responses API vs Chat Completions.** LM Studio implements `POST /v1/responses` (and advertises Codex compatibility because of it) (https://lmstudio.ai/docs/app/api/endpoints/openai); Ollama added `/v1/responses` in v0.13.3 (https://docs.ollama.com/openai); vLLM lists `/v1/responses` (https://docs.vllm.ai/en/latest/serving/online_serving/). The Agents SDK defaults to Responses and must be switched to Chat Completions for servers that lack it (https://openai.github.io/openai-agents-python/models/). Whether UCompute Run implements `/v1/responses` is not stated in the context block; if it does not, Agents SDK and Codex users will hit 404s until they switch APIs.
+- **Context window defaults.** LlamaIndex `OpenAILike` defaults `context_window` to 3900 (https://developers.llamaindex.ai/python/framework-api-reference/llms/openai_like/); Zed reads llama.cpp's `/props` for context length (https://zed.dev/docs/ai/use-a-local-model.md). Servers that expose model metadata get auto-configured; those that do not force manual settings.
 
 ---
 
-## 4. Integration content this audience consumes
+## 2. What they compare: the competitor set as the audience sees it
 
-### 4.1 Recurring tutorial shapes (observed)
+### 2.1 The canonical five (plus the 2026 additions)
 
-- **"Change the base URL" quickstarts** in three languages (Python, JS/TS, curl) -- the exact structure of Ollama's and LM Studio's OpenAI pages. Sources: https://docs.ollama.com/openai ; https://lmstudio.ai/docs/app/api/endpoints/openai
-- **Framework provider guides**: install package -> create provider with `baseURL` -> `generateText`/`streamText`/`embed`, with a note to download the model first and set `maxRetries: 0`. Source: https://ai-sdk.dev/providers/openai-compatible-providers/lmstudio
-- **Coding-assistant configs**: a YAML `apiBase` snippet for Continue; a URL+blank-key connection for Open WebUI; `/login llama.cpp` for Pi; `hermes config set model.base_url ...`; `openclaw onboard --custom-base-url ...`. Sources: https://docs.continue.dev/customize/model-providers/top-level/openai ; https://docs.openwebui.com/getting-started/quick-start/connect-a-provider/ ; https://huggingface.co/docs/hub/local-apps
-- **"Gotchas" content** that performs because it is specific: Ollama's context window not settable via the OpenAI API (Modelfile `num_ctx`), model-name aliasing (`ollama cp`), `stream_usage` off under `OPENAI_BASE_URL`, `/v1` suffix errors, `host.docker.internal` for Docker, CORS/`0.0.0.0` safety in Jan. Sources: https://docs.ollama.com/openai ; https://docs.langchain.com/oss/python/integrations/chat/openai ; https://docs.jan.ai/desktop/api-server ; search summary of Open WebUI docs (LM Studio/llama.cpp pages surfaced but not read: **unverified**)
-- **Benchmarks on named hardware** (tokens/s, wrapper overhead, KV-cache quantization, context-length cost) -- the InventiveHQ article and several DEV #ollama posts. Sources: https://inventivehq.com/blog/ollama-vs-lm-studio-vs-llama-cpp ; https://dev.to/t/ollama
-- **"Use X coding agent for free with a local model"** posts. Sources: https://dev.to/t/ollama ; https://news.ycombinator.com/item?id=47651540
+| Server | Default endpoint | Auth default | Concurrency default | Notable OpenAI-compat facts | License / form | Source |
+|---|---|---|---|---|---|---|
+| Ollama | `http://localhost:11434/v1/` (key "required but ignored") | none | one request at a time per model, queue up to 512 (Cohorte) | supports chat, completions, models, embeddings, audio speech/transcriptions/translations, `/v1/responses` (v0.13.3+); unsupported: logprobs, image URLs, `tool_choice`, `logit_bias`, `user`, `n` | background service + CLI; also a paid cloud (`https://ollama.com/v1`) | https://docs.ollama.com/openai; https://cohorte.co/blog/local-llm-openai-compatible-server |
+| LM Studio | `http://localhost:1234/v1` | none | 4 concurrent predictions (Cohorte) | `/v1/models`, `/v1/responses`, `/v1/decisions`, `/v1/chat/completions`, `/v1/embeddings`, `/v1/completions`; Python/TS/cURL examples; Codex works via Responses | GUI, plus standalone daemon since 0.4.0 (Cohorte); "Free for personal and commercial use" (HF) | https://lmstudio.ai/docs/app/api/endpoints/openai; https://cohorte.co/blog/local-llm-openai-compatible-server; https://huggingface.co/docs/hub/local-apps |
+| llama.cpp `llama-server` / `llama serve` | `127.0.0.1:9931` (README default; Docker examples map 8080; Continue's example uses 8080) | none | continuous batching on by default; `--parallel -1` auto-chooses slots | chat, completions, embeddings, rerank, Anthropic Messages route; `--jinja` on by default; tool use "for ~any model"; built-in tools and MCP; web UI on by default | C/C++ library; CLI, server, web UI | https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md; https://docs.continue.dev/customize/model-providers/more/llamacpp |
+| Llama (llama.app) | `localhost:9931/v1` | not stated | not stated | "any OpenAI-compatible app or SDK" by changing base URL; Anthropic-compatible endpoints too | free, open-source menu-bar (Mac) / tray (Windows 11) app "built by the llama.cpp team and Hugging Face"; `brew install --cask llama-app`; Linux gets CLI | https://llama.app |
+| vLLM | port 8000 (Cohorte); vLLM docs page does not state it | none (Cohorte) | bounded by `--max-num-seqs`, unbounded queue (Cohorte) | completions (no `suffix`), chat (needs chat template; `user` ignored), chat batch, responses, decisions, embeddings, transcriptions, translations | GPU serving system; "targets datacenter GPUs" (Cohorte) | https://docs.vllm.ai/en/latest/serving/online_serving/; https://cohorte.co/blog/local-llm-openai-compatible-server |
+| LocalAI | not stated on home page | not stated | not stated | "Drop-in replacement for most upstream APIs": OpenAI, Anthropic, Ollama, ElevenLabs API shapes; engine swappable per model (llama.cpp, vLLM, SGLang, MLX, whisper, diffusers...) | MIT; every feature has a CPU path; targets x86_64, ARM64, CUDA, ROCm, SYCL, Metal, Vulkan, Jetson, Raspberry Pi; advertises distributed mode (VRAM-aware placement across worker pool), P2P and federation | https://localai.io/ |
+| Jan | `http://127.0.0.1:1337/v1` | optional bearer key; auth disabled if blank (warned against when binding 0.0.0.0) | not stated | "drop-in replacement for cloud APIs"; model ID must match a loaded model or 404; CORS on by default | open-source desktop app; llama.cpp or MLX (Apple Silicon) engines | https://docs.jan.ai/desktop/api-server |
+| Docker Model Runner | not stated | not stated | not stated | "OpenAI and Ollama-compatible APIs"; pulls from Docker Hub, OCI registries, Hugging Face | llama.cpp default engine on all platforms (GGUF); vLLM on NVIDIA Linux/WSL2; Windows amd64/arm64, macOS Apple Silicon, Linux (CPU, CUDA, ROCm, Vulkan) | https://docs.docker.com/ai/model-runner/ |
 
-### 4.2 Content UCompute can legitimately produce now (no release required)
+Observation for UCompute: **every row already has "OpenAI-compatible" in it**, several also have Anthropic-compatible routes (llama.cpp, llama.app, LocalAI), and LocalAI already uses the words "distributed", "P2P" and "federation" in its marketing. UCompute Mesh's whole-request-on-one-device model must be described precisely enough that it is not confused with LocalAI's worker pool, and must not borrow pooling language.
 
-Within the brief's constraints (no public build, no waitlist, cite dev-build status), the content types above that do not require a download are: engineering write-ups with reproducible numbers on the two named test machines (M2 Mac / Intel Arc 140V laptop), the memory-fit heuristic, the SHA-256 + license-display flow, the Mesh pairing/revocation protocol design, and the "why we pin llama.cpp b11609 and how we credit it" note. Each should be labelled development-build and hardware-specific per the brief.
+### 2.2 The decision tree the audience is being taught
 
----
+Cohorte (2026-09-20) tells readers: one developer on a laptop -> Ollama or LM Studio; small internal tool -> Ollama with raised parallelism or LM Studio; customer-facing traffic -> vLLM or SGLang; batch/evals/embeddings -> vLLM; embedded/edge/unusual hardware -> llama.cpp directly; Apple Silicon single user -> LM Studio or Ollama. Source: https://cohorte.co/blog/local-llm-openai-compatible-server
 
-## 5. Communities, newsletters and aggregators: reach and rules
+Future AGI (published 2026-02-15, updated 2026-10-16) scores runtimes on seven axes: production-scale posture, desktop UX, OpenAI-compatibility depth, quantization coverage, hardware coverage, model coverage, licensing; recommends LM Studio for GUI users, llama.cpp for low-level control, vLLM for multi-user GPU production, Jan as "fully open-source desktop app with MCP support", MLX for Mac. It is vendor SEO content (ranks the vendor's own gateway above the matrix). Source: https://futureagi.com/blog/best-ollama-local-llm-alternatives-2026/
 
-### 5.1 Hacker News
+daily.dev's guide covers Ollama, llama.cpp, LM Studio, LocalAI and vLLM and describes the integration patterns readers expect to see in any tutorial: pointing existing OpenAI SDK code at a local endpoint, connecting Continue.dev/Cursor, Docker with GPU passthrough behind Nginx, RAG with a local embedding model + ChromaDB + LangChain/LlamaIndex, and llama-cpp-python bindings. Source: https://daily.dev/blog/running-llms-locally-ollama-llama-cpp-self-hosted-ai-developers/
 
-- Guidelines: "It's ok to post your own stuff part of the time"; "Don't solicit upvotes, comments, or submissions"; don't automate posting; don't put generated or AI-edited text in posts or comments; don't create accounts routinely because "HN depends on identities others can relate to"; submit the original source; no editorialized titles. Source: https://news.ycombinator.com/newsguidelines.html
-- Show HN: "for projects people can try out"; explicitly excludes "Sign-up pages, waitlists, landing pages, and fundraisers", "Projects that aren't ready for users to try", "Anything that requires signups or emails to try"; early-stage is welcome; author must be present to answer questions; "Don't ask friends to upvote or comment." Source: https://news.ycombinator.com/showhn.html
-- Implication: **no Show HN is possible until a public, no-signup download exists.** A write-up (non-Show) is allowed but competes as a regular story.
+**Implication:** the slot UCompute Run would be placed in today is "one developer on a laptop, Apple Silicon or Windows laptop," which is the most crowded cell (Ollama, LM Studio, Jan, llama.app). The second-device angle (Mesh) is the only thing in the context block that is not already a row in these tables, and it is a *placement* feature (choose which of my devices runs this), not a *throughput* feature.
 
-### 5.2 Lobsters
+### 2.3 The engine-attribution norm
 
-- Invite-only; "new" for the first 70 days; new users cannot send invites and cannot submit self-promo; self-promo should be "less than a quarter" of stories+comments in the last year; the site "shouldn't be used as a write-only tool for product announcements"; invitation tree is public and inviters can lose invite rights if invitees spam; "Hats" let a user speak officially for a company. Source: https://lobste.rs/about
-- Relevant tags: `ai` ("Developing artificial intelligence, machine learning, LLMs", no hotness penalty), `building-ai-tooling` ("The design, ux, development of AI/LLM-powered tools (excludes use)"), `release`, `show`. Source: https://lobste.rs/tags
-- Implication: an account must exist 70+ days and have non-promotional history before any UCompute post; a brand-only account is culturally at odds with the site.
-
-### 5.3 DEV (dev.to)
-
-- Terms/content policy: content must not be "designed primarily for the purposes of promotion or creating backlinks"; posts need substance, not just a link; affiliate links require disclosure; "Organization Accounts" exist (rules not detailed on the page). Source: https://dev.to/terms
-- AI-assisted content guidelines (last updated 2024-04-08): allowed with disclosure (`#ABotWroteThis` or in-text); prohibited: promoting a business/course including your own as the main purpose, bots/AI-generated comments; company blogs shared under a DEV organization are exempt from the backlink rule. Source: https://dev.to/guidelines-for-ai-assisted-articles-on-dev
-- Code of Conduct requires following the AI Guidelines and disclosing AI help. Source: https://dev.to/code-of-conduct
-- An August 2026 announcement of structured AI-disclosure tiers surfaced only via a third-party mirror: **unverified**.
-
-### 5.4 Hashnode
-
-- Acceptable Use Policy bans "unsolicited promotional content, bulk messages" and "automated content generation for the purpose of manipulating search results or engagement metrics"; API users may not circumvent rate limits; accounts may be terminated without notice for spam. Promotional content per se is not banned. Source: https://hashnode.com/terms
-
-### 5.5 Reddit (r/LocalLLaMA, r/LLMDevs, r/ollama) -- **primary sources unreachable**
-
-- reddit.com, old.reddit.com, redditinc.com and support.reddithelp.com all refused or were blocked from this environment; several third-party mirrors failed (403/502/503/DNS). Everything below is from one third-party summary page and is **unverified against the live subreddit**.
-- Third-party summary (data sampled 2026-10-04; rules text archived January 2025): r/LocalLLaMA about 840k members; "self-promotion should not be more than 10% of your content"; posts require 5 karma earned inside the subreddit (AutoModerator removes otherwise); searchable questions may be removed; project links should go directly to GitHub/Hugging Face; "an honest disclosure" is described as the price of entry for sharing your own work. Source: https://spacestationlabs.ai/subreddits/localllama
-- Search-surfaced but unread: other trackers put membership between ~686k and ~850k (2026). **Unverified.**
-- r/LLMDevs reportedly has a "no self-promotion" rule (search snippet only): **unverified**.
-- Ollama's README links r/ollama as an official community. Source: https://github.com/ollama/ollama
-
-### 5.6 Newsletters
-
-| Outlet | Claimed reach | Free submission path | Paid | Source |
-|---|---|---|---|---|
-| TLDR AI | 1,100,000 readers on the newsletter page; 1.1M / 1.15M (47% open rate) on the advertise page; "8M+ tech professionals" across all TLDR lists | None shown | Custom proposals; Quick Links / Secondary / Primary placements; no prices published | https://tldr.tech/ai ; https://advertise.tldr.tech/ |
-| Latent Space | No subscriber number given; newsletter 2-3x/week, AINews every weekday, podcast, Paper Club, AI Engineer events | tips@latent.space for stories/tips; business@latent.space for partnerships | not stated | https://www.latent.space/about |
-| Ben's Bites | "Over 117,000 subscribers"; Substack; "What I'm learning building with agents (plus tools worth trying)" | None shown | None shown | https://www.bensbites.com/ |
-| Console.dev | features 2-3 developer tools per week | Email hello@console.dev; criteria questions include "Is the primary user a developer?" and "Is there a self-service signup?" ("an individual developer should be able to try it themselves without speaking to anyone") | Sponsored text ads only; "We do not do sponsored reviews" | https://console.dev/selection-criteria |
-
-Implication: with $0 budget, TLDR AI is reachable only if an editor independently picks up a story; Latent Space and Console.dev have explicit free tip/submission routes, but Console.dev's self-service criterion is not satisfiable until a public build exists.
-
-### 5.7 Registries and lists (free, PR-based)
-
-- Hugging Face local apps (PR to `huggingface.js`; model must be tagged with library name first). Sources: https://huggingface.co/docs/hub/local-apps ; https://huggingface.co/docs/hub/models-adding-libraries
-- Ollama README "Community Integrations" (PR; ~155 entries) -- relevant only for tools that integrate *with* Ollama, so not a fit for a competing server. Source: https://github.com/ollama/ollama
-- `janhq/awesome-local-ai` (PR). Source: https://github.com/janhq/awesome-local-ai
-- GitHub topics (`openai-compatible`, 6,655 repos) -- free, self-tagged. Source: https://github.com/topics/openai-compatible
-- Vercel AI SDK: dedicated OpenAI-compatible provider guides exist for specific products (LM Studio etc.), implying a path for additional providers. Source: https://ai-sdk.dev/providers/openai-compatible-providers
-
-### 5.8 Platform rules summary (automation / brand / manipulation)
-
-| Platform | Automated posting | Brand/org account | Vote/engagement manipulation | Source |
-|---|---|---|---|---|
-| Hacker News | Prohibited ("Don't automate posting"); no AI-generated text | Discouraged (identities matter; throwaways only for sensitive info) | "Don't solicit upvotes, comments, or submissions" | https://news.ycombinator.com/newsguidelines.html |
-| Lobsters | Not addressed; sockpuppeting is abuse; official Fediverse bot exists | "Hats" for speaking officially; <25% self-promo | Equal votes; flags need 50 karma | https://lobste.rs/about |
-| DEV | Bot/AI-generated comments prohibited; AI disclosure required | Organization Accounts exist | Promotion/backlink-primary content removable | https://dev.to/terms ; https://dev.to/guidelines-for-ai-assisted-articles-on-dev |
-| Hashnode | Automation to manipulate engagement prohibited; API rate limits enforced | not addressed | Spam -> termination without notice | https://hashnode.com/terms |
-| Reddit | **unverified** (blocked) | **unverified** | **unverified**; third-party summary says 10% self-promo rule in r/LocalLLaMA | https://spacestationlabs.ai/subreddits/localllama |
+This audience actively polices how llama.cpp-based products credit the engine. The May 2025 HN thread (202 points, 68 comments) argued whether MIT notice requirements cover binaries, but "many commenters say the real grievance is that Ollama gives little visible credit to llama.cpp." Source: https://news.ycombinator.com/item?id=44003741. The July 2026 funding thread revived it: "Commenters broadly suggest that the attribution issue is a reason to reconsider using Ollama." Source: https://news.ycombinator.com/item?id=48846153. UCompute's pinned engine build (b11609) and visible license display are directly relevant: naming the engine and build in every public artifact is both compliance and positioning.
 
 ---
 
-## 6. Implications for UCompute
+## 3. Where they look for "local OpenAI-compatible server" options
 
-### 6.1 Opportunities (ranked by fit with constraints)
+### 3.1 Framework and tool documentation (highest intent)
 
-1. **Own the "secure second machine" story.** The audience is already running headless servers on another machine and praising it, while every incumbent ships auth off and Jan explicitly warns about `0.0.0.0`. Mesh's pinned device keys, sub-0.1 s revocation (test figure), local-only default, and prompt-free audit logs answer a real, documented gap. Must be worded as "pick which of your devices runs the whole request", never pooling. Sources: https://news.ycombinator.com/item?id=47651540 ; https://cohorte.co/blog/local-llm-openai-compatible-server ; https://docs.jan.ai/desktop/api-server
-2. **Make engine attribution a headline, not a footnote.** Pinning llama.cpp b11609, shipping the notice, and crediting ggml in-app turns a known community grievance into a trust signal. Source: https://news.ycombinator.com/item?id=44003741
-3. **Publish reproducible numbers on the two named machines** (M2 Mac, Intel Arc 140V) with an experiment log, in the style that earned 919 points. Label as development builds. Source: https://news.ycombinator.com/item?id=49098510
-4. **Prepare the framework/registry PRs now, file them at public release**: HF local-apps PR; Vercel AI SDK OpenAI-compatible provider guide; Continue and Open WebUI docs mentions; `awesome-local-ai`; GitHub topic tags. Sources in sections 2.1-2.4.
-5. **Ship the exact tutorial shapes the audience reads**: three-language base-URL quickstart; LangChain/LlamaIndex/AI SDK snippets; Continue YAML; Open WebUI connection; coding-agent-for-$0 guide. Sources: https://docs.ollama.com/openai ; https://lmstudio.ai/docs/app/api/endpoints/openai ; https://ai-sdk.dev/providers/openai-compatible-providers/lmstudio
-6. **Build account history in advance where rules require it**: Lobsters (70-day minimum, non-promo history), r/LocalLLaMA (5 sub-karma minimum, third-party claim), HN (identity continuity). Sources: https://lobste.rs/about ; https://spacestationlabs.ai/subreddits/localllama ; https://news.ycombinator.com/newsguidelines.html
-7. **Free editorial routes**: tips@latent.space; hello@console.dev (after public build). Sources: https://www.latent.space/about ; https://console.dev/selection-criteria
+Docs that name specific servers effectively decide the default comparison set:
 
-### 6.2 Risks
+- Vercel AI SDK: the OpenAI-compatible providers page lists nine provider guides, of which **LM Studio is the only local one**; Ollama is served via two community provider packages (`ollama-ai-provider-v2`, `ai-sdk-ollama`, default `http://localhost:11434/api`). Sources: https://ai-sdk.dev/providers/openai-compatible-providers; https://ai-sdk.dev/providers/community-providers/ollama
+- Zed documents llama.cpp (`llama serve`, auto-discovery via `/props` and `/models/sse`), Ollama, LM Studio, and generic OpenAI-compatible endpoints. Source: https://zed.dev/docs/ai/use-a-local-model.md
+- Continue has a dedicated llama.cpp provider page (`provider: llama.cpp`, `apiBase: http://localhost:8080`) and an "Using Ollama with Continue" guide. Source: https://docs.continue.dev/customize/model-providers/more/llamacpp
+- Open WebUI has dedicated LM Studio and llama.cpp pages (LM Studio page updated August 2026). Source: https://docs.openwebui.com/alternatives/lm-studio.md
+- CrewAI documents Ollama and NVIDIA NIM explicitly; LM Studio, llama.cpp, vLLM are absent. Source: https://docs.crewai.com/en/concepts/llms
+- LiteLLM has first-class providers for vLLM (`hosted_vllm`) and llamafile, and a generic `openai/` path for everything else. Source: https://docs.litellm.ai/docs/providers/openai_compatible
+- Hugging Face's own agent snippets (Pi, Hermes Agent, OpenClaw) all start with `llama serve -hf ...` and point at `http://127.0.0.1:8080/v1`. Source: https://huggingface.co/docs/hub/local-apps
 
-1. **"Why not `llama serve`?"** The llama.cpp project itself (with Hugging Face backing since 2026-02-20) now ships an installer, menu-bar app, Anthropic+OpenAI endpoints and Tailscale remote access. Sources: https://github.com/ggml-org/llama.cpp/discussions/23875 ; https://huggingface.co/blog/ggml-joins-hf ; https://llama.app
-2. **Launch-surface lockout until a public build exists**: Show HN forbids waitlists/landing pages; Console.dev requires self-service trial. Sources: https://news.ycombinator.com/showhn.html ; https://console.dev/selection-criteria
-3. **Anonymous founder + brand voice vs identity-centric communities** (HN guidelines; Lobsters invite tree). Sources: https://news.ycombinator.com/newsguidelines.html ; https://lobste.rs/about
-4. **"Open source" with an empty repo** will be challenged by an audience that litigates MIT notice compliance. Source: https://news.ycombinator.com/item?id=44003741
-5. **Tool calling unverified** blocks the dominant 2026 use case (coding agents). Sources: https://news.ycombinator.com/item?id=47651540 ; https://huggingface.co/docs/hub/local-apps
-6. **Mesh will be misread as distributed inference** unless every mention says the whole request runs on one device; LocalAI already markets P2P/federation/worker pools, so the word "mesh" invites the comparison. Source: https://localai.io/
-7. **Linux CPU-only** vs an audience whose comparison articles treat GPU support as a core column. Sources: https://inventivehq.com/blog/ollama-vs-lm-studio-vs-llama-cpp ; https://docs.docker.com/ai/model-runner/
-8. **Reddit rules could not be verified**; posting there without reading the live sidebar risks removal.
+The pattern: **a server gets into a framework's docs by being popular enough that users ask for it, or by the server's team contributing the page.** The AI SDK LM Studio guide is a worked example of what such a page looks like (package, baseURL, port, `maxRetries: 0`, text + streaming + embeddings). Source: https://ai-sdk.dev/providers/openai-compatible-providers/lmstudio
+
+### 3.2 Hugging Face "Use this model" (model-page distribution)
+
+- The Hub's local-apps doc lists 18 apps on model pages; the underlying `LOCAL_APPS` registry in `huggingface.js` has 25 keys (llama.cpp, llama-app, node-llama-cpp, vllm, sglang, mlx-lm, tgi, lmstudio, localai, jan, atomic-chat, backyard, jellybox, msty, recursechat, drawthings, diffusionbee, joyfusion, ollama, unsloth, docker-model-runner, lemonade, pi, hermes-agent, openclaw). Sources: https://huggingface.co/docs/hub/local-apps; https://github.com/huggingface/huggingface.js/blob/main/packages/tasks/src/local-apps.ts
+- Each entry provides `prettyLabel`, `docsUrl`, `mainTask`, `displayOnModelPage`, and either a `deeplink` or a `snippet` (terminal commands with `{{GGUF_FILE}}` / `{{QUANT_TAG}}` placeholders). The comments say: "add new apps there and suggestions are welcome... If possible, you need to support deeplinks and be as cross-platform as possible", and to contact the HF team for help. Source: https://github.com/huggingface/huggingface.js/blob/main/packages/tasks/src/local-apps.ts
+- The Hub's general library-integration guide describes the PR route (`model-libraries.ts`, alphabetical order, `repoUrl`, optional `docsUrl`, optional snippet) and requires at least one model tagged for the library before the PR. Source: https://huggingface.co/docs/hub/models-adding-libraries
+- Hub listing requires a public, runnable product and documentation URL. **This is a post-release channel for UCompute, not a now channel.** It is also $0 and non-promotional by design.
+
+### 3.3 GitHub lists and topics
+
+- Ollama README "Community Integrations": ~150 entries across Chat Interfaces (Web ~16, Desktop ~24, Mobile 1), Code Editors ~16, Libraries & SDKs ~29, Frameworks & Agents ~8, RAG ~9, Bots ~5, Terminal ~11, Productivity ~14, Observability ~6, Database ~4, Infrastructure (Cloud ~4, Package Managers ~7). "Want to add your project? Open a pull request." Source: https://github.com/ollama/ollama (counts approximate, per read)
+- `janhq/awesome-local-ai`: ~2.0k stars, 312 forks; categories Inference Engine (~16), Inference UI (~22), Developer Tools (~22), Agents (~12), plus Research, Training, Platforms, Leaderboards, Community links; "Your contributions are always welcome!" with a CONTRIBUTING file. Source: https://github.com/janhq/awesome-local-ai
+- GitHub topic `openai-compatible`: 6,669 public repositories; top entries include `HKUDS/nanobot` (49.7k), `maximhq/bifrost` (9.2k), `Michael-A-Kuykendall/shimmy` (6k). The top-ranked repo makes implausible "free frontier model" claims, i.e. the topic is partly spam-polluted. Source: https://github.com/topics/openai-compatible
+- These lists are reachable with a single PR once source is public. They are the cheapest durable discovery surface in this research. Before source publication they are unavailable (a LICENSE-only repo would be rejected or ignored).
+
+### 3.4 SEO comparison articles
+
+The 2026 search results for "local OpenAI-compatible server comparison" are dominated by vendor/SEO comparison pages (Cohorte, Future AGI, Pinggy, InventiveHQ, daily.dev, Techsy, PromptQuorum). Sources read: https://cohorte.co/blog/local-llm-openai-compatible-server; https://futureagi.com/blog/best-ollama-local-llm-alternatives-2026/; https://daily.dev/blog/running-llms-locally-ollama-llama-cpp-self-hosted-ai-developers/. Getting into these articles requires either a release (so writers can test) or a direct relationship; with $0 budget, the realistic path is to publish the kind of reproducible benchmark/how-to the writers cite, after release.
+
+### 3.5 Hacker News and Show HN
+
+See section 5 for data points. HN is where this audience's opinion about a local server is formed in public; it is also the channel with the strictest rules (section 6).
 
 ---
 
-## 7. Open questions / things not verified
+## 4. What integration content they consume
 
-- Live r/LocalLLaMA, r/LLMDevs, r/ollama rules and member counts (Reddit blocked).
-- Reddit sitewide vote-manipulation policy text (blocked).
-- Lobsters "I am the author" checkbox mechanics (about page does not describe it).
-- SitePoint comparison content (HTTP 403).
-- llama-server's current default port (README says 9931; Sept 2026 article and HF snippets say 8080).
-- DEV's August 2026 structured AI-disclosure tiers (seen only via mirror).
-- TLDR AI pricing (not published).
-- Whether UCompute exposes `/v1/models`, `/v1/embeddings`, `/v1/responses`, or an Anthropic messages route (not in brief).
+Based on what the framework docs and tutorials actually contain, the content formats this audience reads are:
+
+1. **"Drop-in replacement" quick starts**: three snippets (Python `OpenAI(base_url=...)`, TypeScript `new OpenAI({ baseURL })`, cURL to `/v1/chat/completions`). LM Studio's page is the template; Ollama's and Jan's follow the same shape. Sources: https://lmstudio.ai/docs/app/api/endpoints/openai; https://docs.ollama.com/openai; https://docs.jan.ai/desktop/api-server
+2. **Framework-specific provider pages**: AI SDK (`createOpenAICompatible`, `maxRetries: 0`, embeddings), LangChain (`base_url`, env vars, `stream_usage` caveat), LlamaIndex (`OpenAILike` flags), Agents SDK (`set_default_openai_api("chat_completions")`, caveat list), CrewAI (prefix + dummy key), LiteLLM (`openai/` + `api_base` ending `/v1`). Sources in section 1.2.
+3. **Compatibility matrices**: which OpenAI parameters are honoured vs silently dropped (Ollama publishes one; Cohorte tells readers to test each parameter by response body). Sources: https://docs.ollama.com/openai; https://cohorte.co/blog/local-llm-openai-compatible-server
+4. **Agent/editor wiring guides**: Zed, Continue, Open WebUI, Pi/Hermes/OpenClaw snippets; the recurring gotchas are context-window defaults and tool-calling templates. Sources: https://zed.dev/docs/ai/use-a-local-model.md; https://docs.continue.dev/customize/model-providers/more/llamacpp; https://docs.openwebui.com/alternatives/lm-studio.md; https://huggingface.co/docs/hub/local-apps
+5. **Reproducible hardware write-ups**: named machine, named model and quant, tokens/s, memory used, method; this is what the 919-point Show HN was (5-6 tok/s on an 8 GB M2 Air, 31-35 tok/s on an M5 Pro, "more than 100 experiments"). Source: https://news.ycombinator.com/item?id=49098510
+6. **Load-test / concurrency recipes**: Cohorte ships a stdlib load-test script measuring p50/p95 time-to-first-token vs concurrency. Source: https://cohorte.co/blog/local-llm-openai-compatible-server
+
+Mapping to the UCompute context block: items 1-3 are writable now for internal review (they depend only on the API shape and on what was verified on the M2 Mac and the Arc 140V laptop); item 5 is writable only with the exact numbers from those two machines and must say "development build". Item 4 depends on tool calling, which is unverified, so any agent-wiring guide must either avoid tool calls or label them unverified. Item 6 is a Mesh-adjacent story only if framed honestly: Mesh does not increase a single request's throughput; it lets you choose which device takes the whole request.
 
 ---
 
-## Sources (every URL read)
+## 5. What earns attention on HN in this niche (data points)
 
-Primary pages read successfully:
+| Thread | Points / comments | Date | What it was | What the audience focused on | Source |
+|---|---|---|---|---|---|
+| Show HN: Open-source engine running Gemma 4 26B in 2 GB RAM on any M-series Mac | 919 / 342 | 2026-07-29 | Swift engine streaming MoE experts from SSD; mentions an experimental OpenAI-compatible server with streaming, tool calls, prefix KV reuse | Memory accounting (page cache), SSD vs bandwidth, mmap comparison (0.5 vs 4 tok/s), usability at low tok/s, build issues on macOS 15, and a large side-argument about whether the prose was AI-written | https://news.ycombinator.com/item?id=49098510 (date from https://hn.algolia.com/api/v1/search?query=Gemma%204%20RAM%20Mac&tags=show_hn&hitsPerPage=10) |
+| Show HN: Forge – Guardrails take an 8B model from 53% to 99% on agentic tasks | 687 / 252 | 2026-05-19 | Agent reliability layer for local models | (not read in depth) | https://hn.algolia.com/api/v1/search?query=local%20LLM%20OpenAI%20compatible%20server&tags=show_hn&hitsPerPage=20 |
+| Running Gemma 4 locally with LM Studio's new headless CLI and Claude Code | 407 / 103 | approx. April 2026 ("6 months ago" on 2026-10-30) | Blog post on LM Studio headless + Claude Code | llama-server's Anthropic route, oMLX vs llama.cpp speed, `ollama launch claude`, MoE memory, tool-call loops, chat templates, remote headless workflow | https://news.ycombinator.com/item?id=47651540 |
+| Show HN: LocalGPT, a local-first AI assistant in Rust with persistent memory | 331 / 153 | approx. Feb 2026 ("8 months ago") | Rust assistant, Apache-2.0, multi-provider | "Is it really local?" (needed an Anthropic key by default); placeholder keys for local servers; which local models work; RAM/VRAM; naming called misleading | https://news.ycombinator.com/item?id=46930391 |
+| Ollama violating llama.cpp license for over a year | 202 / 68 | 2025-05-16 | GitHub issue about MIT notices in binaries | Legal reading vs attribution norm; maintainers' silence | https://news.ycombinator.com/item?id=44003741 |
+| Ollama raises $65M, grows to nearly 9M users | 8 / 7 | approx. 2026-07-09 | TechCrunch funding story | Attribution issue again; "hard and expensive" to enforce | https://news.ycombinator.com/item?id=48846153 |
+| Show HN: Llamactl – Self-hosted LLM manager with OpenAI-compatible routing | 2 / 0 | 2026-03-17 | Manager with routing | none | Algolia search above |
+| Show HN: Small hardware box that runs local LLMs and exposes an OpenAI API | 2 / 0 | 2025-11-19 | Hardware box | none | Algolia search above |
+| Show HN: FlexLLama – Run multiple local LLMs at once with a simple dashboard | 4 / 0 | 2025-08-05 | Multi-model dashboard | none | Algolia search above |
 
-- https://news.ycombinator.com/newsguidelines.html
+Reading: the Algolia list is a long tail of 1-4 point "OpenAI-compatible local server/manager/router" Show HNs with zero comments. The posts that broke out had (a) a specific, surprising, reproducible hardware result, or (b) a named-model + named-tool workflow people could copy that week. "Yet another OpenAI-compatible wrapper" does not break out. UCompute's differentiators that fit pattern (a) are the memory-fit check and the two named machines; the one that fits pattern (b) is "pair two of my own devices with a short code and pick which one runs the request" — provided the whole-request-on-one-device framing is explicit, because this audience will test the claim.
+
+Also note the recurring **AI-written-prose** sub-thread in the 919-point post and the LLM-authored-post ban on Lobsters (section 6): long, polished launch copy is itself a liability in these two communities.
+
+---
+
+## 6. Communities, newsletters and aggregators: reach and rules
+
+| Channel | What it is / reach claim | Submission path | Rules that bind UCompute | Status for UCompute today | Source |
+|---|---|---|---|---|---|
+| Hacker News / Show HN | General tech; Show HN is for "something people can try out" | Any account submits a story titled "Show HN: ..."; appears on shownew, moves to show after a small points threshold | Must be ready to try "without signing up or providing an email"; **no landing pages, sign-up pages or fundraisers**; blog posts/newsletters excluded (regular submissions instead); submitter must be available in the thread; don't ask friends to upvote; don't use HN primarily for promotion; **don't automate posting**; **don't post generated or AI-edited text**; don't solicit votes/comments; throwaways only for sensitive info; titles without caps/exclamation/praise | **Blocked** until a public, no-sign-up build exists. Posting a LICENSE-only repo or a waitlist would violate the Show HN rule. Submission must be by a human | https://news.ycombinator.com/showhn.html; https://news.ycombinator.com/newsguidelines.html |
+| Lobsters | Invite-only link aggregator with tags | Need an invite from an existing member; new users (first 70 days) cannot invite, cannot use `show` or meta tags, **cannot submit self-promo**; self-promo must stay under a quarter of a user's stories+comments over the past year | Inviter can lose invite rights if invitee spams | **Blocked** for brand-style posting; a human maintainer with an established account could post after 70 days and under the 25% ratio. No automation path | https://lobste.rs/about |
+| DEV (dev.to) | Developer blogging community | Any account can publish | Content must not be "designed primarily for the purposes of promotion or creating backlinks"; posts must have substantial content (not just an external link); affiliate links disclosed; AI-assisted articles allowed with disclosure (`#ABotWroteThis` or in copy), must not be published mainly to build a brand; **no bots/AI for comments**; articles should not promote a business/program/course "including the author's own"; backlink exception for a personal blog or a company blog shared under that company's DEV organization | **Possible now for genuinely educational posts** (e.g. parameter-compatibility testing, base-URL patterns across frameworks) that do not promote UCompute; UCompute-specific how-tos belong under a UCompute DEV organization and only once something is runnable. Any AI assistance must be disclosed | https://dev.to/terms; https://dev.to/guidelines-for-ai-assisted-articles-on-dev |
+| Hashnode | Developer blogging platform with team blogs | Any account; team publications | Prohibits "automated or bulk posting", "engagement farming", "SEO abuse", misleading links, "using the platform primarily for self-promotion without contributing to the community"; multiple accounts to sway votes banned; AI-generated content permitted but author takes responsibility (no disclosure requirement stated); publication owners responsible for team blog content | **Possible** for a human-run UCompute publication with real contribution; **no automation** | https://hashnode.com/code-of-conduct |
+| daily.dev | Developer content aggregator | "New Post" button or a Squad; company/personal blogs are **not eligible as sources**; companies get a paid Verified Company Squad (can auto-post RSS/YouTube) or a free Squad (manual posting) | Sources must be English, regular, with an RSS/Atom feed; inactive 3+ months rejected; **content primarily for self-promotion rejected**; paid distribution only via labelled Sponsored/Boost; paying for posts/upvotes banned; affiliate links banned; **programmatic / auto-populated content rejected**; **AI-generated content and content with AI characteristics rejected**; content made for SEO/AEO/GEO rejected | **Possible** as a free Squad posted by a human; paid Verified Company Squad is out ($0). No AI-written posts | https://docs.daily.dev/content-guidelines/ |
+| TLDR AI | Daily AI newsletter; nav claims 1.1M, advertise page claims 1.15M subscribers and 47% open rate; TLDR overall "8M+" | None free. Paid native text placements (Quick Links <=30 words, Secondary <=50 words, Primary <=100 words), custom pricing, max 3 advertisers per issue | n/a | **Out** at $0; the only organic route is being linked as a news item, which requires newsworthy, public work | https://tldr.tech/ai; https://advertise.tldr.tech |
+| Latent Space | "By and for AI engineers": publication, podcast, community | Tips: tips@latent.space; partnerships: business@latent.space; no guest form listed; no audience number published | n/a | **Possible later**: one tip email when something public and technically interesting exists. Not before | https://www.latent.space/about |
+| Ben's Bites | Substack; "Over 117,000 subscribers"; "What I'm learning building with agents (plus tools worth trying)" | No submission or sponsorship path on the page | n/a | **Unverified** submission path; treat as earned-only | https://www.bensbites.com/ |
+| Console | Free weekly devtools newsletter, Thursdays, "30k+ subscribers", founder David Mytton | Readers can suggest a tool or flag an error at hello@console.dev; no form; reviews are not sponsored; betas from the past 1-2 weeks are listed separately | Tools should be "built for developers" with easy self-service signup and clear docs | **Possible later**: one suggestion email at public beta. A private, access-controlled alpha does not meet "easy self-service signup" | https://console.dev/; https://console.dev/about |
+| r/LocalLLaMA | Reddit; third-party page claims ~840k members (data as of 2026-10-04, rules archived Jan 2025) | Reddit rules page unreachable from this environment (old.reddit.com blocked) | **Unverified (third-party summary):** 5 karma earned inside the sub via comments before posting (AutoModerator); Rule 4 "Limit Self-Promotion": not more than 10% of your content; no sensational titles; no affiliate links; links go directly to the source; projects use Resources flair, never News; audience expects hardware, quantization and tok/s specifics; product launches posted as Discussion commonly removed | **Prerequisite**: an owner-run human account with earned karma; confirm rules on the live sidebar before any post | https://spacestationlabs.ai/subreddits/localllama |
+| Hugging Face "Use this model" | Model-page dropdown | PR to `huggingface.js` `local-apps.ts`; deeplinks + cross-platform "if possible" | n/a | **Post-release** (needs public installer and docs URL) | https://github.com/huggingface/huggingface.js/blob/main/packages/tasks/src/local-apps.ts; https://huggingface.co/docs/hub/local-apps |
+| Ollama README / awesome-local-ai / GitHub topics | Community lists | PR | n/a | **Post-source-publication** | https://github.com/ollama/ollama; https://github.com/janhq/awesome-local-ai; https://github.com/topics/openai-compatible |
+| Framework docs (AI SDK, Zed, Continue, Open WebUI, CrewAI, LiteLLM) | Provider/guide pages | PR or maintainer request; AI SDK's community-provider model shows third parties can publish provider packages | n/a | **Post-release**; a provider page must point at a working server | https://ai-sdk.dev/providers/community-providers/ollama; https://zed.dev/docs/ai/use-a-local-model.md; https://docs.continue.dev/customize/model-providers/more/llamacpp; https://docs.openwebui.com/alternatives/lm-studio.md; https://docs.crewai.com/en/concepts/llms; https://docs.litellm.ai/docs/providers/openai_compatible |
+
+Cross-cutting rule findings:
+- **Automation is prohibited or rejected everywhere it matters**: HN ("don't automate posting"), Hashnode ("automated or bulk posting"), daily.dev (programmatic content), DEV (bot comments). The only platform that explicitly allows auto-posting is daily.dev's *paid* Verified Company Squad. Sources: https://news.ycombinator.com/newsguidelines.html; https://hashnode.com/code-of-conduct; https://docs.daily.dev/content-guidelines/; https://dev.to/guidelines-for-ai-assisted-articles-on-dev
+- **AI-generated text is a liability**: HN bans it outright; daily.dev rejects it; DEV requires disclosure; Hashnode permits it with responsibility. Sources as above.
+- **Waitlists and landing pages fail Show HN**, which matches the context constraint that no waitlist is authorized anyway. Source: https://news.ycombinator.com/showhn.html
+
+---
+
+## 7. Implications for UCompute (strategy notes, not claims)
+
+### 7.1 Opportunities
+
+1. **Write the compatibility matrix before anyone else writes it about you.** Ollama publishes an explicit unsupported-parameter list (https://docs.ollama.com/openai); Cohorte teaches readers to probe each parameter (https://cohorte.co/blog/local-llm-openai-compatible-server). A UCompute Run page that lists every OpenAI parameter as honoured / ignored / rejected, plus whether `/v1/responses` exists, would pre-empt the first HN question and is writable from the development build today (internal draft; publication waits for release).
+2. **Lead with the two named machines and the memory-fit check.** The audience rewards reproducible hardware specifics (919-point thread: https://news.ycombinator.com/item?id=49098510) and complains about memory fit and OOM in practice (https://news.ycombinator.com/item?id=47651540). "Refuses to load a model that will not fit, before download" is a concrete, testable behaviour. Numbers must come from the actual M2 Mac (macOS 26.2) and Arc 140V laptop runs and be labelled development build.
+3. **Make engine attribution a visible feature.** This audience punishes weak llama.cpp attribution (https://news.ycombinator.com/item?id=44003741; https://news.ycombinator.com/item?id=48846153). "Pinned llama.cpp b11609, license shown" is already true and should appear in README, about screen and every post.
+4. **Position Mesh as device *selection*, not device *pooling*, in the first sentence.** LocalAI already markets "distributed mode", "P2P" and "federation" (https://localai.io/), and HN threads already discuss headless remote servers driven from a laptop (https://news.ycombinator.com/item?id=47651540). The honest Mesh story is: pick which of my paired devices runs this whole request; TLS 1.3 + pinned keys; revoke in <0.1 s in tests; local-only by default; audit log without prompt text. That is a privacy/control story for the same audience, and it does not collide with LocalAI's pooling claims as long as the wording never implies splitting or pooling.
+5. **Queue the $0 post-release checklist now**: PRs to `huggingface.js` `local-apps.ts`, Ollama README community list, `awesome-local-ai`, `openai-compatible` topic; provider/guide pages or PRs for AI SDK (community provider), Zed, Continue, Open WebUI, LiteLLM, CrewAI; one Show HN with a no-sign-up installer; one tip email each to tips@latent.space and hello@console.dev. All are free and non-promotional by platform design; none can be done before source and a public build exist. Sources: section 3 and 6.
+6. **Educational DEV/Hashnode posts are allowed now** if they do not promote UCompute: e.g. "how each framework sets the base URL and why you still need a dummy API key", or "test OpenAI parameters by response body". These would build an author history before any product post. Sources: https://dev.to/terms; https://hashnode.com/code-of-conduct
+
+### 7.2 Risks
+
+1. **Commoditisation by `llama serve` / llama.app.** The engine UCompute pins now ships its own one-line installer, tray app, OpenAI- and Anthropic-compatible server, web UI, tool calling, MCP, continuous batching, and auto-discovery in Zed (https://llama.app; https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md; https://zed.dev/docs/ai/use-a-local-model.md). "Why not just `llama serve`?" needs an answer that does not depend on features marked NOT built.
+2. **Tool calling is unverified.** The highest-intent 2026 use case (local backend for coding agents) depends on tool calls and chat templates, and the audience already documents failures there (https://news.ycombinator.com/item?id=47651540; https://huggingface.co/docs/hub/local-apps lists only models "whose chat template supports tool calling" for agent snippets). Any agent-wiring content must say tool calling is unverified or avoid it.
+3. **Responses API gap (if present).** Agents SDK defaults to Responses and 404s on servers without it (https://openai.github.io/openai-agents-python/models/); LM Studio advertises Codex support because it has `/v1/responses` (https://lmstudio.ai/docs/app/api/endpoints/openai). Whether UCompute Run implements it is not in the context block: **unverified**, and it should be checked before any "works with the official SDKs" sentence is extended to agent SDKs.
+4. **Naming and framing scrutiny.** "LocalGPT" was attacked for a name that over-promised (https://news.ycombinator.com/item?id=46930391). "Compute better. Together." and a future credit economy are direction-only; if they appear anywhere near a Show HN they will be read as claims and tested.
+5. **Platform rules make brand/automated posting impossible.** Every channel in section 6 either bans automation or rejects promotional/AI content; Show HN also bans landing pages and sign-ups. The private alpha behind access control fails Show HN's "easy to try without signing up" and Console's "easy self-service signup" criteria (https://news.ycombinator.com/showhn.html; https://console.dev/about).
+6. **Linux CPU-only and no Linux GUI.** llama.app gives Linux the CLI only (https://llama.app); Docker Model Runner supports Linux CPU/CUDA/ROCm/Vulkan (https://docs.docker.com/ai/model-runner/); LocalAI "every feature ships a CPU path" (https://localai.io/). UCompute's CPU-only Linux daemon is not unusual for a development build but will be compared against those.
+7. **Third-party-summary dependence for Reddit.** r/LocalLLaMA rules were not readable from the primary source here; acting on the 5-karma / 10% figures without confirming on the live sidebar risks a removal. Source (unverified): https://spacestationlabs.ai/subreddits/localllama
+
+---
+
+## 8. Unverified items and gaps
+
+- r/LocalLLaMA official rules and member count: Reddit unreachable from this environment; only https://spacestationlabs.ai/subreddits/localllama (third party) was read. **Unverified.**
+- Ben's Bites submission/sponsorship path: not on the page read. **Unverified.**
+- Console submission via a `/submit` page: returned 404; only hello@console.dev from the About page is verified. 
+- Continue's generic OpenAI-compatible provider page: 404 at the URL tried; only the llama.cpp provider page was read.
+- Open WebUI quick-start "starting with OpenAI-compatible" page: 404/503; only the LM Studio alternatives page was read.
+- Exact dates for HN items 47651540 ("6 months ago") and 46930391 ("8 months ago") are approximate; 49098510 and 44003741 dates come from Algolia / the page.
+- Students as a distinct segment: no primary source read; omitted from claims.
+- Whether UCompute Run implements `/v1/responses`, `/v1/embeddings`, or publishes an unsupported-parameter list: not in the context block; **unverified**, flagged as a question for Engineering.
+- Ollama "8.9 million developers every month" is the company's own figure as reported by TechCrunch (https://techcrunch.com/?p=3140214), not independently verified.
+- All competitor port/concurrency/auth defaults in section 2.1 attributed to Cohorte are that article's claims (2026-09-20) and may drift; official docs read here confirm the Ollama, LM Studio, Jan and llama.cpp base URLs but not the concurrency figures.
+
+---
+
+## 9. Sources (every URL read in this session)
+
+Platform rules
 - https://news.ycombinator.com/showhn.html
-- https://news.ycombinator.com/item?id=44003741
-- https://news.ycombinator.com/item?id=47651540
-- https://news.ycombinator.com/item?id=49098510
-- https://hn.algolia.com/api/v1/search?query=%22OpenAI%20compatible%22%20local&tags=show_hn&hitsPerPage=30
-- https://hn.algolia.com/api/v1/search?query=ollama%20llama.cpp&tags=story&hitsPerPage=30
-- https://hn.algolia.com/api/v1/search?query=%22Ollama%20violating%20llama.cpp%20license%22&tags=story&hitsPerPage=3
-- https://hn.algolia.com/api/v1/search?query=LocalAI&tags=story&hitsPerPage=15
-- https://hn.algolia.com/api/v1/search?query=%22LM%20Studio%22&tags=story&hitsPerPage=15
-- https://hn.algolia.com/api/v1/search?query=%22Gemma%204%2026B%22%20%222%20GB%20RAM%22&tags=show_hn&hitsPerPage=3
+- https://news.ycombinator.com/newsguidelines.html
 - https://lobste.rs/about
-- https://lobste.rs/tags
-- https://dev.to/code-of-conduct
 - https://dev.to/terms
 - https://dev.to/guidelines-for-ai-assisted-articles-on-dev
-- https://dev.to/t/ollama
-- https://hashnode.com/terms
+- https://hashnode.com/code-of-conduct
+- https://docs.daily.dev/content-guidelines/
+- https://spacestationlabs.ai/subreddits/localllama (third-party summary of r/LocalLLaMA; unverified)
+
+Newsletters / aggregators
+- https://tldr.tech/ai
+- https://advertise.tldr.tech
+- https://www.latent.space/about
+- https://www.bensbites.com/
+- https://console.dev/
+- https://console.dev/about
+
+Framework / SDK documentation
+- https://github.com/openai/openai-python
+- https://github.com/openai/openai-node
+- https://docs.langchain.com/oss/python/integrations/chat/openai
+- https://developers.llamaindex.ai/python/framework-api-reference/llms/openai_like/
+- https://ai-sdk.dev/providers/openai-compatible-providers
+- https://ai-sdk.dev/providers/openai-compatible-providers/lmstudio
+- https://ai-sdk.dev/providers/community-providers/ollama
+- https://openai.github.io/openai-agents-python/models/
+- https://docs.litellm.ai/docs/providers/openai_compatible
+- https://docs.crewai.com/en/concepts/llms
+- https://zed.dev/docs/ai/use-a-local-model.md
+- https://docs.continue.dev/customize/model-providers/more/llamacpp
+- https://docs.openwebui.com/alternatives/lm-studio.md
+
+Competitor documentation
 - https://docs.ollama.com/openai
 - https://github.com/ollama/ollama
 - https://lmstudio.ai/docs/app/api/endpoints/openai
 - https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md
-- https://github.com/ggml-org/llama.cpp/discussions/23875
 - https://llama.app
-- https://huggingface.co/blog/ggml-joins-hf
-- https://huggingface.co/docs/hub/local-apps
-- https://huggingface.co/docs/hub/models-adding-libraries
 - https://localai.io/
 - https://docs.jan.ai/desktop/api-server
 - https://docs.vllm.ai/en/latest/serving/online_serving/
 - https://docs.docker.com/ai/model-runner/
-- https://github.com/Michael-A-Kuykendall/shimmy
-- https://github.com/topics/openai-compatible
+
+Distribution surfaces
+- https://huggingface.co/docs/hub/local-apps
+- https://huggingface.co/docs/hub/models-adding-libraries
+- https://github.com/huggingface/huggingface.js/blob/main/packages/tasks/src/local-apps.ts
 - https://github.com/janhq/awesome-local-ai
-- https://github.com/openai/openai-python
-- https://ai-sdk.dev/providers/openai-compatible-providers
-- https://ai-sdk.dev/providers/openai-compatible-providers/lmstudio
-- https://ai-sdk.dev/providers/community-providers/ollama
-- https://docs.langchain.com/oss/python/integrations/chat/openai
-- https://docs.langchain.com/oss/python/integrations/chat/ollama
-- https://developers.llamaindex.ai/python/framework-api-reference/llms/openai_like/
-- https://docs.continue.dev/customize/model-providers/top-level/openai
-- https://docs.openwebui.com/getting-started/quick-start/connect-a-provider/
+- https://github.com/topics/openai-compatible
+
+Comparison / tutorial content
 - https://cohorte.co/blog/local-llm-openai-compatible-server
-- https://inventivehq.com/blog/ollama-vs-lm-studio-vs-llama-cpp
-- https://tldr.tech/ai
-- https://advertise.tldr.tech/
-- https://www.latent.space/about
-- https://www.bensbites.com/
-- https://console.dev/selection-criteria
-- https://spacestationlabs.ai/subreddits/localllama (third-party summary; used only for Reddit claims marked unverified)
+- https://futureagi.com/blog/best-ollama-local-llm-alternatives-2026/
+- https://daily.dev/blog/running-llms-locally-ollama-llama-cpp-self-hosted-ai-developers/
 
-Attempted but not readable (listed for transparency; nothing is cited from them):
+Hacker News threads and data
+- https://news.ycombinator.com/item?id=49098510
+- https://news.ycombinator.com/item?id=47651540
+- https://news.ycombinator.com/item?id=46930391
+- https://news.ycombinator.com/item?id=44003741
+- https://news.ycombinator.com/item?id=48846153
+- https://hn.algolia.com/api/v1/search?query=Gemma%204%20RAM%20Mac&tags=show_hn&hitsPerPage=10
+- https://hn.algolia.com/api/v1/search?query=local%20LLM%20OpenAI%20compatible%20server&tags=show_hn&hitsPerPage=20
 
-- https://www.sitepoint.com/local-llm-deployment-ollama-vs-vllm-vs-lm-studio-compared/ (403)
-- https://redditinc.com/policies/content-policy (blocked)
-- https://www.reddit.com/r/LocalLLaMA/about/rules/ and https://old.reddit.com/r/LocalLLaMA/about/rules/ (blocked)
-- https://support.reddithelp.com/hc/en-us/articles/360043066452-What-constitutes-vote-manipulation and .../360043512931 (403)
-- https://r.datuan.dev/r/LocalLLaMA/wiki/index (403), https://redlib.hackliberty.org/r/LocalLLaMA (DNS), https://redlib.groet-infra.nl/r/LLMDevs (502), https://safereddit.com/r/LocalLLaMA/ (503)
-- https://docs.continue.dev/customize/model-providers/openai and .../more/openai (404; superseded by the top-level URL above)
-- https://docs.openwebui.com/getting-started/quick-start/starting-with-openai-compatible and .../starting-with-openai/ (404; superseded by connect-a-provider above)
-- https://console.dev/submit (404; superseded by selection-criteria above)
-- https://developers.llamaindex.ai/python/examples/llm/openai_like/ (404; superseded by the API reference above)
+Market context
+- https://techcrunch.com/?p=3140214

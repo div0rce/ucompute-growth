@@ -3,17 +3,18 @@ id: 2026-11-02-openai-client-base-url
 title: Point the official OpenAI Python and JavaScript clients at a local server
 type: search-page
 audience: ai-app-builders
-channel_intent: website-handoff (docs or notes), syndication to dev.to/Hashnode when authorized
-claims: [openai-clients, run-local, local-only, no-release, license]
+channel_intent: website-handoff (docs or notes), syndication to dev.to/Hashnode when authorized (front matter is never rendered or syndicated)
+claims: [openai-clients, run-local, local-only, device-sees-prompt, no-release, license]
 status: draft
-sources: engineering README (serve on 127.0.0.1:8192, OpenAI-compatible API); capability snapshot 2026-10-23b claim 4 (openai 3.31.0 and openai npm 6.49.0 verified); https://github.com/openai/openai-python (base_url parameter); https://github.com/openai/openai-node (baseURL option)
+review: fact-check and reader review applied 2026-10-30 (journal/LOG.md "draft review")
+sources: engineering README (serve on 127.0.0.1:8192, OpenAI-compatible API, catalog id qwen2.5-0.5b-instruct-q4_k_m); capability snapshot 2026-10-23b claim 4 (openai 3.31.0 and openai npm 6.49.0 verified) and section 7 (OpenAPI 3.1 document, Prometheus metrics without prompt text); https://github.com/openai/openai-python (base_url); https://github.com/openai/openai-node (baseURL)
 ---
 
 # Point the official OpenAI Python and JavaScript clients at a local server
 
-*Development build, October 2026. UCompute is in development; there is no public release or download yet. The client-side steps below apply to any server that speaks the OpenAI chat-completions API; the UCompute-specific details are marked.*
+*Development build, October 2026. UCompute is in development. There is no public release or download yet. The client-side steps below apply to any server that speaks the OpenAI chat-completions API; the UCompute-specific details are in their own section.*
 
-If your application already uses the official OpenAI client libraries, you do not need a different SDK to talk to a model running on your own machine. Both libraries take a base URL. Change it, and keep the rest of your code.
+If your application already uses the official OpenAI client libraries, you do not need a different SDK to talk to a model running on your own machine. Both libraries take a base URL. Change it and the model id, and keep the rest of your code.
 
 ## Python
 
@@ -26,7 +27,7 @@ client = OpenAI(
 )
 
 stream = client.chat.completions.create(
-    model="qwen2.5-0.5b-instruct-q4_k_m",  # the model id your local server exposes
+    model="qwen2.5-0.5b-instruct-q4_k_m",  # example id; use one from GET /v1/models on your server
     messages=[{"role": "user", "content": "Explain unified memory in two sentences."}],
     stream=True,
 )
@@ -47,7 +48,7 @@ const client = new OpenAI({
 });
 
 const stream = await client.chat.completions.create({
-  model: "qwen2.5-0.5b-instruct-q4_k_m",
+  model: "qwen2.5-0.5b-instruct-q4_k_m", // example id; use one from GET /v1/models on your server
   messages: [{ role: "user", content: "Explain unified memory in two sentences." }],
   stream: true,
 });
@@ -64,15 +65,14 @@ for await (const chunk of stream) {
 
 ## What UCompute does (development build)
 
-UCompute's local API works with the official OpenAI Python and JavaScript client libraries; only the base URL changes. Demonstrated on an Apple M2 Mac (macOS 26.2); the platform is experimental. Chat and completions with streaming; tool calling is not yet verified.
+UCompute's local API works with the official OpenAI Python and JavaScript client libraries; only the base URL changes. Demonstrated on an Apple M2 Mac (macOS 26.2); the platform is experimental. Chat and completions with streaming were exercised; tool calling is not yet verified. The model id in the examples is the id of one model in UCompute's catalog, the one its own quick start uses.
 
-- The server is started with `ucompute serve` and listens on `127.0.0.1:8192`, loopback only, by default. Nothing else on your network can reach it unless you deliberately change that.
-- UCompute Run runs small open models on your own computer, with no account and no UCompute service. By default, your requests stay on your device. Demonstrated on an Apple M2 Mac (macOS 26.2) and a Windows 11 laptop with an Intel Arc 140V GPU; both platforms are experimental; other platforms are not yet available, and most are planned. Downloading a model or the engine uses the internet.
-- Your prompts and responses stay on your device unless you pair another device and choose to run a request there. Local-only mode refuses every off-device request. Downloading a model or the engine uses the internet.
-- The API also serves `/openapi.json` and `/metrics`, so you can see exactly which request fields a route accepts.
+- `ucompute serve` starts the server on `127.0.0.1:8192`. By default only programs on the same computer can reach the HTTP API; it does not listen on your network address unless you configure it to.
+- UCompute runs small open models on your own computer, with no account and no UCompute service. By default, your requests stay on your device: your prompts and responses stay on your device unless you pair another device and choose to run a request there, and local-only mode refuses every off-device request. Downloading a model or the engine uses the internet. The device that runs your request processes your prompt. Pair only devices you control or trust. How pairing works is covered in a separate note. Demonstrated on an Apple M2 Mac (macOS 26.2) and a Windows 11 laptop with an Intel Arc 140V GPU; both platforms are experimental. Linux is planned, with no date.
+- The API also serves an OpenAPI 3.1 document at `/openapi.json`, which lists the routes and the request fields each one reads, and Prometheus metrics at `/metrics`, which never contain prompt or completion text.
 
-## Why the base URL is the whole integration
+## What actually changes
 
-The point of an OpenAI-compatible local server is that the application layer does not change: the same SDK, the same streaming loop, the same error handling. What changes is where the request goes, and therefore who sees it. For development, tests and private data, that is a large difference for a one-line change.
+The same SDK and the same streaming loop; mostly the same error handling, though a local server returns its own error bodies and has no rate-limit headers. What changes is where the request goes: by default, to a server on your own computer. For development and tests, that is a large difference for a small change in client configuration.
 
 UCompute's code is licensed under Apache-2.0. The source has not been published yet.
