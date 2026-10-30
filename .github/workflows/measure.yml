@@ -1,0 +1,38 @@
+name: public-measurement
+on:
+  schedule:
+    - cron: "17 6 * * *"   # daily 06:17 UTC, off the routines' slots
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: measure
+  cancel-in-progress: false
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Measure (public sources only)
+        id: m
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          python3 scripts/measure_public.py
+          echo "rc=$?" >> "$GITHUB_OUTPUT"
+      - name: Commit results
+        run: |
+          git config user.name "UCompute Growth (measurement)"
+          git config user.email "growth-measure@ucompute.invalid"
+          git add analytics/
+          git diff --cached --quiet && exit 0
+          git commit -m "$(date -u +%F): public measurement (actions)"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0; sleep 10; done
+          exit 1
+      - name: Alert when the cloud daily routine has not logged for 48 h
+        if: steps.m.outputs.rc == '2'
+        run: |
+          echo "::error::No 'cloud daily' entry in journal/LOG.md for 48 h. Check https://claude.ai/code/routines (usage limit, repository access or environment)."
+          exit 1

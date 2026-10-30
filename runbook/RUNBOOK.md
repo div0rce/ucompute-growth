@@ -47,6 +47,7 @@ git add -A && git commit -m "<date>: <what changed>" && git push origin main
 A cloud session that cannot push to `main` pushes a branch `growth/<date>` and opens a pull request titled with the date; the next local session merges it.
 
 ## 6. Scheduled execution (how this runs without a chat)
+- GitHub Actions in this repository (no Claude usage, no Mac): `claims-lint` runs the lint and self-tests on every push; `public-measurement` runs daily at 06:17 UTC, writes `analytics/measurements/<date>.public.json` (site, public repository, organization, repositories named like the project, exact-match Hacker News and Bluesky mentions) and appends new mentions to `analytics/mentions.jsonl`, and fails with an alert when no cloud daily entry exists for 48 hours. GitHub emails the workflow's owner on failure.
 - Cloud routine **ucompute-growth-daily**: daily, runs sections 0, 2 and 5 on a fresh clone.
 - Cloud routine **ucompute-growth-weekly**: Mondays, runs sections 0, 3 and 5.
 - Local scheduled task **ucompute-growth-evidence-sync**: daily while the owner's Claude desktop app is open; runs section 1 and pushes, so the cloud runs see new upstream evidence. The routines' ids and the local task id are recorded in `journal/STATE.md`.
