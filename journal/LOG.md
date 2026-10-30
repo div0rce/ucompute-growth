@@ -30,3 +30,8 @@ Append-only, newest at the bottom. Each entry: date (UTC), who (local session / 
 - X-04 variants revised per the W44 strategy change. Lint: CALENDAR.md exempted from the strict front-matter rule.
 - 11:50 UTC: usage limit reached again; research workflow stopped after six raw lenses landed (homelab/self-hosting and OSS-infra new; app-builders and competitors regenerated). Missing lenses, verification and synthesis handed to the cloud daily run (STATE.md item 0). Everything is committed and pushed.
 
+## 2026-10-30 — local founding session (resumed again, 11:55 UTC onward)
+- Research continued with subagents instead of the workflow: `adoption-barriers` (35 sources) and `search-demand` (48 sources) landed in `research/raw/`; `channels-platform-rules` running.
+- New piece `2026-10-30-what-the-audit-log-records` drafted, fact-checked (13 findings, all applied: Windows ACL caveat, SD-08 scope, field-construction vs size bound, event-kind rows corrected, reader merge, flood-window limit, example line and file names added) and promoted to `content/ready/`; registry row `audit-detail` added for its mechanics. Five pieces ready.
+- **Owner action observed:** GitHub organization `ucompute` created 16:56 UTC with this account as admin (OWNER-ASKS 1 done). No grant line yet; channel row updated to "prerequisite met, grant pending". Search research notes name collisions (an RP2040 hardware project "uCompute", "Universal Compute" products) for the future profile text.
+
