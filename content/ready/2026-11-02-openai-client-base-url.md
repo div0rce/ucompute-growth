@@ -5,7 +5,7 @@ type: search-page
 audience: ai-app-builders
 channel_intent: website-handoff (docs or notes), syndication to dev.to/Hashnode when authorized (front matter is never rendered or syndicated)
 claims: [openai-clients, run-local, local-only, device-sees-prompt, no-release, license]
-status: draft
+status: ready
 review: fact-check and reader review applied 2026-10-30 (journal/LOG.md "draft review")
 sources: engineering README (serve on 127.0.0.1:8192, OpenAI-compatible API, catalog id qwen2.5-0.5b-instruct-q4_k_m); capability snapshot 2026-10-23b claim 4 (openai 3.31.0 and openai npm 6.49.0 verified) and section 7 (OpenAPI 3.1 document, Prometheus metrics without prompt text); https://github.com/openai/openai-python (base_url); https://github.com/openai/openai-node (baseURL)
 ---

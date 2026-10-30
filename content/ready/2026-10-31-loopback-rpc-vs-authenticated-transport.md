@@ -5,7 +5,7 @@ type: comparison
 audience: local-ai-developers, oss-infra
 channel_intent: website-handoff (Engineering notes), later syndication with canonical link
 claims: [engine, transport, mesh-pair-choose, planned, device-sees-prompt, no-release, license]
-status: draft
+status: ready
 review: fact-check and reader review applied 2026-10-30 (journal/LOG.md "draft review")
 sources: https://github.com/ggml-org/llama.cpp/blob/master/tools/rpc/README.md (read 2026-10-30); https://github.com/ggml-org/llama.cpp/blob/master/SECURITY.md (read 2026-10-30); engineering docs/security/THREAT_MODEL.md section 3 (secure defaults) and 2.13; ADR-0002 (supervised engine, pinned archives); capability snapshot 2026-10-23b sections 5, 8 and 9
 ---

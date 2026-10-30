@@ -5,7 +5,7 @@ type: explainer
 audience: local-ai-developers, ai-app-builders
 channel_intent: website-handoff (Engineering notes), search page (front matter is never rendered)
 claims: [catalog-fit, engine, platforms, no-release, license]
-status: draft
+status: ready
 review: fact-check and reader review applied 2026-10-30 (journal/LOG.md "draft review")
 sources: engineering crates/ucompute-models/src/feasibility.rs (calibration constants, estimate, check_fit, verdict string), crates/ucompute-api/src/admin.rs (pre-download lower bound, basis "file_size" vs "gguf", 10 % headroom), docs/VERIFICATION.md memory-estimate entry (14 combinations, example rows), capability snapshot 2026-10-23b sections 7 and 8
 ---
