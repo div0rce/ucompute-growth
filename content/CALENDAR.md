@@ -9,7 +9,7 @@ No public channel is authorized yet (`channels/REGISTRY.md`). The calendar there
 | **READY 2026-10-30** (awaits an AUTHORIZED channel or the website handoff) | `2026-11-01-memory-fit-explainer` (how UCompute estimates whether a GGUF fits before loading) | local-AI developers; AI app builders | nothing: reviewed, lint clean, in `content/ready/` | done |
 | **READY 2026-10-30** (awaits an AUTHORIZED channel or the website handoff) | `2026-11-02-openai-client-base-url` (point the official OpenAI clients at a local server) | AI app builders | nothing: reviewed, lint clean, in `content/ready/` | done |
 | **READY 2026-10-30** (awaits an AUTHORIZED channel or the website handoff) | `2026-10-30-what-the-audit-log-records` (what the audit log records and never records) | multi-device developers; homelab; OSS infra | nothing: fact-checked, lint clean, in `content/ready/` | done |
-| Ready, community answers bank | `community-answers.md` (truthful answers to the recurring questions in `research/`) | all | research raw files (4 of 9 exist; enough for a first version) | 2026-11-06 |
+| **READY 2026-10-30** (internal bank; used only in AUTHORIZED channels) | `community-answers.md` (25 answers in 9 themes, quotations traced to `research/raw/`) | all | nothing: lint clean, reviewed | done |
 | Drafted, held | Source-publication announcement | all | owner publishes the source (engineering B-007) | draft within 24 h of the decision |
 | Drafted, held | Public release communication | all | website LAUNCH.md gates | draft within 24 h |
 | Weekly | `analytics/weekly/` report | owner (internal) | — | every Monday |
