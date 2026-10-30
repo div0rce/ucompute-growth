@@ -1,6 +1,6 @@
 # State
 
-Updated: 2026-10-30 11:50 UTC (founding session, ended by usage limit)
+Updated: 2026-10-30 11:55 UTC (founding session, resumed again)
 
 ## Where things stand
 - Workspace: private repo `ucompute-growth`, pushed. Charter, runbook, claims registry + lint, channel registry, owner asks, pipeline, experiments, analytics baseline exist.
@@ -20,7 +20,7 @@ Updated: 2026-10-30 11:50 UTC (founding session, ended by usage limit)
 - first runs: daily 2026-10-30 13:06 UTC, weekly 2026-11-02 14:05 UTC; verify with `RemoteTrigger list_runs` or the routine page, then record in LOG.md
 
 ## Next actions (ranked, for the daily runs)
-0. **Cloud daily, from today:** the founding session has ended; research is yours. Each run: one missing lens (`channels-platform-rules` → `search-demand` → `adoption-barriers`, prompts in `scripts/workflows/research.js`, output `research/raw/<key>.md`, every claim with a URL, unverified marked), then once all nine exist write `research/AUDIENCES.md`, `research/POSITIONING.md` (start from `research/COMPETITORS.md` §Implications), `research/SEARCH.md`, `research/BARRIERS.md` and `distribution/COMMUNITIES.md` per the synthesis prompt in that script. Also: first version of `content/community-answers.md` from the raw files, each answer with claim ids, strict lint; monitoring; measurement ("not measured" until OWNER-ASKS 8); log and push.
+0. **Cloud daily, today (2026-10-30) only:** the founding session resumed at 11:55 UTC and is finishing the research (three lenses, synthesis files, `distribution/COMMUNITIES.md`) and `content/community-answers.md` itself; do NOT write under `research/`, `distribution/` or `content/` today. Do: monitoring into `pipeline/OPPORTUNITIES.md`; measurement ("not measured" until OWNER-ASKS 8); routine-health note; log and push. From 2026-10-31 the normal list below applies.
 1. From 2026-10-31: routine health check (a "cloud daily" entry per day in LOG.md; a missing one for 2 days is a failure to record and to put in OWNER-ASKS).
 2. Channel check every run: publish from `content/ready/` only when `channels/REGISTRY.md` shows an AUTHORIZED row with the owner's words.
 3. If the research synthesis exists (`research/POSITIONING.md`), re-read the four ready pieces against it and against `research/COMPETITORS.md` §Implications; adjust leads where they contradict (default-deny and prompt-free audit lead; revoke is parity; "whole request on one device" is a limitation statement), keep the lint clean, log the edits.
