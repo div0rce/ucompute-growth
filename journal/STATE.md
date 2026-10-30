@@ -16,6 +16,7 @@ Updated: 2026-10-30 (founding session, in progress)
 - first runs: daily 2026-10-30 13:06 UTC, weekly 2026-11-02 14:05 UTC; verify with `RemoteTrigger list_runs` or the routine page, then record in LOG.md
 
 ## Next actions (ranked)
+0. Four drafts in `content/drafts/` are under fact-check and reader review (findings land in `journal/LOG.md` as 'draft review'); do not move them to `content/ready/` until that entry exists and its fixes are applied.
 1. Finish the research synthesis review; fix anything the critic flagged; commit.
 2. Draft and lint the first three engineering notes (`content/CALENDAR.md`), move to `content/ready/`.
 3. Write `content/community-answers.md` from the research (truthful answers to the recurring questions).
