@@ -7,7 +7,7 @@ channel_intent: website-handoff (Engineering notes), later syndication with cano
 claims: [engine, transport, mesh-pair-choose, planned, device-sees-prompt, no-release, license]
 status: ready
 review: fact-check and reader review applied 2026-10-30 (journal/LOG.md "draft review")
-sources: https://github.com/ggml-org/llama.cpp/blob/master/tools/rpc/README.md (read 2026-10-30); https://github.com/ggml-org/llama.cpp/blob/master/SECURITY.md (read 2026-10-30); engineering docs/security/THREAT_MODEL.md section 3 (secure defaults) and 2.13; ADR-0002 (supervised engine, pinned archives); capability snapshot 2026-10-23b sections 5, 8 and 9
+sources: https://github.com/ggml-org/llama.cpp/blob/master/tools/rpc/README.md (read 2026-10-30); https://github.com/ggml-org/llama.cpp/blob/master/SECURITY.md (read 2026-10-30); CVE-2026-34159 record at https://cveawg.mitre.org/api/cve/CVE-2026-34159 and advisory https://github.com/ggml-org/llama.cpp/security/advisories/GHSA-j8rj-fmpv-wcxw (read 2026-10-30; fixed in b8492; UCompute pins b11609 per engineering catalog/backends.json); engineering docs/security/THREAT_MODEL.md section 3 (secure defaults) and 2.13; ADR-0002 (supervised engine, pinned archives); capability snapshot 2026-10-23b sections 5, 8 and 9
 ---
 
 # llama.cpp's RPC backend is not a network transport, and what UCompute does instead
@@ -39,6 +39,10 @@ and
 > "Encrypt your data if sending it over the network."
 
 The RPC protocol is an unencrypted wire format for moving tensors and compute commands between two processes that trust each other completely. It has no authentication and no notion of which device is allowed to talk to which. Its authors call it insecure, and they are right to.
+
+## What "insecure" has meant in practice
+
+On 1 April 2026 the project published CVE-2026-34159 (CVSS 3.1 base score 9.8, critical): in RPC builds before b8492, a tensor deserialization path skipped bounds validation, and an unauthenticated attacker with TCP access to the RPC server port could read and write the process's memory and, combined with pointer leaks from other RPC messages, run code on the host. The fix shipped in b8492. The point is not that llama.cpp is careless; the project fixed it and documented it. The point is that for this component, "whoever can reach the port" is the whole threat model, exactly as the README says. (The release UCompute pins is later than that fix, and UCompute does not use the RPC backend today, as described below.)
 
 ## The trap for the two-computer setup
 
