@@ -10,10 +10,13 @@ status: proposed
 
 **Why.** The site has one indexed URL. Developers find infrastructure projects through specific technical pages (how pairing works, why an RPC server stays on loopback, how memory fit is estimated), not through a prelaunch page. Every article is bounded by the capability snapshot and passes both the website checks and Growth's claims lint, so the section adds discoverability without adding claims.
 
-**First three articles (ready in `content/ready/` as they pass lint):**
-1. How two UCompute devices pair: the code, the keys, and the revoke (claims `mesh-pair-choose`, `transport`, `revocation`, `device-sees-prompt`, `local-only`).
-2. Why llama.cpp's RPC server stays on loopback, and what UCompute puts around it (claims `engine`, `transport`, `planned`).
-3. Before you load a model: how UCompute estimates whether a GGUF fits (claims `catalog-fit`, `platforms`).
+**Four pieces are ready now** (`content/ready/` in the `ucompute-growth` repository; each passed a fact-check against the engineering evidence, a reader review, and the claims lint on 2026-10-30):
+1. `2026-10-30-pairing-explainer`: How two UCompute devices pair: the six-digit code, the keys and the revoke (claims `mesh-pair-choose`, `transport`, `revocation`, `local-only`, `device-sees-prompt`, `audit`, `connect-by-address`, `platforms`, `no-release`, `license`).
+2. `2026-10-31-loopback-rpc-vs-authenticated-transport`: llama.cpp's RPC backend is not a network transport, and what UCompute does instead (claims `engine`, `transport`, `mesh-pair-choose`, `planned`, `device-sees-prompt`, `no-release`, `license`).
+3. `2026-11-01-memory-fit-explainer`: Before you load a model: how UCompute estimates whether a GGUF fits (claims `catalog-fit`, `engine`, `platforms`, `no-release`, `license`).
+4. `2026-11-02-openai-client-base-url`: Point the official OpenAI Python and JavaScript clients at a local server (claims `openai-clients`, `run-local`, `local-only`, `device-sees-prompt`, `no-release`, `license`); fits `/docs/` as well as `/notes/`.
+
+Each file's front matter (`claims:`, `sources:`) is source-side material and must not render; the claim ids map onto `reference/claims.json` rows of the same meaning (`mesh-pair-choose`, `transport`, `revocation`, `local-only`, `audit`, `device-sees-prompt`, `connect-by-address`, `platforms`, `license`, `no-release` exist there under the same or equivalent names; `engine`, `catalog-fit`, `openai-clients`, `planned` map to `engine`, `catalog`/`memory-fit`, `openai-clients`, `planned`). The website's own `check.mjs` stays the final gate.
 
 **Measurement.** If the owner permits a first-party, cookie-free measure (Cloudflare Web Analytics server-side, or Pages request logs), Growth will use it; otherwise Google Search Console on the domain (owner-verified, free) is enough for search impressions. No third-party scripts, consistent with the site's rule.
 
