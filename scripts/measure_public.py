@@ -48,6 +48,11 @@ def site():
     _, sm = get("https://ucompute.org/sitemap.xml", raw=True)
     return {"http": s, "sitemap_urls": count_locs(sm)}
 
+def notes_site():
+    s, _ = get("https://ucompute.github.io/notes/", raw=True)
+    _, sm = get("https://ucompute.github.io/notes/sitemap.xml", raw=True)
+    return {"http": s, "sitemap_urls": count_locs(sm)}
+
 def repo():
     _, d = get("https://api.github.com/repos/div0rce/ucompute", gh_headers())
     return {k: d.get(k) for k in ("stargazers_count", "subscribers_count", "forks_count", "open_issues_count", "pushed_at")}
@@ -84,7 +89,7 @@ def bsky():
 def main():
     today = dt.datetime.now(dt.timezone.utc).date()
     out = {"date": today.isoformat(), "source": "github-actions measure_public.py",
-           "site": safe(site), "public_repo": safe(repo), "org": safe(org), "org_repos": safe(published),
+           "site": safe(site), "notes_site": safe(notes_site), "public_repo": safe(repo), "org": safe(org), "org_repos": safe(published),
            "repos_named_ucompute": safe(name_repos), "hn": safe(hn), "bsky": safe(bsky)}
     mdir = ROOT / "analytics" / "measurements"; mdir.mkdir(parents=True, exist_ok=True)
     mentions = ROOT / "analytics" / "mentions.jsonl"

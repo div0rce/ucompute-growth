@@ -24,22 +24,22 @@ UCompute pairs your own devices with a short code. A paired device refuses off-d
 ## Post 2 (day 2; links the pairing note)
 
 How two UCompute devices pair: a six-digit code, SPAKE2, and a confirmation bound to the TLS session and both device keys, so a relay in the middle fails.
-https://github.com/ucompute/notes/blob/main/2026-10-30-pairing-explainer.md
+https://ucompute.github.io/notes/2026-10-30-pairing-explainer.html
 
 ## Post 3 (day 4; links the audit note)
 
 UCompute's audit log refuses fields named prompt or messages, and writes the "sent" line before a request leaves the device. Tested on one computer; scope in the note:
-https://github.com/ucompute/notes/blob/main/2026-10-30-what-the-audit-log-records.md
+https://ucompute.github.io/notes/2026-10-30-what-the-audit-log-records.html
 
 ## Post 4 (day 6; links the RPC note)
 
 llama.cpp's RPC README: "the functionality is fragile and insecure." UCompute keeps llama.cpp on loopback and does not use RPC, so a model must fit one device.
-https://github.com/ucompute/notes/blob/main/2026-10-31-loopback-rpc-vs-authenticated-transport.md
+https://ucompute.github.io/notes/2026-10-31-loopback-rpc-vs-authenticated-transport.html
 
 ## Post 5 (day 8; links the memory-fit note)
 
 How UCompute estimates whether a GGUF fits: weights, KV cache, compute buffers, tokenizer tables. Dev build, one Apple M2 Mac, models up to 1.5B: -4.6 % to +8.9 % of measured peak, 14 combinations.
-https://github.com/ucompute/notes/blob/main/2026-11-01-memory-fit-explainer.md
+https://ucompute.github.io/notes/2026-11-01-memory-fit-explainer.html
 
 ## Rules for this account
 - At most one post a day and four a week; reply only to mentions and to replies on its own posts; never search-and-reply.

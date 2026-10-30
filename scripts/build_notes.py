@@ -12,6 +12,9 @@ import html, pathlib, re, subprocess, sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC, OUT = ROOT / "content" / "ready", ROOT / "dist" / "notes"
 BASE = "https://github.com/ucompute/notes/blob/main/"
+SITE = "https://ucompute.github.io/notes/"
+# IndexNow ownership key (public by design: it proves control of the site, grants nothing else).
+INDEXNOW_KEY = "b1d8674aecd8b2fc96497ccb3c2cd26e"
 TYPES = {"engineering-note", "explainer", "comparison", "search-page"}
 FRONT = re.compile(r"^---\n(.*?)\n---\n", re.S)
 FOOTER = ("\n---\n\n*Published by the UCompute project. This note was drafted and checked by UCompute's automated "
@@ -50,13 +53,21 @@ def build():
     idx += [f"- [{m['title']}]({m['id']}.md)" for m, _ in items]
     idx += ["", "Feed: [feed.xml](feed.xml). Each note states the hardware and builds it rests on; numbers are never performance claims."]
     (OUT / "README.md").write_text("\n".join(idx) + "\n")
+    (OUT / "_config.yml").write_text(
+        "title: UCompute engineering notes\n"
+        "description: Technical notes from the UCompute project. In development; no public release. "
+        "Apache-2.0; source not yet published.\n"
+        "url: https://ucompute.github.io\nbaseurl: /notes\n"
+        "plugins:\n  - jekyll-sitemap\n  - jekyll-relative-links\n  - jekyll-optional-front-matter\n  - jekyll-titles-from-headings\n"
+        "include: [" + INDEXNOW_KEY + ".txt]\n")
+    (OUT / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY + "\n")
     entries = "".join(
-        f"<entry><title>{html.escape(m['title'])}</title><id>{BASE}{m['id']}.md</id>"
-        f"<link href=\"{BASE}{m['id']}.md\"/><updated>{m['id'][:10]}T00:00:00Z</updated></entry>\n" for m, _ in items)
+        f"<entry><title>{html.escape(m['title'])}</title><id>{SITE}{m['id']}.html</id>"
+        f"<link href=\"{SITE}{m['id']}.html\"/><updated>{m['id'][:10]}T00:00:00Z</updated></entry>\n" for m, _ in items)
     newest = max((m["id"][:10] for m, _ in items), default="2026-10-30")
     (OUT / "feed.xml").write_text(
         "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<feed xmlns=\"http://www.w3.org/2005/Atom\">"
-        f"<title>UCompute engineering notes</title><id>{BASE}</id><updated>{newest}T00:00:00Z</updated>\n{entries}</feed>\n")
+        f"<title>UCompute engineering notes</title><id>{SITE}</id><link href=\"{SITE}\"/><updated>{newest}T00:00:00Z</updated>\n{entries}</feed>\n")
     return items
 
 def main():

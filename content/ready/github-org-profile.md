@@ -20,6 +20,6 @@ UCompute (ucompute.org): run small open AI models on your own computer, and pair
 
 *Demonstrated on an Apple M2 Mac (macOS 26.2) and a Windows 11 laptop with an Intel Arc 140V GPU; both platforms are experimental; other platforms are not yet available, and most are planned. Downloading a model or the engine uses the internet.*
 
-**Read:** [engineering notes](https://github.com/ucompute/notes): how pairing works, what the audit log records, how the memory-fit estimate works, and what llama.cpp's own README says about its RPC backend.
+**Read:** [engineering notes](https://ucompute.github.io/notes/) (source: [ucompute/notes](https://github.com/ucompute/notes)): how pairing works, what the audit log records, how the memory-fit estimate works, and what llama.cpp's own README says about its RPC backend.
 
 *Parts of this organization are maintained by UCompute's automated growth workstream, which writes from the project's engineering evidence and is reviewed in scheduled sessions, not in real time.*
