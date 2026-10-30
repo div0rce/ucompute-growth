@@ -1,0 +1,46 @@
+# UCompute claims registry
+
+Generated from `claims/registry.json` by `scripts/render_claims.py`. Snapshot: **2026-10-23b draft 3**, updated 2026-10-30.
+
+Source: evidence/upstream/capability-snapshot.md (engineering docs/capabilities/snapshot-2026-10-23b.md, draft 3) sections 8 and 9; website reference/claims.json; engineering docs/DECISIONS.md D-019..D-031
+
+**Rule:** Every public sentence about the product maps to one claim id below and keeps its qualifier beside it. Labels: verified = Verified reality on the named hardware; scope = committed engineering scope, not built; direction = strategic hypothesis, always introduced as direction.
+
+| id | label | claim | qualifier (keep beside the claim) | evidence |
+|---|---|---|---|---|
+| `no-release` | verified | UCompute is in development. There is no public release or download yet. | — | snapshot 8.1; B-007; Gate G |
+| `run-local` | verified | UCompute Run runs small open models on your own computer, with no account and no UCompute service. By default, your requests stay on your device. | Demonstrated on an Apple M2 Mac (macOS 26.2) and a Windows 11 laptop with an Intel Arc 140V GPU; both platforms are experimental; other platforms are not yet available, and most are planned. Downloading a model or the engine uses the internet. | snapshot 8.2; F-01-02, F-06-02, F-06-06 |
+| `catalog-fit` | verified | Before you download a model, UCompute shows its size, its license and whether it fits in your computer's memory. Every download is checked against a pinned SHA-256 hash. | Demonstrated on an Apple M2 Mac (macOS 26.2); the platform is experimental. Memory-fit estimates are calibrated for Apple Silicon Macs. | snapshot 8.3; F-10-02, F-05-04, F-01-05, F-01-03 |
+| `openai-clients` | verified | UCompute's local API works with the official OpenAI Python and JavaScript client libraries; only the base URL changes. | Demonstrated on an Apple M2 Mac (macOS 26.2); the platform is experimental. Chat and completions with streaming; tool calling is not yet verified. | snapshot 8.4; F-09-01, F-09-02 |
+| `mesh-pair-choose` | verified | UCompute Mesh lets you pair your own devices with a short code and choose which one runs a request. Each request runs whole on one device; UCompute does not split a model across devices. | Tested with development builds between one Apple M2 Mac and one Windows 11 laptop (Intel Arc 140V) on the same Wi-Fi network or phone hotspot, and between that Mac and one Linux desktop computer (Ubuntu, processor only, a development build of the background program compiled and started by hand; no app or installer) on a home Wi-Fi network. Linux is a planned platform, not a supported one. Pairing between two Macs is not yet shown to work. | snapshot 8.5; F-02-02, Mode B |
+| `demo-2026-10-19` | verified | In a test on 19 October 2026 (UTC), development builds of the desktop app on a MacBook Air (Apple M2, macOS 26.2) and a Windows 11 laptop (Intel Core Ultra 7 258V, Arc 140V) were paired through their own windows on one phone hotspot, and the Windows app ran a prompt on the Mac (the Mac's permission for the laptop to run prompts was set through the Mac's local API, not its window). A request in the other direction, sent through the Mac's local API rather than its app window, ran on the laptop's GPU. Each request ran whole on one device; no model was split. The test model was a 15-million-parameter fixture, so speeds from it are not performance figures. | Use this exact text. | snapshot 8.6; desktop-two-machine-2026-10-19 |
+| `transport` | verified | Traffic between paired devices is encrypted and both ends are authenticated: QUIC with TLS 1.3 and device keys pinned at pairing. Your device will not send work to a device you have not paired. | If a page says how the encryption was checked, add: The check that captured traffic carries no readable prompt text ran on one computer. The sentence 'A device you have not paired cannot send you work' carries its own qualifier: Tested with several instances on one computer, not yet between two machines. | snapshot 8.7; F-02-03, F-06-03, F-02-01, F-06-02 |
+| `local-only` | verified | Your prompts and responses stay on your device unless you pair another device and choose to run a request there. Local-only mode refuses every off-device request. | Downloading a model or the engine uses the internet. | snapshot 8.8; F-06-02, F-10-10, F-06-07 |
+| `revocation` | verified | You can revoke a paired device at any time. In our two-machine tests, its connection closed less than a tenth of a second after the revoke (between 0.002 s and 0.061 s in four runs), and its next request was refused. | Never say what the revoked device is told. | snapshot 8.9; F-06-05 |
+| `audit` | verified | Audit logs record each off-device request without the prompt or the response. | — | snapshot 8.10; F-06-10 |
+| `device-sees-prompt` | verified | The device that runs your request processes your prompt. Pair only devices you control or trust. | Required context whenever transport or local-only is described. | snapshot 8.11; spec 26.1 |
+| `platforms` | verified | No platform is declared supported yet. macOS 26.2 on Apple M2 and Windows 11 on an Intel Core Ultra 7 258V with Arc 140V are experimental; Linux, other GPUs and phones (as clients) are planned. | — | snapshot 8.12; spec 27.1 |
+| `planned` | scope | Planned, with no date: running one model across several devices, an opt-in open network (UCompute Swarm), compute credits and an optional managed service (UCompute Cloud). None of these exists today. | — | snapshot 8.13; F-03-*, U-05 NOT_STARTED; ADR-0005 Proposed |
+| `direction` | direction | Our direction: Compute better. Together. Use your own compute for free. Share compute to earn credits. Let trusted people use your hardware for free. Spend credits to access compensated compute. Purchase credits when you need more. Share your compute. Not your computer. | Introduce with 'Our direction:' or 'What we are building toward:'. Add: Credits do not exist yet. Free does not mean unlimited. Never next to download, sign-up or 'available' wording. | snapshot 8.14; D-019; spec 26.5, 29.5 |
+| `license` | verified | UCompute's code is licensed under Apache-2.0. The source has not been published yet. | Both sentences travel together. | snapshot 8.15; D-009; B-007 |
+| `connect-by-address` | verified | Where a network blocks automatic discovery, as some campus Wi-Fi does, paired devices can still connect by address. An address alone is never trusted: the device must present the key it was paired with. | Reconnecting by address was shown between one Mac and one Windows laptop on the same campus network, with development builds. | snapshot 8.16; F-02-02, F-02-03 |
+| `windows-firewall` | verified | On Windows, UCompute asks before it lets your paired devices reach it through the firewall, and the rule it adds covers only its own program, on private networks. | Shown in October 2026 on one Windows 11 laptop with a development build (later builds not yet re-checked); Windows asks for administrator approval. | snapshot 8.17 |
+| `private-alpha` | verified | A private alpha build for macOS on Apple Silicon exists for an owner-managed cohort. It is not a public release and is not open for sign-up. | Never name testers or their number, never link the file, never describe the cohort as open. Source: D-031 (2026-10-30), website LAUNCH.md. | engineering D-031; website docs/LAUNCH.md |
+| `engine` | verified | UCompute runs models through a pinned release of llama.cpp (MIT), downloaded on first use and verified against its published hash; UCompute does not write its own inference kernels. | — | engineering README; ADR-0002; snapshot 3.1 |
+
+## Numbers
+
+A number appears only with its model, its hardware, a plain-language build qualifier ('development build, October 2026') and, for tokens per second, the words 'path check, not performance'.
+
+| figure | model | hardware | scope |
+|---|---|---|---|
+| 122.7 / 84.0 tok/s (Metal / CPU), TTFT 36.8 / 158.6 ms | qwen2.5-0.5b-instruct q4_k_m | Apple M2 MacBook Air | path check, 3 runs |
+| revocation closed the connection in 0.002 s to 0.061 s | n/a | Mac-Windows and Mac-Linux pairs | four two-machine runs |
+| memory estimate within -4.6 % to +8.9 % of measured, 14 combinations | stories260K to qwen2.5-1.5b | Apple M2 | calibrated for llama.cpp b11609 on Apple Silicon |
+
+## How a new snapshot is adopted
+
+1. `scripts/sync_evidence.sh` refreshes `evidence/upstream/`.
+2. Diff `capability-snapshot.md` sections 8 and 9 against this registry; edit `claims/registry.json` (never a page first).
+3. `python3 scripts/render_claims.py && python3 scripts/claims_lint.py content --strict`.
+4. Re-lint every file in `content/ready` and `content/published`; withdraw or amend anything a changed claim no longer supports; log it in `journal/LOG.md`.
