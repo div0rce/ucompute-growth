@@ -22,4 +22,6 @@ UCompute (ucompute.org): run small open AI models on your own computer, and pair
 
 **Read:** [engineering notes](https://ucompute.github.io/notes/) (source: [ucompute/notes](https://github.com/ucompute/notes)): how pairing works, what the audit log records, how the memory-fit estimate works, and what llama.cpp's own README says about its RPC backend.
 
+**Contact:** hello@ucompute.org. Please send anything security-related there rather than posting it publicly.
+
 *Parts of this organization are maintained by UCompute's automated growth workstream, which writes from the project's engineering evidence and is reviewed in scheduled sessions, not in real time.*

@@ -18,9 +18,9 @@ INDEXNOW_KEY = "b1d8674aecd8b2fc96497ccb3c2cd26e"
 TYPES = {"engineering-note", "explainer", "comparison", "search-page"}
 FRONT = re.compile(r"^---\n(.*?)\n---\n", re.S)
 FOOTER = ("\n---\n\n*Published by the UCompute project. This note was drafted and checked by UCompute's automated "
-          "growth workstream against the project's engineering evidence. Please do not post suspected security problems "
-          "publicly; a private reporting route will be listed here when it exists. UCompute is in development. There is no "
-          "public release or download yet.*\n")
+          "growth workstream against the project's engineering evidence. Corrections and questions: hello@ucompute.org. "
+          "Please send anything security-related there rather than posting it publicly. UCompute is in development. There "
+          "is no public release or download yet.*\n")
 
 def parse(text):
     m = FRONT.match(text)
