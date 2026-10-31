@@ -11,3 +11,4 @@
 | 2026-10-30 23:54 UTC | 2026-11-02-openai-client-base-url | GitHub notes | https://github.com/ucompute/notes/blob/main/2026-11-02-openai-client-base-url.md |
 | 2026-10-30 23:54 UTC | 2026-11-03-what-0000-exposes | GitHub notes | https://github.com/ucompute/notes/blob/main/2026-11-03-what-0000-exposes.md |
 | 2026-10-31 00:05 UTC | notes site (GitHub Pages) | GitHub notes | https://ucompute.github.io/notes/ (sitemap https://ucompute.github.io/notes/sitemap.xml, feed https://ucompute.github.io/notes/feed.xml) |
+| 2026-10-31 00:52 UTC | 2026-10-31-verify-a-gguf-download | notes site | https://ucompute.github.io/notes/2026-10-31-verify-a-gguf-download.html |

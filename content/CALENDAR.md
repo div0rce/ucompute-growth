@@ -20,4 +20,5 @@ Dates slipped because the founding session's draft review was interrupted. One p
 
 ## Published 2026-10-30 23:54 UTC
 The six ready notes and the organization profile are public (`content/published/INDEX.md`). Bluesky posts in `content/ready/bluesky-first-posts.md` now have live link targets and wait only for the account (owner).
+- 2026-10-31 00:52 UTC: published `2026-10-31-verify-a-gguf-download` (search query group 7: verifying model downloads). Next in the queue (`research/SEARCH.md` §4, `research/BARRIERS.md` §4.1): "Use your desktop's GPU from your laptop without opening a port to everyone on the Wi-Fi"; "How UCompute compares with NVIDIA PAIR, fact by fact"; "Windows firewall consent: what UCompute asks and what the rule covers". One a day at most, each with the independent fact-check.
 

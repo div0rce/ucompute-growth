@@ -114,7 +114,7 @@
   },
   "engine": {
    "label": "verified",
-   "text": "UCompute runs models through a pinned release of llama.cpp (MIT), downloaded on first use and verified against its published hash; UCompute does not write its own inference kernels.",
+   "text": "UCompute runs models through a pinned release of llama.cpp (MIT), downloaded on first use and verified against a pinned SHA-256 hash (the digest published for that release); UCompute does not write its own inference kernels.",
    "qualifier": "",
    "evidence": "engineering README; ADR-0002; snapshot 3.1"
   },
@@ -126,7 +126,7 @@
   },
   "download-integrity": {
    "label": "verified",
-   "text": "UCompute's catalog pins each model to a SHA-256 hash and to the repository revision it is downloaded from. A download whose bytes do not match is rejected and the partial file deleted; a plain http:// URL is refused before any request is made; an interrupted download resumes; and a model already on disk is hashed again against its manifest before every load.",
+   "text": "UCompute's catalog pins each model to a SHA-256 hash and to the repository revision it is downloaded from. A download whose bytes do not match is rejected and the partial file deleted; a plain http:// URL is refused before any request is made; an interrupted download continues from where it stopped when you start it again; and a model already on disk is hashed again against its manifest each time the engine loads it, so a mismatch stops the load before the engine starts.",
    "qualifier": "Demonstrated on an Apple M2 Mac (macOS 26.2) with development builds, October 2026; the platform is experimental. A matching hash proves the bytes are the ones the catalog pinned; it does not prove who trained the model or that its contents are safe.",
    "evidence": "snapshot 2026-10-23b section 3.1 row 'Verified model downloads' (F-01-05, F-05-01, F-05-02, F-05-04; ca298bd; Mac-M2); engineering docs/VERIFICATION.md F-01-05 (corrupted_byte_is_rejected_and_partial_deleted, http_url_refused_before_any_network, cut_at_half_then_resume, tampered_blob_is_integrity_mismatch_before_any_spawn); engineering README (catalog: revision + SHA-256 + license)"
   }
