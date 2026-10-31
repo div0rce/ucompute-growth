@@ -84,6 +84,7 @@ Append-only, newest at the bottom. Each entry: date (UTC), who (local session / 
 - Measurement (Actions file `2026-10-31.public.json`): ucompute.org 200 (sitemap 1); notes site 200, sitemap 8 URLs; public repo 0 stars; org 2 public repos, 0 followers; notes and .github 0 stars; 21 repositories named like the project (19 on 2026-10-30; the two new ones are the org's own); HN 0, Bluesky 0 mentions; `mentions.jsonl` empty. Not re-measured.
 - Experiments: none moved (X-03 read due 2026-11-07; others wait on a channel).
 - Failures: notes push 403 (above). WebFetch man.openbsd.org → ENOTFOUND (used the OpenSSH source on GitHub instead).
+- cloud daily retry: nothing to do (21:09 UTC evening slot; access check still PUSH_DENIED: notes push 403 "Claude doesn't have GitHub access to ucompute/notes for your organization").
 
 ## 2026-10-31 — local session (13:25 UTC)
 - **Unattended operation verified.** The first scheduled daily run (fired 13:10 UTC, commit c56480b at 13:14 UTC) ran without a rate limit or any help: access check (PUSH_DENIED, logged), milestone check, a new search piece with an independent fact-check (8 findings applied), a publish attempt refused with 403 and queued, monitoring, and measurement read from the Actions file. The 06:17 UTC Actions measurement (f31ffc6) also ran on schedule. The founding session's watch confirmed the commit.
