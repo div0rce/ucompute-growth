@@ -49,7 +49,7 @@ A cloud session that cannot push to `main` pushes a branch `growth/<date>` and o
 ## 6. Scheduled execution (how this runs without a chat)
 - Publishing to the notes site (same procedure local or cloud):
   1. `python3 scripts/build_notes.py` (fails closed on any lint finding).
-  2. The `ucompute/notes` checkout: in cloud runs it is cloned next to this repository (`../notes`, i.e. `/home/user/notes`); in local sessions clone it to the scratchpad.
+  2. The `ucompute/notes` checkout: in cloud runs both repositories are attached, the session starts in `/home/user`, and the checkouts are `/home/user/ucompute-growth` and `/home/user/notes`; in local sessions clone `ucompute/notes` to the scratchpad.
   3. In that checkout: delete the top-level non-hidden files, copy `dist/notes/*` and `dist/notes/_config.yml` in, then `git -c user.name=UCompute -c user.email=noreply@ucompute.org commit -am "<note title>"` (use `git add -A` for new files) and `git push origin HEAD:main`.
   4. A refused push is a failure to log (with the exact error) and the piece stays queued in `content/CALENDAR.md`; nothing else changes.
   5. Search submission is automatic: the daily `public-measurement` Actions job submits new sitemap URLs to IndexNow (`scripts/indexnow_submit.py --new-only`), because cloud sandboxes may not reach api.indexnow.org.
