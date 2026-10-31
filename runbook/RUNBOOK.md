@@ -47,7 +47,13 @@ git add -A && git commit -m "<date>: <what changed>" && git push origin main
 A cloud session that cannot push to `main` pushes a branch `growth/<date>` and opens a pull request titled with the date; the next local session merges it.
 
 ## 6. Scheduled execution (how this runs without a chat)
-- Publishing to the notes site: `python3 scripts/build_notes.py` → push `dist/notes/` to `ucompute/notes` as `UCompute <noreply@ucompute.org>` → wait for the Pages build → `python3 scripts/indexnow_submit.py` (search-engine submission, no account). Cloud runs need OWNER-ASKS 10 to push there.
+- Publishing to the notes site (same procedure local or cloud):
+  1. `python3 scripts/build_notes.py` (fails closed on any lint finding).
+  2. The `ucompute/notes` checkout: in cloud runs it is cloned next to this repository (`../notes`, i.e. `/home/user/notes`); in local sessions clone it to the scratchpad.
+  3. In that checkout: delete the top-level non-hidden files, copy `dist/notes/*` and `dist/notes/_config.yml` in, then `git -c user.name=UCompute -c user.email=noreply@ucompute.org commit -am "<note title>"` (use `git add -A` for new files) and `git push origin HEAD:main`.
+  4. A refused push is a failure to log (with the exact error) and the piece stays queued in `content/CALENDAR.md`; nothing else changes.
+  5. Search submission is automatic: the daily `public-measurement` Actions job submits new sitemap URLs to IndexNow (`scripts/indexnow_submit.py --new-only`), because cloud sandboxes may not reach api.indexnow.org.
+  6. Record the site URL (`https://ucompute.github.io/notes/<id>.html`) in `content/published/INDEX.md` and the log.
 - GitHub Actions in this repository (no Claude usage, no Mac): `claims-lint` runs the lint and self-tests on every push; `public-measurement` runs daily at 06:17 UTC, writes `analytics/measurements/<date>.public.json` (site, public repository, organization, repositories named like the project, exact-match Hacker News and Bluesky mentions) and appends new mentions to `analytics/mentions.jsonl`, and fails with an alert when no cloud daily entry exists for 48 hours. GitHub emails the workflow's owner on failure.
 - Cloud routine **ucompute-growth-daily**: daily, runs sections 0, 2 and 5 on a fresh clone.
 - Cloud routine **ucompute-growth-weekly**: Mondays, runs sections 0, 3 and 5.

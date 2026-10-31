@@ -22,6 +22,8 @@ jobs:
           set +e
           python3 scripts/measure_public.py
           echo "rc=$?" >> "$GITHUB_OUTPUT"
+      - name: Submit new notes-site URLs to IndexNow
+        run: python3 scripts/indexnow_submit.py --new-only || echo "::warning::IndexNow submission failed; retried tomorrow"
       - name: Commit results
         run: |
           git config user.name "UCompute Growth (measurement)"

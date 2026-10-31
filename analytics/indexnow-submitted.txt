@@ -1,0 +1,7 @@
+https://ucompute.github.io/notes/
+https://ucompute.github.io/notes/2026-10-30-pairing-explainer.html
+https://ucompute.github.io/notes/2026-10-30-what-the-audit-log-records.html
+https://ucompute.github.io/notes/2026-10-31-loopback-rpc-vs-authenticated-transport.html
+https://ucompute.github.io/notes/2026-11-01-memory-fit-explainer.html
+https://ucompute.github.io/notes/2026-11-02-openai-client-base-url.html
+https://ucompute.github.io/notes/2026-11-03-what-0000-exposes.html
