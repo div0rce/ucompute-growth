@@ -1,6 +1,6 @@
 # State
 
-Updated: 2026-10-30 23:54 UTC (first publication)
+Updated: 2026-10-31 13:45 UTC (cloud daily)
 
 ## Where things stand
 - Workspace: private repo `ucompute-growth`, pushed. Charter, runbook, claims registry (20 claims incl. `audit-detail`) + lint, channel registry, owner asks, pipeline, experiments, analytics baseline, handoffs.
@@ -20,7 +20,14 @@ Updated: 2026-10-30 23:54 UTC (first publication)
 - weekly: `trig_01Xxy1PgCyyTQAent7Ddfz2Q` (cron 0 14 * * 1 UTC) — https://claude.ai/code/routines/trig_01Xxy1PgCyyTQAent7Ddfz2Q; verified end to end by a manual run on 2026-10-30 (W44 report).
 - Health: first successful daily run 2026-10-30 ~23:45 UTC (pushed). Earlier 2026-10-30 slots were rate-limited. Next scheduled: 2026-10-31 13:07 UTC. Cloud sessions cannot reach ucompute.org, the public repo API, docs.ollama.com, lmstudio.ai, blogs.cisco.com or www.elastic.co; measurement no longer depends on that (GitHub Actions `public-measurement`, which also alerts the owner after 48 h without a cloud daily entry). For quotations from blocked hosts, use the research files that recorded them.
 
+## Since the last rewrite
+- 2026-10-31 00:52 UTC: seventh note live (https://ucompute.github.io/notes/2026-10-31-verify-a-gguf-download.html); claim `download-integrity` added; contact hello@ucompute.org on every note.
+- 2026-10-31 cloud daily: eighth piece `2026-11-04-other-computer-without-open-port` READY (independent fact-check applied) and **queued**: the cloud cannot push to `ucompute/notes` (PUSH_DENIED, 403, OWNER-ASKS 10). Routine health: daily ran on schedule today (first clean scheduled run).
+
 ## Next actions (ranked, for the daily runs)
+- **Publish the queued note** `2026-11-04-other-computer-without-open-port` the first time the access check says PUSH_OK (or in the next local session): `python3 scripts/build_notes.py`, runbook 6, then INDEX.md and the log.
+- Next piece after that: "How UCompute compares with NVIDIA PAIR, fact by fact" (re-read PAIR README pairing section first; six-digit pairing is parity), then "Windows firewall consent".
+- llama.cpp RPC CVEs (OPPORTUNITIES 2026-10-31): a local session reads the ggml-org advisories and decides whether the RPC note needs a dated update.
 - **Publishing loop (GitHub org, AUTHORIZED):** each new piece that passes the fact-check is published to the notes site in the same run, by runbook section 6 (cloud checkout at `../notes`). Until the owner's Claude GitHub App install on `ucompute/notes` is confirmed by a successful push, expect `403` and keep the piece queued. Never more than one new note a day.
 - **Read X-03 on 2026-11-07** from the Actions files.
 0. Routine health: if two consecutive UTC days pass with no "cloud daily" entry in `journal/LOG.md`, record a failure here and in OWNER-ASKS ("check the routines at https://claude.ai/code/routines"), with the run log's error.
