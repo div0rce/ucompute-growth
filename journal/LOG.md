@@ -101,3 +101,4 @@ Append-only, newest at the bottom. Each entry: date (UTC), who (local session / 
 - Measurement: no `analytics/measurements/2026-11-01.public.json` yet at 13:40 UTC (the 2026-10-31 file landed at 12:44 UTC, so the scheduled job may still be queued); `analytics/mentions.jsonl` does not exist (no mentions recorded). Last values (2026-10-31) unchanged in the log above. Not re-measured.
 - Experiments: none moved (X-03 read due 2026-11-07; others wait on a channel).
 - Failures: notes push 403 (above); `api.github.com/repos/NVIDIA/Personal-AI-Router/releases` → "GitHub access to this repository is not enabled for this session" and github.com releases page 403 (worked around: no release dates stated).
+- cloud daily retry: nothing to do (evening slot; access check still PUSH_DENIED: notes push 403 "Claude doesn't have GitHub access to ucompute/notes for your organization").
