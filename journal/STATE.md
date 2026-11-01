@@ -1,6 +1,6 @@
 # State
 
-Updated: 2026-10-31 13:45 UTC (cloud daily)
+Updated: 2026-11-01 13:45 UTC (cloud daily)
 
 ## Where things stand
 - Workspace: private repo `ucompute-growth`, pushed. Charter, runbook, claims registry (20 claims incl. `audit-detail`) + lint, channel registry, owner asks, pipeline, experiments, analytics baseline, handoffs.
@@ -22,21 +22,18 @@ Updated: 2026-10-31 13:45 UTC (cloud daily)
 
 ## Since the last rewrite
 - 2026-10-31 00:52 UTC: seventh note live (https://ucompute.github.io/notes/2026-10-31-verify-a-gguf-download.html); claim `download-integrity` added; contact hello@ucompute.org on every note.
+- 2026-11-01 cloud daily: ninth piece `2026-11-05-ucompute-and-nvidia-pair` ("UCompute Mesh and NVIDIA PAIR, fact by fact") READY after the independent fact-check (14 findings applied) and **queued** behind the eighth; access check still PUSH_DENIED (403). Routine health: daily ran on schedule (second clean scheduled run). No 2026-11-01 Actions measurement file yet at 13:40 UTC; next run confirms it landed.
 - 2026-10-31 cloud daily: eighth piece `2026-11-04-other-computer-without-open-port` READY (independent fact-check applied) and **queued**: the cloud cannot push to `ucompute/notes` (PUSH_DENIED, 403, OWNER-ASKS 10). Routine health: daily ran on schedule today (first clean scheduled run).
 
 ## Next actions (ranked, for the daily runs)
-- **Publish the queued note** `2026-11-04-other-computer-without-open-port` the first time the access check says PUSH_OK (or in the next local session): `python3 scripts/build_notes.py`, runbook 6, then INDEX.md and the log.
-- Next piece after that: "How UCompute compares with NVIDIA PAIR, fact by fact" (re-read PAIR README pairing section first; six-digit pairing is parity), then "Windows firewall consent".
-- llama.cpp RPC CVEs (OPPORTUNITIES 2026-10-31): a local session reads the ggml-org advisories and decides whether the RPC note needs a dated update.
-- **Publishing loop (GitHub org, AUTHORIZED):** each new piece that passes the fact-check is published to the notes site in the same run, by runbook section 6 (cloud checkout at `../notes`). Until the owner's Claude GitHub App install on `ucompute/notes` is confirmed by a successful push, expect `403` and keep the piece queued. Never more than one new note a day.
+- **Publish the two queued notes, one per day,** the first time the access check says PUSH_OK (or in the next local session): first `2026-11-04-other-computer-without-open-port`, next day `2026-11-05-ucompute-and-nvidia-pair`. `python3 scripts/build_notes.py` (it builds every ready note; nine today), runbook 6, then INDEX.md and the log. Before publishing the PAIR piece, re-read PAIR's README and SECURITY.md (both change) and adjust quotes.
+- Next piece: "Windows firewall consent: what UCompute asks and what the rule covers" (`windows-firewall`, `platforms`), then "What 'verified' means: SHA-256 before the engine opens the file" if not already covered by the GGUF-download note.
+- Measurement: confirm `analytics/measurements/2026-11-01.public.json` landed; if two days are missing, record a failure and an owner ask (Actions schedule).
+- llama.cpp CVEs (OPPORTUNITIES 2026-10-31, 2026-11-01): a local session checks the advisories against pinned build b11609 and decides whether the RPC note needs a dated update.
 - **Read X-03 on 2026-11-07** from the Actions files.
+- Weekly report `analytics/weekly/2026-W45.md` on Monday 2026-11-02 (weekly routine).
 0. Routine health: if two consecutive UTC days pass with no "cloud daily" entry in `journal/LOG.md`, record a failure here and in OWNER-ASKS ("check the routines at https://claude.ai/code/routines"), with the run log's error.
-1. Channel check every run: publish from `content/ready/` only when `channels/REGISTRY.md` shows an AUTHORIZED row quoting the owner's words. When the GitHub organization is granted: draft the organization profile README (disambiguation wording in `research/SEARCH.md` §5.4; claims-clean; lint) into `content/ready/`, then publish per the registry procedure.
-2. Owner grants: when a grant line arrives (GitHub org, Bluesky, Fosstodon, dev.to), record it verbatim in `channels/REGISTRY.md`, then publish per the procedure. For the GitHub org, first draft the profile README (disambiguation wording in `research/SEARCH.md` §5.4).
-3. Next pieces, one per run, from `research/SEARCH.md` §4 and `research/BARRIERS.md` §4.1, in this order: (a) DONE 2026-10-30 (0.0.0.0 self-check, ready); (b) "What 'verified' means: SHA-256 before the engine opens the file" (`catalog-fit`, `engine`); (c) "Windows: the firewall consent step" (`windows-firewall`, `platforms`). Each: draft → fact-check against `evidence/upstream/` and the engineering sources named in the registry → lint → ready.
-4. Handoffs written 2026-10-30 (engineering snapshot rows; website docs pages). Next: watch `evidence/upstream/` for answers; when a snapshot answers an item, add the claim to the registry and revise the affected pieces.
-5. Experiments: X-04 variants are revised; X-02 and X-04 stay blocked on a channel. Record in `experiments/BACKLOG.md` anything learned.
-6. Monitoring into `pipeline/OPPORTUNITIES.md`; measurement ("not measured" from the cloud until OWNER-ASKS 8).
-7. Watch `evidence/upstream/` for the final capability snapshot and the Windows post-fix run (local sessions sync; cloud runs use the mirror).
-8. Held drafts: source-publication announcement and release communication (only when the gates move).
-9. Weekly report `analytics/weekly/2026-W45.md` on Monday 2026-11-02 14:05 UTC.
+1. Channel check every run: publish only where `channels/REGISTRY.md` shows AUTHORIZED. Owner grants for Bluesky, Fosstodon, dev.to (OWNER-ASKS 3) unlock `content/ready/bluesky-first-posts.md`.
+2. Handoffs (2026-10-30 engineering snapshot rows, website docs pages, 2026-10-31 security contact): watch `evidence/upstream/` for answers. Candidate registry addition to request: pairing-code length and "pairing is separate from permission" as explicit claims (the PAIR piece had to fall back to snapshot section 1 wording).
+3. Experiments: X-02 and X-04 blocked on a channel.
+4. Held drafts: source-publication announcement and release communication (only when the gates move).
