@@ -1,0 +1,32 @@
+name: bluesky-post
+on:
+  schedule:
+    - cron: "37 15 * * *"   # daily 15:37 UTC, after the daily routine may have queued a post
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: bluesky
+  cancel-in-progress: false
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Post the next queued post (caps, lint and live links checked)
+        env:
+          BSKY_HANDLE: ucompute.org
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+        run: |
+          if [ -z "$BSKY_APP_PASSWORD" ]; then echo "::warning::BSKY_APP_PASSWORD secret not set (OWNER-ASKS 11); nothing posted"; exit 0; fi
+          python3 scripts/bsky_post.py
+      - name: Commit the ledger
+        run: |
+          git config user.name "UCompute Growth (bluesky)"
+          git config user.email "growth-bluesky@ucompute.invalid"
+          git add analytics/
+          git diff --cached --quiet && exit 0
+          git commit -m "$(date -u +%F): bluesky post (actions)"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0; sleep 10; done
+          exit 1

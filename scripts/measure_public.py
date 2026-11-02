@@ -86,10 +86,24 @@ def bsky():
              "text": (p.get("record", {}).get("text") or "")[:200]} for p in d.get("posts", [])]
     return {"count": len(hits), "hits": hits}
 
+def bluesky():
+    """Public counts for @ucompute.org and engagement on every post in analytics/bluesky-posted.jsonl."""
+    _, p = get("https://api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=ucompute.org")
+    out = {k: p.get(k) for k in ("followersCount", "followsCount", "postsCount")}
+    out["bot_label"] = any(l.get("val") == "bot" for l in p.get("labels", []))
+    led = ROOT / "analytics" / "bluesky-posted.jsonl"
+    uris = [json.loads(l)["uri"] for l in led.read_text().splitlines() if l.strip()] if led.exists() else []
+    if uris:
+        q = "&".join("uris=" + urllib.parse.quote(u, safe="") for u in uris[-25:])
+        _, d = get(f"https://api.bsky.app/xrpc/app.bsky.feed.getPosts?{q}")
+        out["posts"] = {x["uri"].rsplit("/", 1)[-1]: {k: x.get(k) for k in ("likeCount", "repostCount", "replyCount", "quoteCount")}
+                        for x in d.get("posts", [])}
+    return out
+
 def main():
     today = dt.datetime.now(dt.timezone.utc).date()
     out = {"date": today.isoformat(), "source": "github-actions measure_public.py",
-           "site": safe(site), "notes_site": safe(notes_site), "public_repo": safe(repo), "org": safe(org), "org_repos": safe(published),
+           "site": safe(site), "notes_site": safe(notes_site), "public_repo": safe(repo), "org": safe(org), "org_repos": safe(published), "bluesky_account": safe(bluesky),
            "repos_named_ucompute": safe(name_repos), "hn": safe(hn), "bsky": safe(bsky)}
     mdir = ROOT / "analytics" / "measurements"; mdir.mkdir(parents=True, exist_ok=True)
     mentions = ROOT / "analytics" / "mentions.jsonl"

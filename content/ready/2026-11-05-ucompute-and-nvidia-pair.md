@@ -6,6 +6,7 @@ audience: multi-device-developers, local-ai-developers
 channel_intent: github-org (notes site), website-handoff, later syndication with canonical link
 claims: [no-release, mesh-pair-choose, transport, local-only, device-sees-prompt, audit, audit-detail, revocation, connect-by-address, platforms, engine, license]
 status: ready
+publish_after: 2026-11-03
 review: independent fact-check (fresh subagent, scripts/prompts/factcheck.md) 2026-11-01, 14 findings (8 major, 6 minor), all applied
 sources: https://github.com/NVIDIA/Personal-AI-Router/blob/main/README.md (read 2026-11-01 via raw.githubusercontent.com); https://github.com/NVIDIA/Personal-AI-Router/blob/main/SECURITY.md (read 2026-11-01); research/COMPETITORS.md (PAIR row, 2026-10-30); claims/REGISTRY.md; evidence/upstream/capability-snapshot.md section 1 item 3 and the single-host rows (pairing separate from permission)
 ---

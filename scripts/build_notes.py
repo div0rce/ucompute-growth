@@ -32,10 +32,12 @@ def parse(text):
             k, v = line.split(":", 1); meta[k.strip()] = v.strip()
     return meta, text[m.end():]
 
-def pieces():
+def pieces(today=None):
+    """Ready notes, skipping any whose `publish_after: YYYY-MM-DD` is later than today (the one-a-day cap)."""
+    today = today or __import__("datetime").datetime.now(__import__("datetime").timezone.utc).date().isoformat()
     for f in sorted(SRC.glob("*.md")):
         meta, body = parse(f.read_text())
-        if meta.get("status") == "ready" and meta.get("type") in TYPES:
+        if meta.get("status") == "ready" and meta.get("type") in TYPES and meta.get("publish_after", "") <= today:
             yield meta, body.strip() + "\n"
 
 def build():
@@ -83,6 +85,7 @@ def selftest():
     meta, body = parse("---\nid: x\ntitle: T: sub\nstatus: ready\n---\n# H\n")
     assert meta == {"id": "x", "title": "T: sub", "status": "ready"} and body == "# H\n"
     assert parse("no front\n") == ({}, "no front\n")
+    assert "" <= "2026-11-02" and not ("2026-11-03" <= "2026-11-02")  # publish_after comparison is ISO-date ordering
     print("build_notes selftest: ok")
 
 if __name__ == "__main__":
