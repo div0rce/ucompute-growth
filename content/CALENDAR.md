@@ -1,6 +1,6 @@
 # Distribution calendar
 
-No public channel is authorized yet (`channels/REGISTRY.md`). The calendar therefore schedules **readiness**, not publication: each piece is made ready so that the day a channel or gate opens, publication is a one-step action with no new writing.
+Two channels are AUTHORIZED (`channels/REGISTRY.md`): the GitHub organization's notes site (one new note a day at most, released by `publish_after`) and Bluesky `@ucompute.org` (Actions job, 1 post a day, 4 a week). Everything else stays readiness-only. The table below is the historical readiness record; the current week's plan is the last section.
 
 | Target state | Piece (content/ id) | Audience | Waits on | Ready by |
 |---|---|---|---|---|
@@ -24,3 +24,14 @@ The six ready notes and the organization profile are public (`content/published/
 - 2026-10-31 13:40 UTC (cloud daily): `2026-11-04-other-computer-without-open-port` ("Running a prompt on your other computer without opening a port to everyone on the Wi-Fi", SEARCH.md rank 2) READY after the independent fact-check. **Queued for the notes site**: the cloud push to `ucompute/notes` was refused (403, OWNER-ASKS 10); the next local session or the first cloud run with PUSH_OK publishes it. Next in the queue: "How UCompute compares with NVIDIA PAIR, fact by fact" (short-code pairing is parity, see OPPORTUNITIES 2026-10-31); "Windows firewall consent: what UCompute asks and what the rule covers".
 - 2026-11-01 13:40 UTC (cloud daily): `2026-11-05-ucompute-and-nvidia-pair` ("UCompute Mesh and NVIDIA PAIR, fact by fact") READY after the independent fact-check (14 findings applied). **Queued** behind `2026-11-04-other-computer-without-open-port` (notes push still 403, OWNER-ASKS 10). Publish order when access works: 11-04 piece first, PAIR piece the next day (one note a day). Next to write: "Windows firewall consent: what UCompute asks and what the rule covers".
 - 2026-11-02 13:30 UTC (cloud daily): `2026-11-06-windows-firewall-what-the-rule-covers` ("Windows firewall prompts for local AI servers: what a rule covers, and how to read yours", BARRIERS.md §6 item 6) READY after the independent fact-check (18 findings, 2 major, all applied); `publish_after: 2026-11-04`. Publish order: PAIR comparison 2026-11-03, firewall note 2026-11-04 (cloud push to `ucompute/notes` is PUSH_OK). Bluesky post 6 (links the other-computer note) queued. Next to write: a research lens or "What 'verified' means: SHA-256 before the engine opens the file" only if the GGUF-download note does not already cover it; otherwise BARRIERS.md §9 "what happens when a paired device cannot be reached" once the evidence answers it.
+
+## Week 2026-W45 plan (2026-11-02 to 2026-11-08), set by the W45 weekly review
+| Date (UTC) | Notes site | Bluesky (Actions job, 15:37 UTC, cap-dependent) | Other |
+|---|---|---|---|
+| Mon 11-02 | — (note 8 went out 01:55) | none expected (post 1 went out 03:02, 1/day cap) | weekly report |
+| Tue 11-03 | `2026-11-05-ucompute-and-nvidia-pair` (re-read PAIR README/SECURITY.md first) | next queued post | queue a Bluesky post for the PAIR note |
+| Wed 11-04 | `2026-11-06-windows-firewall-what-the-rule-covers` | next queued post | queue a Bluesky post for the firewall note |
+| Thu 11-05 | none scheduled | next queued post (likely the 4th in 7 days; then the weekly cap holds until 11-09) | one new piece may be drafted and fact-checked, `publish_after` 11-06 or later |
+| Fri 11-06 – Sun 11-08 | at most one more note in the week (new cadence: max three new notes a week after 11-04) | cap holds | **Sat 11-07: X-03 7-day read** |
+
+Cadence change (W45 strategy): ten notes are live or scheduled by 11-04 with zero measured audience; from 11-05 the daily runs write at most three new notes a week and spend the freed capacity on accuracy maintenance (llama.cpp advisory check for the RPC note), a Bluesky post for every published note, and the measurement asks.

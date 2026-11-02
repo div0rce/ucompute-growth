@@ -45,7 +45,7 @@ The five notes referred to below (all in `content/ready/`, claims-linted, canoni
 | Fosstodon (Mastodon) | AUTOMATED_OK_WITH_DISCLOSURE (bot flag, replies answered, non-commercial) | PREREQUISITE_OWNER_ACCOUNT; canonical URL for the notes | pairing note as a short thread |
 | Hachyderm (Mastodon) | HUMAN_ONLY for a Projects account (bots not allowed on it) | not pursued | none |
 | mastodon.social | REJECTED (accounts may not consist solely of AI-generated content) | — | none |
-| Bluesky | AUTOMATED_OK_WITH_DISCLOSURE (automation label) | PREREQUISITE_OWNER_ACCOUNT (`@ucompute.org` domain handle); canonical URL | pairing note as a short thread |
+| Bluesky | AUTOMATED_OK_WITH_DISCLOSURE (automation label) — **LIVE, AUTHORIZED 2026-11-01** (`channels/REGISTRY.md`) | none: `@ucompute.org` exists, bot label and disclosure bio set, post 1 pinned 2026-11-02 | done (post 1); queue in `content/ready/bluesky-first-posts.md`, 1/day, 4/week |
 | dev.to (Organization) | AUTOMATED_OK_WITH_DISCLOSURE (AI assistance disclosed; no promotional AI-assisted articles) | PREREQUISITE_OWNER_ACCOUNT; canonical URL | base-URL note with disclosure and canonical link |
 | Hashnode | REJECTED for automation (API is Pro-only since 2026-05-13); manual only | — | none |
 | Medium | HUMAN_ONLY (programmatic posting is listed misuse); low priority | — | none |
@@ -55,7 +55,7 @@ The five notes referred to below (all in `content/ready/`, claims-linted, canoni
 | YouTube | SUITABLE_WHEN_RELEASED (rules allow Data API uploads with AI disclosure) | a runnable build to record | none today |
 | Discord: a UCompute server | REJECTED for now (the Community page says none exists; an empty server misleads) | public release | none |
 | Discord: other projects' servers | HUMAN_ONLY (self-bots banned); peer questions only | owner's human account | none as the project |
-| GitHub organization `ucompute` | AUTOMATED_OK_WITH_DISCLOSURE (GitHub App identity) | owner's written grant (OWNER-ASKS 3) | profile README; a `notes` repository holding the five notes |
+| GitHub organization `ucompute` | AUTOMATED_OK_WITH_DISCLOSURE — **LIVE, AUTHORIZED** (`channels/REGISTRY.md`) | none; identity choice (own token vs GitHub App) still open as OWNER-ASKS 9 | done: profile README, `notes` repository and Pages site (8 notes on 2026-11-02, one new note a day at most) |
 | GitHub Discussions (public repo) | SUITABLE_WHEN_SOURCE_PUBLIC | source publication (engineering B-007/D-028) | pinned "what exists / what does not" thread |
 | Other projects' issue threads | HUMAN_ONLY; data-bearing comments only; any UCompute mention SUITABLE_WHEN_SOURCE_PUBLIC | — | none |
 | awesome-selfhosted | REJECTED (needs a tagged release older than 4 months; LLM-generated PRs banned) | — | none |
@@ -261,7 +261,7 @@ Reddit's own domains (reddit.com, old.reddit.com, redditinc.com) were unreachabl
   - Org accounts: allowed; "Do not impersonate others or official groups in ways that could mislead users"; creating "fake accounts to deceive others about who you are" is prohibited (https://bsky.social/about/support/community-guidelines). A domain handle (`@ucompute.org`) proves the project identity.
   - Rate limits: creates cost 3 points against a 5,000-point hourly and 35,000-point daily per-account budget (about 1,666 creates/hour, 11,666/day); 3,000 requests per 5 minutes per IP (https://raw.githubusercontent.com/bluesky-social/bsky-docs/main/docs/advanced-guides/rate-limits.md)
   - API: free and open (AT Protocol); no pricing for write access.
-- **Status:** `AUTOMATED_OK_WITH_DISCLOSURE`. Gate today: `PREREQUISITE_OWNER_ACCOUNT` (the owner creates the account and sets the DNS record for the `ucompute.org` handle), plus a canonical URL for the notes.
+- **Status:** `AUTOMATED_OK_WITH_DISCLOSURE`; **live since 2026-11-02 03:02 UTC** (owner grant 2026-11-01; account, DNS handle, bot label and disclosure bio in place). Canonical URLs: the notes site `https://ucompute.github.io/notes/`.
 - **Cadence norms:** platform limits are far above any sane volume; Growth's own cap: at most 1 post per day and 4 per week; replies only to mentions and to replies on its own threads.
 - **First post:** the pairing note as a short thread linking its canonical URL; second, the audit note. Each post labelled; the bio carries the disclosure wording in section 10.
 - **Never:** post without the automation label; reply to strangers' posts found by search; auto-follow or auto-like; post the same text as the Mastodon account; imply a release exists.
@@ -471,3 +471,14 @@ Sources the research could not read on 2026-10-30, and claims that rest on secon
 - The three accounts to ask the owner to create first, in this order: Bluesky (`@ucompute.org` domain handle), Fosstodon, dev.to Organization. Each needs the project mailbox (OWNER-ASKS 2) first and the written grant line (OWNER-ASKS 3) after. The GitHub organization needs only the grant line.
 
 Nothing in this file authorizes publication. Research date 2026-10-30; re-read platform pages before each registry change.
+
+---
+
+## 14. Weekly review 2026-W45 (2026-11-02, cloud weekly)
+
+Evidence gathered this week and what it changed:
+- **Bluesky:** community guidelines re-read 2026-11-02 at https://bsky.social/about/support/community-guidelines ("Last Updated: September 19, 2025"; spam and undisclosed-commercial-content rules unchanged). Status moved from PREREQUISITE to live/AUTHORIZED (owner grant, account live). Audience fit unchanged: still the weakest audience of the automated channels; the account had 0 followers at the 2026-11-02 baseline. Watch follower count and replies in the daily Actions file (`bluesky_account`); this is the first channel where Growth can observe any reaction at all.
+- **GitHub organization / notes site:** live; 8 notes on 2026-11-02, 2 more scheduled (2026-11-03, 2026-11-04). 0 stars, 0 watchers, 0 org followers in every Actions file of the week.
+- **Fosstodon and dev.to:** rules **not re-read** this week: `fosstodon.org` and `dev.to` both fail from the cloud session with `getaddrinfo ENOTFOUND` (outside the session's allowed network domains). Statuses unchanged (PREREQUISITE). Fosstodon remains the next account to ask for (OWNER-ASKS 3).
+- **Reddit, Lemmy, Hacker News, Lobste.rs, Product Hunt and the rest:** no new evidence; statuses unchanged. Nothing is publicly usable, so every SUITABLE_WHEN_RELEASED / WHEN_SOURCE_PUBLIC row stays gated.
+- **selfh.st 2026 survey:** results not yet published (web search 2026-11-02 found only the 2025 results at https://selfh.st/survey/2025-results/); re-check next week for the homelab audience re-read.
