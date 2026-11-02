@@ -42,3 +42,21 @@ Sources re-read this run: github.com/NVIDIA/Personal-AI-Router (README, /release
 
 ## Change record
 - 2026-10-30 (cloud weekly): file created from the founding raw lens plus a same-day primary-source re-check; revoke verdict downgraded to parity vs. PAIR; release and repository facts updated.
+
+## Re-check 2026-11-02 (cloud weekly W45)
+Sources read: github.com HTML pages (repo, /releases, /security/advisories) via WebFetch; tags via `git ls-remote`; README/SECURITY/LICENSE via raw.githubusercontent.com; commit history since 2026-10-29 from shallow fetches. `gh api` refused for all repos (HTTP 403 "GitHub access to this repository is not enabled for this session"); lmstudio.ai `getaddrinfo ENOTFOUND`. Release-page dates show no year; 2026 taken from asset timestamps and tag commit dates.
+
+| Project | Latest release | Stars | Change since 2026-10-30 |
+|---|---|---|---|
+| NVIDIA PAIR | v1.0.0, 13 Oct (unchanged) | 1.7k | None. README still: removal via "**Settings → Cluster** by removing that node from the list" or "Settings → Cluster → Leave" |
+| Mesh LLM | v0.78.1, 05 Oct; rolling preview 30 Oct (unchanged) | 3.8k | On main, not released: owner-only local management actions now need "a credential held in a private local file" (`~/.mesh-llm/owner-control-token-v2`; control protocol `mesh-llm-control/2`), commit 6a0468d, 2026-11-01; "let owners require signed gossip" (origin signatures on relayed peer records; strict mode only on new meshes), commit 99e20ae, 2026-10-30. Advisories page: none published |
+| exo | v1.0.71, 23 Apr 2026 (unchanged) | 48.1k | None |
+| Ollama | v0.40.13, 28 Oct (unchanged) | 185.7k | None in release notes or SECURITY.md |
+| llama.cpp | b12040, 02 Nov 2026 | 133.1k | RPC README wording unchanged ("fragile and insecure"; "Never run the RPC server on an open network or in a sensitive environment!"). No new advisory after 10-30; newest on page 1: GHSA-j8rj-fmpv-wcxw (RPC, Critical, 26 Mar 2026); GGUF GHSA-96jg-mvhq-q7q7 (18 Mar 2026). Page 2 not read |
+| LocalAI | v4.12.1, 23 Oct (unchanged) | 50.1k | On main 2026-11-02, not released: connector calls routed through the owner runtime |
+| Jan | v0.8.8, 28 Oct (unchanged) | 45.3k | 10+ GitHub security advisories published 29 Oct 2026 (not in the 10-30 file), incl. a 0.0.0.0 bind that discarded the Trusted Hosts allowlist (GHSA-x6p8-7cp8-c3p6) and DNS rebinding (GHSA-g9j3-j6vx-jqf7); fixes on main 10-30, not yet released. Page 2 not read |
+| LM Studio LM Link | **unverified** (host unreachable) | n/a | Search results still say Preview, access in batches; no GA statement found (**unverified**) |
+
+**Verdicts:** unchanged. No competitor page documents a default-deny off-device policy or an audit log of off-device requests without prompt text. Mesh LLM's signed gossip and owner-control credential strengthen its own trust model (parity-direction movement on authenticated control, not on default-deny or audit). Revoke stays parity with PAIR. Jan's advisories are category evidence that widened binds and Host-header checks are a real, recurring problem class; cite only in Jan's own advisory words, never as "Jan is insecure".
+
+- 2026-11-02 (cloud weekly W45): section above added; no verdict change.
