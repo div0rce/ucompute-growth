@@ -41,6 +41,11 @@ https://ucompute.github.io/notes/2026-10-31-loopback-rpc-vs-authenticated-transp
 How UCompute estimates whether a GGUF fits: weights, KV cache, compute buffers, tokenizer tables. Dev build, one Apple M2 Mac, models up to 1.5B: -4.6 % to +8.9 % of measured peak, 14 combinations.
 https://ucompute.github.io/notes/2026-11-01-memory-fit-explainer.html
 
+## Post 6 (links the other-computer note)
+
+Three common ways to run a prompt on your other computer: widen the bind, an SSH tunnel, a VPN overlay. What each one trusts, and what UCompute dev builds do instead (same local network only):
+https://ucompute.github.io/notes/2026-11-04-other-computer-without-open-port.html
+
 ## Rules for this account
 - At most one post a day and four a week; reply only to mentions and to replies on its own posts; never search-and-reply.
 - Every post is under 300 characters including the link; check with `python3 -c "print(len(open('post.txt').read()))"` before posting.
