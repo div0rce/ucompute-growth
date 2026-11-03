@@ -7,3 +7,4 @@ https://ucompute.github.io/notes/2026-11-01-memory-fit-explainer.html
 https://ucompute.github.io/notes/2026-11-02-openai-client-base-url.html
 https://ucompute.github.io/notes/2026-11-03-what-0000-exposes.html
 https://ucompute.github.io/notes/2026-11-04-other-computer-without-open-port.html
+https://ucompute.github.io/notes/2026-11-05-ucompute-and-nvidia-pair.html
