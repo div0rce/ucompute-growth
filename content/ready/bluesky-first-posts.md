@@ -46,6 +46,11 @@ https://ucompute.github.io/notes/2026-11-01-memory-fit-explainer.html
 Three common ways to run a prompt on your other computer: widen the bind, an SSH tunnel, a VPN overlay. What each one trusts, and what UCompute dev builds do instead (same local network only):
 https://ucompute.github.io/notes/2026-11-04-other-computer-without-open-port.html
 
+## Post 7 (links the PAIR comparison)
+
+NVIDIA PAIR and UCompute Mesh, fact by fact, each in its own project's words. Both run each request whole on one machine. PAIR ships installers today; UCompute has no public release yet.
+https://ucompute.github.io/notes/2026-11-05-ucompute-and-nvidia-pair.html
+
 ## Rules for this account
 - At most one post a day and four a week; reply only to mentions and to replies on its own posts; never search-and-reply.
 - Every post is under 300 characters including the link; check with `python3 -c "print(len(open('post.txt').read()))"` before posting.

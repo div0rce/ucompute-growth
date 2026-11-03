@@ -14,3 +14,4 @@
 | 2026-10-31 00:52 UTC | 2026-10-31-verify-a-gguf-download | notes site | https://ucompute.github.io/notes/2026-10-31-verify-a-gguf-download.html |
 | 2026-11-02 01:55 UTC | 2026-11-04-other-computer-without-open-port | notes site | https://ucompute.github.io/notes/2026-11-04-other-computer-without-open-port.html |
 | 2026-11-02 03:02 UTC | bluesky post-1 (pinned) | Bluesky @ucompute.org | https://bsky.app/profile/ucompute.org/post/3mzcdkd4nog22 |
+| 2026-11-03 13:16 UTC | 2026-11-05-ucompute-and-nvidia-pair | notes site | https://ucompute.github.io/notes/2026-11-05-ucompute-and-nvidia-pair.html (notes commit 2dd702f) |

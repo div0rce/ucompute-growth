@@ -8,12 +8,12 @@ claims: [no-release, mesh-pair-choose, transport, local-only, device-sees-prompt
 status: ready
 publish_after: 2026-11-03
 review: independent fact-check (fresh subagent, scripts/prompts/factcheck.md) 2026-11-01, 14 findings (8 major, 6 minor), all applied
-sources: https://github.com/NVIDIA/Personal-AI-Router/blob/main/README.md (read 2026-11-01 via raw.githubusercontent.com); https://github.com/NVIDIA/Personal-AI-Router/blob/main/SECURITY.md (read 2026-11-01); research/COMPETITORS.md (PAIR row, 2026-10-30); claims/REGISTRY.md; evidence/upstream/capability-snapshot.md section 1 item 3 and the single-host rows (pairing separate from permission)
+sources: https://github.com/NVIDIA/Personal-AI-Router/blob/main/README.md (read 2026-11-01 via raw.githubusercontent.com; every quotation re-checked 2026-11-03); https://github.com/NVIDIA/Personal-AI-Router/blob/main/SECURITY.md (read 2026-11-01; re-checked 2026-11-03); research/COMPETITORS.md (PAIR row, 2026-10-30); claims/REGISTRY.md; evidence/upstream/capability-snapshot.md section 1 item 3 and the single-host rows (pairing separate from permission)
 ---
 
 # UCompute Mesh and NVIDIA PAIR, fact by fact
 
-*Development build, October 2026. UCompute is in development. There is no public release or download yet. PAIR facts are quoted from its README and SECURITY.md as read on 1 November 2026; both documents change, so check them before relying on this page.*
+*Development build, October 2026. UCompute is in development. There is no public release or download yet. PAIR facts are quoted from its README and SECURITY.md as read on 1 November 2026 and re-checked on 3 November 2026; both documents change, so check them before relying on this page.*
 
 NVIDIA's Personal AI Router (PAIR) and UCompute Mesh answer the same question: you have more than one computer, and you want a prompt typed on one to run on another. Both send each request whole to one machine. Both pair machines with a short code (PAIR's is a six-digit PIN) and then use keys: PAIR's SECURITY.md says its peer traffic is "designed to use certificates and mutual TLS after pairing"; UCompute uses QUIC with TLS 1.3 and pinned device keys. If you are choosing between them today, the first fact decides it: PAIR ships installers, and UCompute has no public release.
 
@@ -29,7 +29,7 @@ This page lines the two up on the facts each project publishes, in each project'
 | Who picks the machine | PAIR: requests "can be routed to eligible nodes according to engine availability, model availability, and current workload" | You choose which device runs a request. |
 | Pairing | "The inviting machine shows a six-digit PIN, and you enter that PIN on the machine you invited." | A short code, after which each device pins the other's key. |
 | Traffic after pairing | "designed to use certificates and mutual TLS after pairing" | QUIC with TLS 1.3 and device keys pinned at pairing; both ends are authenticated. |
-| When a paired machine can run work | "A node only becomes a candidate for a request once it is actually running a compatible engine." The pages read do not describe a separate per-node permission. | Pairing alone does not let another device run work on yours; you also allow it. |
+| When a paired machine can run work | "A node only becomes a candidate for a request once it is actually running a compatible engine". The pages read do not describe a separate per-node permission. | Pairing alone does not let another device run work on yours; you also allow it. |
 | Record of requests | Each job appears under Jobs, "naming the node that served it"; the pages read do not say what is kept or for how long. SECURITY.md: prompts and response bodies "should not be written to logs". | Audit logs record each off-device request without the prompt or the response. |
 | Removing a machine | Any member can remove a node from PAIR's settings | You can revoke a paired device at any time (tested timings below). |
 | Engines | "Ollama, LM Studio, and llama.cpp" | A pinned release of llama.cpp, downloaded on first use and verified against a pinned SHA-256 hash. |

@@ -1,13 +1,13 @@
 # State
 
-Updated: 2026-11-02 15:00 UTC (cloud weekly W45; report `analytics/weekly/2026-W45.md`)
+Updated: 2026-11-03 13:30 UTC (cloud daily; PAIR comparison published)
 
 ## Where things stand
 - Workspace: private repo `ucompute-growth`, pushed. Charter, runbook, claims registry (20 claims incl. `audit-detail`) + lint, channel registry, owner asks, pipeline, experiments, analytics baseline, handoffs.
 - Evidence mirror: `evidence/upstream/` at engineering 29c0c8e (wp04/fix-pass), website ce71dc1 (stage-snapshot), snapshot 2026-10-23b draft 3.
 - Product truth: development builds only; private alpha 0.1.1 candidate 2 behind access control (D-031); no public release, source, channel or cohort.
 - Research: COMPLETE for the founding milestone. Nine raw lenses in `research/raw/`; synthesis in `research/POSITIONING.md`, `AUDIENCES.md`, `COMPETITORS.md` (cloud re-check), `SEARCH.md`, `BARRIERS.md`; channel database `distribution/COMMUNITIES.md`. Positioning: default-deny off-device policy + prompt-free audit log lead; whole-request is a limitation statement; revoke is parity. Primary audience multi-device developers; secondary local-AI developers.
-- Content (2026-11-02): eight notes published on the notes site; READY and scheduled: `2026-11-05-ucompute-and-nvidia-pair` (publish_after 2026-11-03) and `2026-11-06-windows-firewall-what-the-rule-covers` (publish_after 2026-11-04, fact-checked 2026-11-02). Historical: SIX pieces READY in `content/ready/` (pairing, RPC backend, memory fit, OpenAI base URL, audit log, and since the 2026-10-30 cloud daily the 0.0.0.0 exposure self-check `2026-11-03-what-0000-exposes`, self fact-checked; its Cisco, Elastic and LM Studio quotations were traced to `research/` by the founding session on 2026-10-30); `content/community-answers.md` READY (25 answers). All six aligned with `research/POSITIONING.md`. The website handoff lists the five pieces.
+- Content (2026-11-03): nine notes published on the notes site (PAIR comparison live 2026-11-03, notes commit 2dd702f); READY and scheduled: `2026-11-06-windows-firewall-what-the-rule-covers` (publish_after 2026-11-04, fact-checked 2026-11-02). Bluesky queue: posts 2–7 (7 = PAIR note). Historical: SIX pieces READY in `content/ready/` (pairing, RPC backend, memory fit, OpenAI base URL, audit log, and since the 2026-10-30 cloud daily the 0.0.0.0 exposure self-check `2026-11-03-what-0000-exposes`, self fact-checked; its Cisco, Elastic and LM Studio quotations were traced to `research/` by the founding session on 2026-10-30); `content/community-answers.md` READY (25 answers). All six aligned with `research/POSITIONING.md`. The website handoff lists the five pieces.
 - Publish packages: `scripts/build_notes.py` (public notes repository), `content/ready/github-org-profile.md`, `content/ready/bluesky-first-posts.md`; one-step publish documented in `channels/REGISTRY.md`.
 - **Published:** https://github.com/ucompute (profile), https://github.com/ucompute/notes (source) and the site https://ucompute.github.io/notes/ (six notes, sitemap, Atom feed; submitted to IndexNow, HTTP 200), 2026-10-30 23:54 UTC. Index: `content/published/INDEX.md`.
 - Channels: GitHub organization AUTHORIZED (basis quoted in `channels/REGISTRY.md`); all others not yet. The GitHub organization `ucompute` exists (owner, 2026-10-30 16:56 UTC; this account is admin) and awaits the owner's grant line (OWNER-ASKS 3). First accounts to ask for: Bluesky (`@ucompute.org` handle), Fosstodon, dev.to organization (all need the project mailbox, OWNER-ASKS 2).
@@ -27,9 +27,9 @@ Updated: 2026-11-02 15:00 UTC (cloud weekly W45; report `analytics/weekly/2026-W
 
 - **Bluesky live** since 2026-11-02 03:02 UTC: @ucompute.org has the automation label and disclosure bio; post 1 is pinned; the `bluesky-post` Actions job posts one queued post a day (15:37 UTC, max 4 a week). When a note is published to the notes site, add a Bluesky post for it to `content/ready/bluesky-first-posts.md` (under 300 characters, claims-linted, link to the notes site page).
 
-## Routine health (2026-11-02)
-- Daily ran on schedule (13:30 UTC; third clean scheduled run). Cloud access to `ucompute/notes`: PUSH_OK. `public-measurement` scheduled runs land late (2026-11-01 at 13:34 UTC, not 06:17); judge a missing file only after 24 h.
-- **Bluesky caution:** this cloud environment holds `BSKY_HANDLE`/`BSKY_APP_PASSWORD`. Never run `scripts/bsky_post.py` without `--selftest` (exact spelling) in a routine; posting belongs to the Actions job. See the 2026-11-02 cloud daily incident.
+## Routine health (2026-11-03)
+- Daily ran on schedule (13:14 UTC; fourth clean scheduled run in a row). Cloud access to `ucompute/notes`: PUSH_OK; first unattended cloud publication done today. `public-measurement` 2026-11-02 file landed (late runs normal; judge a missing file only after 24 h). ucompute.github.io is not reachable from the cloud sandbox; rely on the Actions file for site liveness.
+- **Bluesky caution:** this cloud environment holds `BSKY_HANDLE`/`BSKY_APP_PASSWORD`. Never run `scripts/bsky_post.py` without `--selftest` (exact spelling) in a routine; posting belongs to the Actions job.
 
 ## Weekly W45 decisions (2026-11-02)
 - Cadence: notes 2026-11-03 (PAIR) and 2026-11-04 (firewall) as scheduled; **from 2026-11-05 at most three new notes a week**. Every published note gets a Bluesky post in the queue the same day.
@@ -38,14 +38,13 @@ Updated: 2026-11-02 15:00 UTC (cloud weekly W45; report `analytics/weekly/2026-W
 - Routine health: daily entries on every day 10-30..11-02; healthy.
 
 ## Next actions (ranked, for the daily runs)
-1. **2026-11-03: publish the PAIR comparison** (runbook 6; `build_notes.py` releases it by `publish_after`): first re-read PAIR's README and SECURITY.md via raw.githubusercontent.com and adjust quotes (the W45 competitor re-check in `research/COMPETITORS.md` lists what changed); then INDEX.md, the log, and a Bluesky post for it in `content/ready/bluesky-first-posts.md` (under 300 characters, lint clean).
-2. **2026-11-04: publish the Windows firewall note** the same way, plus its Bluesky post.
-3. **2026-11-05 onward: at most one new piece per run and three per week.** First check whether "What 'verified' means: SHA-256 before the engine opens the file" is already covered by the GGUF-download note; if so, pick from `research/BARRIERS.md` §4 or a research lens. Independent fact-check required.
-4. **2026-11-07: read X-03** (7-day) from the Actions files; record in `experiments/BACKLOG.md`. Also confirm the `bluesky_account` block is in the daily file (X-06 baseline).
-5. Measurement: confirm `analytics/measurements/2026-11-02.public.json` landed (late runs are normal); two missing days → failure and owner ask.
-6. Local session only: llama.cpp advisories (OPPORTUNITIES, pruned summary) vs pinned b11609 → decide on a dated update to the RPC note.
-7. Channel check every run: notes site and Bluesky are AUTHORIZED; everything else waits on OWNER-ASKS 3.
-8. Handoffs: watch `evidence/upstream/` for answers. Candidate registry additions to request: pairing-code length; "pairing is separate from permission"; the Windows rule's exact scope (snapshot 3.3 row).
-9. Held drafts: source-publication announcement and release communication (only when the gates move).
-10. Next weekly: `analytics/weekly/2026-W46.md` on Monday 2026-11-09; re-check selfh.st 2026 survey results (not published as of 11-02).
+1. **2026-11-04: publish the Windows firewall note** (runbook 6; `build_notes.py` releases it by `publish_after`), INDEX.md, the log, and a Bluesky post for it in `content/ready/bluesky-first-posts.md` (under 300 characters, lint clean). Also confirm in `analytics/measurements/2026-11-03.public.json` (or 11-04) that the notes sitemap shows 10 URLs (PAIR page live) and that `bluesky-posted.jsonl` has post 2.
+2. **From 2026-11-05: at most one new piece per run and three per week.** First check whether "What 'verified' means: SHA-256 before the engine opens the file" is already covered by the GGUF-download note; if so, pick from `research/BARRIERS.md` §4 or a research lens. Independent fact-check required.
+3. **2026-11-07: read X-03** (7-day) from the Actions files; record in `experiments/BACKLOG.md`. X-06 baseline: Bluesky post 1 has 1 like (11-02 file).
+4. Local session: mirror engineering ADR-0003 into `evidence/upstream/` or add a `pairing-code` claim, so "six-digit code / SPAKE2 / 120-second window" in the pairing explainer and Bluesky post 2 trace to the mirror (provenance gap logged 2026-11-03).
+5. Local session only: llama.cpp advisories (OPPORTUNITIES, grouped row) vs pinned b11609 → decide on a dated update to the RPC note; read the SANS ISC diary (OPPORTUNITIES 2026-11-03) before citing it in the 0.0.0.0 note.
+6. Channel check every run: notes site and Bluesky are AUTHORIZED; everything else waits on OWNER-ASKS 3. `mentions.jsonl` lines that are our own posts are not discovery events.
+7. Handoffs: watch `evidence/upstream/` for answers. Candidate registry additions to request: pairing-code length; "pairing is separate from permission"; the Windows rule's exact scope (snapshot 3.3 row).
+8. Held drafts: source-publication announcement and release communication (only when the gates move).
+9. Next weekly: `analytics/weekly/2026-W46.md` on Monday 2026-11-09; re-check selfh.st 2026 survey results.
 0. Routine health: if two consecutive UTC days pass with no "cloud daily" entry in `journal/LOG.md`, record a failure here and in OWNER-ASKS ("check the routines at https://claude.ai/code/routines"), with the run log's error.
