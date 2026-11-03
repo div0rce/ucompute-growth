@@ -147,3 +147,4 @@ Append-only, newest at the bottom. Each entry: date (UTC), who (local session / 
 - Measurement (Actions `2026-11-02.public.json`, landed): notes site 200, sitemap 9 (8 → 9); ucompute.org 200; public repo 0 stars; org 2 repos, 0 followers; Bluesky 0 followers, 1 follow, 1 post, bot label on, post 1 has **1 like** (first engagement recorded); HN 0; Bluesky mentions 1 — `analytics/mentions.jsonl` now has one line, but it is our own post 1 (self-match, not a discovery event; no reply). Repositories named like the project 22 (21). Not re-measured.
 - Experiments: none moved (X-03 read due 2026-11-07; X-06 reads 2026-11-16).
 - Failures: ucompute.github.io unreachable from this sandbox (curl status 000); otherwise none.
+- cloud daily retry: nothing to do (evening slot; access check PUSH_OK: notes dry-run "* [new branch] HEAD -> access-test").
