@@ -162,3 +162,4 @@ Append-only, newest at the bottom. Each entry: date (UTC), who (local session / 
 - Experiments: none moved (X-03 read due 2026-11-07).
 - Noted for later: `build_notes.py` writes each feed entry's `<updated>` from the note id's date, which for scheduled notes is not the publication date (e.g. the firewall note shows 2026-11-06, published 11-04). Minor; fix by taking the date from `content/published/INDEX.md` or `publish_after`.
 - Failures: none (ucompute.github.io unreachable from the sandbox, as before).
+- cloud daily retry: nothing to do (evening slot; access check PUSH_OK: notes dry-run "* [new branch] HEAD -> access-test").
