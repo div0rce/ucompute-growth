@@ -30,7 +30,7 @@ The six ready notes and the organization profile are public (`content/published/
 |---|---|---|---|
 | Mon 11-02 | — (note 8 went out 01:55) | none expected (post 1 went out 03:02, 1/day cap) | weekly report |
 | Tue 11-03 | **DONE 13:16 UTC** `2026-11-05-ucompute-and-nvidia-pair` (PAIR README/SECURITY.md re-read; 24 quotes matched, one stray period fixed) | post 2 (Actions 15:37) | Bluesky post 7 queued for the PAIR note |
-| Wed 11-04 | `2026-11-06-windows-firewall-what-the-rule-covers` | next queued post | queue a Bluesky post for the firewall note |
+| Wed 11-04 | **DONE 13:20 UTC** `2026-11-06-windows-firewall-what-the-rule-covers` (notes commit a901fb5; `build_notes.py` TYPES gained `tutorial`, which had silently excluded it) | next queued post (post 3) | Bluesky post 8 queued for the firewall note |
 | Thu 11-05 | none scheduled | next queued post (likely the 4th in 7 days; then the weekly cap holds until 11-09) | one new piece may be drafted and fact-checked, `publish_after` 11-06 or later |
 | Fri 11-06 – Sun 11-08 | at most one more note in the week (new cadence: max three new notes a week after 11-04) | cap holds | **Sat 11-07: X-03 7-day read** |
 

@@ -51,6 +51,11 @@ https://ucompute.github.io/notes/2026-11-04-other-computer-without-open-port.htm
 NVIDIA PAIR and UCompute Mesh, fact by fact, each in its own project's words. Both run each request whole on one machine. PAIR ships installers today; UCompute has no public release yet.
 https://ucompute.github.io/notes/2026-11-05-ucompute-and-nvidia-pair.html
 
+## Post 8 (links the Windows firewall note)
+
+A Windows firewall prompt for a local model server creates a rule. Four fields decide what it lets in: direction, program, profile, remote address. How to read the rules on your machine with PowerShell:
+https://ucompute.github.io/notes/2026-11-06-windows-firewall-what-the-rule-covers.html
+
 ## Rules for this account
 - At most one post a day and four a week; reply only to mentions and to replies on its own posts; never search-and-reply.
 - Every post is under 300 characters including the link; check with `python3 -c "print(len(open('post.txt').read()))"` before posting.

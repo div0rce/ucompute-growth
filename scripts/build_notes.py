@@ -2,7 +2,7 @@
 """Render content/ready engineering notes into a publishable tree for the public `ucompute/notes` repository.
 
 Output: dist/notes/README.md (index), dist/notes/<id>.md (front matter stripped, a provenance footer added),
-dist/notes/feed.xml (Atom). Only pieces with type engineering-note, explainer, comparison or search-page are
+dist/notes/feed.xml (Atom). Only pieces with type engineering-note, explainer, comparison, search-page or tutorial are
 included; the community-answers bank and anything not status: ready are excluded. The output is linted again
 with the strict claims lint before the script succeeds, so a failing piece blocks the whole package.
 ponytail: string templates, no markdown or XML library; Atom needs only escaped titles and absolute links.
@@ -15,7 +15,7 @@ BASE = "https://github.com/ucompute/notes/blob/main/"
 SITE = "https://ucompute.github.io/notes/"
 # IndexNow ownership key (public by design: it proves control of the site, grants nothing else).
 INDEXNOW_KEY = "b1d8674aecd8b2fc96497ccb3c2cd26e"
-TYPES = {"engineering-note", "explainer", "comparison", "search-page"}
+TYPES = {"engineering-note", "explainer", "comparison", "search-page", "tutorial"}
 FRONT = re.compile(r"^---\n(.*?)\n---\n", re.S)
 FOOTER = ("\n---\n\n*Published by the UCompute project. This note was drafted and checked by UCompute's automated "
           "growth workstream against the project's engineering evidence. Corrections and questions: hello@ucompute.org. "
