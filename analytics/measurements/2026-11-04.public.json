@@ -1,0 +1,95 @@
+{
+ "date": "2026-11-04",
+ "source": "github-actions measure_public.py",
+ "site": {
+  "http": 200,
+  "sitemap_urls": 1
+ },
+ "notes_site": {
+  "http": 200,
+  "sitemap_urls": 11
+ },
+ "public_repo": {
+  "stargazers_count": 0,
+  "subscribers_count": 0,
+  "forks_count": 0,
+  "open_issues_count": 0,
+  "pushed_at": "2026-10-14T08:01:10Z"
+ },
+ "org": {
+  "public_repos": 2,
+  "followers": 0
+ },
+ "org_repos": {
+  "notes": {
+   "stars": 0,
+   "watchers": 0,
+   "forks": 0,
+   "pushed_at": "2026-11-04T13:09:54Z"
+  },
+  ".github": {
+   "stars": 0,
+   "watchers": 0,
+   "forks": 0,
+   "pushed_at": "2026-10-31T00:19:54Z"
+  }
+ },
+ "bluesky_account": {
+  "followersCount": 0,
+  "followsCount": 1,
+  "postsCount": 2,
+  "bot_label": true,
+  "posts": {
+   "3mzcdkd4nog22": {
+    "likeCount": 1,
+    "repostCount": 0,
+    "replyCount": 0,
+    "quoteCount": 0
+   },
+   "3mzgqyzora42p": {
+    "likeCount": 0,
+    "repostCount": 0,
+    "replyCount": 0,
+    "quoteCount": 0
+   }
+  }
+ },
+ "repos_named_ucompute": {
+  "total": 22,
+  "names": [
+   "13lucky13/DoUCompute",
+   "ChangeXuan/AMachineryUComputer-Swift",
+   "JPMichon/RP2040_uCompute",
+   "JPMichon/RP2350_uCompute2",
+   "JPMichon/uCompute-Ecosystem",
+   "JPMichon/uComputeJr",
+   "JPMichon/uCompute_Rover",
+   "Starm7481/11UComputerScienceNew",
+   "amtoine/uComputer-clock-module",
+   "amtoine/uComputer-controller",
+   "amtoine/uComputer-mother-board",
+   "amtoine/uComputer-power-supply",
+   "azvurii/12UComputerBACK",
+   "div0rce/ucompute",
+   "div0rce/ucompute-growth",
+   "nealrau/Ucompute",
+   "thewillyhuman-archive/UComputerArchitecture",
+   "uComputeMe0100110/uComputeMe0100110",
+   "ucompute/.github",
+   "ucompute/notes",
+   "uplus-io/ucompute",
+   "winsonwen/ucomputersa-backend"
+  ]
+ },
+ "hn": {
+  "count": 0
+ },
+ "bsky": {
+  "count": 2
+ },
+ "new_mentions": 1,
+ "routine_health": {
+  "last_cloud_daily": "2026-11-04",
+  "overdue": false
+ }
+}
