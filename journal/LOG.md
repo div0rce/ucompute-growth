@@ -174,3 +174,4 @@ Append-only, newest at the bottom. Each entry: date (UTC), who (local session / 
 - Measurement (Actions `2026-11-04.public.json`): notes sitemap **11** (firewall page live, confirmed); notes site and ucompute.org 200; public repo 0 stars; org 2 repos, 0 followers; Bluesky 0 followers, 2 posts, post 1 likes 1, post 2 no engagement; HN 0; Bluesky mentions 2, new_mentions 1 — the new `mentions.jsonl` line is our own post 2 (self-match, not a discovery event). Repositories named like the project 22. Not re-measured.
 - Experiments: none moved (X-03 read due 2026-11-07).
 - Failures: github.com HTML (issue/repo pages) → proxy 403 from curl this run (git clone over HTTPS works); docs.jan.ai and lmstudio.ai → "CONNECT tunnel failed, response 403". Worked around via the projects' docs repositories. No owner action needed.
+- cloud daily retry: nothing to do (evening slot ~21:11 UTC; access check PUSH_OK: notes dry-run "* [new branch] HEAD -> access-test").
