@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-06",
+  "public_repo": {
+    "name": "div0rce/ucompute",
+    "stats": {
+      "forks": 0,
+      "open_issues": 0,
+      "stars": 0,
+      "watchers": 0
+    },
+    "views_14d": {
+      "count": 0,
+      "uniques": 0
+    },
+    "clones_14d": {
+      "count": 8,
+      "uniques": 8
+    },
+    "referrers": []
+  },
+  "site": {
+    "ucompute.org_http": "200",
+    "sitemap_urls": 1
+  },
+  "notes": "Public repo holds only LICENSE and a superseded handoff; the site is the frozen prelaunch page with no analytics (owner rule). Clone counts include bots and the project itself."
+}

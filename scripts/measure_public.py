@@ -79,11 +79,16 @@ def hn():
              "text": (h.get("title") or h.get("comment_text") or "")[:200]} for h in d.get("hits", [])]
     return {"count": d.get("nbHits"), "hits": hits}
 
+OWN_DID = "did:plc:w6gmfj3s5k3xwiwjwr35xpdv"  # @ucompute.org; our own posts are not discovery events
+
+def not_ours(posts):
+    return [p for p in posts if p.get("author", {}).get("did") != OWN_DID]
+
 def bsky():
     q = urllib.parse.urlencode({"q": "ucompute", "limit": 50})
     _, d = get(f"https://api.bsky.app/xrpc/app.bsky.feed.searchPosts?{q}")
     hits = [{"src": "bsky", "id": p["uri"], "at": p.get("indexedAt"), "url": p["uri"],
-             "text": (p.get("record", {}).get("text") or "")[:200]} for p in d.get("posts", [])]
+             "text": (p.get("record", {}).get("text") or "")[:200]} for p in not_ours(d.get("posts", []))]
     return {"count": len(hits), "hits": hits}
 
 def bluesky():
@@ -128,6 +133,7 @@ def selftest():
     assert last_daily(log) == dt.date(2026, 11, 2)
     assert not daily_overdue(log, dt.date(2026, 11, 3)) and daily_overdue(log, dt.date(2026, 11, 4))
     assert daily_overdue("no entries", dt.date(2026, 11, 1)) and not daily_overdue("no entries", dt.date(2026, 10, 31))
+    assert not_ours([{"author": {"did": OWN_DID}}, {"author": {"did": "did:plc:x"}}]) == [{"author": {"did": "did:plc:x"}}]
     print("measure_public selftest: ok")
 
 if __name__ == "__main__":

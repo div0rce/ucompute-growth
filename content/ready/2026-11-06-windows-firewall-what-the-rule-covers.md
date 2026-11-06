@@ -1,6 +1,7 @@
 ---
 id: 2026-11-06-windows-firewall-what-the-rule-covers
 title: "Windows firewall prompts for local AI servers: what a rule covers, and how to read yours"
+description: "What a Windows firewall rule for a local AI server actually covers, what 'private' means to Windows, and how to read the rules already on your machine."
 type: tutorial
 audience: multi-device-developers, local-ai-developers
 channel_intent: notes site (GitHub organization, AUTHORIZED); website-handoff; Bluesky link post after publication

@@ -1,6 +1,7 @@
 ---
 id: 2026-11-01-memory-fit-explainer
 title: Before you load a model: how UCompute estimates whether a GGUF fits
+description: "How to estimate whether a GGUF model fits in memory before you load it, what counts besides the file size, and how UCompute development builds work it out."
 type: explainer
 audience: local-ai-developers, ai-app-builders
 channel_intent: website-handoff (Engineering notes), search page (front matter is never rendered)

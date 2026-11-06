@@ -1,6 +1,7 @@
 ---
 id: 2026-10-30-what-the-audit-log-records
 title: What UCompute's audit log records, and what it never records
+description: "What UCompute's audit log records for each off-device request, what it never records, and which tests hold those rules in development builds."
 type: engineering-note
 audience: multi-device-developers, homelab-selfhosting, oss-infra
 channel_intent: website-handoff (Engineering notes), later syndication with canonical link

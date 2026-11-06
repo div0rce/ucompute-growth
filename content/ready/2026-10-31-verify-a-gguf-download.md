@@ -1,6 +1,7 @@
 ---
 id: 2026-10-31-verify-a-gguf-download
 title: How to check a downloaded GGUF against its published SHA-256, and what UCompute's development builds check
+description: "Check a GGUF file against its published SHA-256: where Hugging Face shows the hash, how to hash the file you have, and what a match does and does not prove."
 type: search-page
 audience: local-ai-developers, multi-device-developers
 channel_intent: notes site (GitHub org, AUTHORIZED); later website handoff

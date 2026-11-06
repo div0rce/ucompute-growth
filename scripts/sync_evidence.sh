@@ -1,33 +1,36 @@
 #!/usr/bin/env bash
-# Mirror read-only evidence from the local engineering and website checkouts into evidence/upstream/.
-# Reads only committed files (git show HEAD:path) so a mid-edit working tree is never copied.
-# ponytail: paths are fixed to this Mac; the cloud routine uses the committed mirror instead.
+# Mirror read-only evidence into evidence/upstream/. Reads committed files at a named ref (git show), never a working
+# tree, and never fetches inside another team's checkout: the cloud evidence routine fetches in its own clones.
+# Website: its approved ref, not the checkout's HEAD (Program Control C-5, HO-004). Engineering: the claims rule is a
+# VERIFIED ledger row, so REQUIREMENTS.csv is mirrored with the records that explain it.
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$HERE/evidence/upstream"
 ENG="${UCOMPUTE_ENG_REPO:-/Users/nasr/repos/ucompute}"
 WEB="${UCOMPUTE_WEB_REPO:-/Users/nasr/repos/ucompute-website-work/website}"
+ENG_REF="${UCOMPUTE_ENG_REF:-HEAD}"
+WEB_REF="${UCOMPUTE_WEB_REF:-origin/stage-snapshot}"
 mkdir -p "$OUT"
-copy() { # repo path dest
-  if git -C "$1" cat-file -e "HEAD:$2" 2>/dev/null; then
-    git -C "$1" show "HEAD:$2" > "$OUT/$3"; echo "synced $3 (from $(git -C "$1" rev-parse --short HEAD))"
-  else echo "missing $1:$2" >&2; fi
+copy() { # repo ref path dest
+  if git -C "$1" cat-file -e "$2:$3" 2>/dev/null; then
+    git -C "$1" show "$2:$3" > "$OUT/$4"; echo "synced $4 (from $2 $(git -C "$1" rev-parse --short "$2"))"
+  else echo "missing $1 $2:$3" >&2; fi
 }
-copy "$ENG" docs/DECISIONS.md engineering-DECISIONS.md
-copy "$ENG" docs/BLOCKERS.md engineering-BLOCKERS.md
-copy "$ENG" README.md engineering-README.md
-latest="$(git -C "$ENG" ls-tree --name-only HEAD docs/capabilities/ | sort | tail -1)"
-[ -n "$latest" ] && copy "$ENG" "$latest" "capability-snapshot.md"
-copy "$WEB" reference/claims.json website-claims.json
-copy "$WEB" reference/releases.json website-releases.json
-copy "$WEB" docs/LAUNCH.md website-LAUNCH.md
+copy "$ENG" "$ENG_REF" docs/DECISIONS.md engineering-DECISIONS.md
+copy "$ENG" "$ENG_REF" docs/BLOCKERS.md engineering-BLOCKERS.md
+copy "$ENG" "$ENG_REF" docs/REQUIREMENTS.csv engineering-REQUIREMENTS.csv
+copy "$ENG" "$ENG_REF" docs/decisions/ADR-0003-peer-transport-and-pairing.md engineering-ADR-0003.md
+copy "$ENG" "$ENG_REF" README.md engineering-README.md
+latest="$(git -C "$ENG" ls-tree --name-only "$ENG_REF" docs/capabilities/ | sort | tail -1)"
+[ -n "$latest" ] && copy "$ENG" "$ENG_REF" "$latest" "capability-snapshot.md"
+copy "$WEB" "$WEB_REF" reference/claims.json website-claims.json
+copy "$WEB" "$WEB_REF" reference/releases.json website-releases.json
+copy "$WEB" "$WEB_REF" docs/LAUNCH.md website-LAUNCH.md
 {
   echo "# Upstream evidence sync"
   echo "synced_at: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-  echo "engineering_head: $(git -C "$ENG" rev-parse HEAD) ($(git -C "$ENG" branch --show-current))"
-  echo "website_head: $(git -C "$WEB" rev-parse HEAD) ($(git -C "$WEB" branch --show-current))"
+  echo "engineering_ref: $ENG_REF $(git -C "$ENG" rev-parse "$ENG_REF")"
+  echo "website_ref: $WEB_REF $(git -C "$WEB" rev-parse "$WEB_REF")"
   echo "capability_snapshot: $latest"
 } > "$OUT/SYNC.md"
-# Privacy scrub check: the mirror must not carry personal identifiers into any public output.
-# It stays private in this repo; the lint blocks these strings from content/.
 cat "$OUT/SYNC.md"

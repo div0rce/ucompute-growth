@@ -1,6 +1,7 @@
 ---
 id: 2026-11-07-shared-api-key-is-not-device-trust
 title: "A shared API key is not device trust: what local AI servers check, in their own words"
+description: "Five local AI servers decide whether to answer a request in four ways. Their own documentation shows what a shared API key proves and what it does not."
 type: explainer
 audience: multi-device-developers, local-ai-developers
 channel_intent: github-org (notes site), website-handoff, later syndication with canonical link

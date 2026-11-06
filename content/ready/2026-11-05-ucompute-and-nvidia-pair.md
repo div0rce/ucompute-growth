@@ -1,6 +1,7 @@
 ---
 id: 2026-11-05-ucompute-and-nvidia-pair
 title: UCompute Mesh and NVIDIA PAIR, fact by fact
+description: "UCompute Mesh and NVIDIA's Personal AI Router (PAIR) compared fact by fact: pairing, where a request runs, encrypted traffic, request records and removing a machine."
 type: comparison
 audience: multi-device-developers, local-ai-developers
 channel_intent: github-org (notes site), website-handoff, later syndication with canonical link

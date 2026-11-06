@@ -1,10 +1,11 @@
 ---
 id: 2026-10-30-pairing-explainer
 title: How two UCompute devices pair, allow, audit and revoke: the six-digit code and the pinned keys
+description: "How UCompute development builds pair two devices with a single-use six-digit code and pinned keys, decide what may run remotely, log it and revoke access."
 type: engineering-note
 audience: multi-device-developers, oss-infra
 channel_intent: website-handoff (Engineering notes), later syndication with canonical link
-claims: [mesh-pair-choose, transport, revocation, local-only, device-sees-prompt, audit, connect-by-address, engine, platforms, no-release, license]
+claims: [mesh-pair-choose, pairing-code, transport, revocation, local-only, device-sees-prompt, audit, connect-by-address, engine, platforms, no-release, license]
 status: ready
 review: fact-check and reader review applied 2026-10-30 (journal/LOG.md "draft review")
 sources: engineering ADR-0003 section 9 (implementation notes), docs/security/THREAT_MODEL.md sections 2.13 and 4, capability snapshot 2026-10-23b sections 3.2, 3.3, 8 and 9 (all read-only, mirrored in evidence/upstream/)

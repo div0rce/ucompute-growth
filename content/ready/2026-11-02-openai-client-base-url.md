@@ -1,6 +1,7 @@
 ---
 id: 2026-11-02-openai-client-base-url
 title: Point the official OpenAI Python and JavaScript clients at a local server
+description: "Point the official OpenAI Python and JavaScript clients at a local model server: change the base URL and the model id, and keep the rest of your code."
 type: search-page
 audience: ai-app-builders
 channel_intent: website-handoff (docs or notes), syndication to dev.to/Hashnode when authorized (front matter is never rendered or syndicated)

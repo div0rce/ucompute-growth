@@ -1,6 +1,7 @@
 ---
 id: 2026-11-04-other-computer-without-open-port
 title: Running a prompt on your other computer without opening a port to everyone on the Wi-Fi
+description: "Three common ways to run a prompt on your other computer (widen the bind, an SSH tunnel, a VPN overlay), the question each leaves open, and another approach."
 type: search-page
 audience: multi-device-developers, local-ai-developers
 channel_intent: notes site (GitHub organization, AUTHORIZED); website-handoff; syndication to dev.to/Hashnode when authorized (front matter is never rendered or syndicated)

@@ -12,7 +12,7 @@ sources: content/ready notes; distribution/COMMUNITIES.md 5 and 11; research/POS
 ## Profile
 
 Display name: UCompute
-Bio (256 characters max): Automated account for the UCompute project: run small open AI models on your own devices. Apache-2.0; source not yet published; in development, no public release. Written by software from the project's engineering evidence. Contact: hello@ucompute.org
+Bio (256 characters max): Automated account for UCompute: run small open AI models on your own devices. In development, no public release. Apache-2.0; source not yet published. Written by software from engineering records. Notes: ucompute.github.io/notes Contact: hello@ucompute.org
 Settings: Account → Automation label ON.
 
 ## Post 1 (pinned; one post, not a thread)

@@ -1,13 +1,14 @@
 ---
 id: 2026-10-31-loopback-rpc-vs-authenticated-transport
 title: What llama.cpp's own README says about its RPC backend, and what UCompute does instead
+description: "llama.cpp's RPC backend is meant for trusted, isolated networks. Its README and security advisories explain why, and how UCompute connects two computers instead."
 type: comparison
 audience: local-ai-developers, oss-infra
 channel_intent: website-handoff (Engineering notes), later syndication with canonical link
 claims: [engine, transport, mesh-pair-choose, planned, device-sees-prompt, no-release, license]
 status: ready
-review: fact-check and reader review applied 2026-10-30 (journal/LOG.md "draft review")
-sources: https://github.com/ggml-org/llama.cpp/blob/master/tools/rpc/README.md (read 2026-10-30); https://github.com/ggml-org/llama.cpp/blob/master/SECURITY.md (read 2026-10-30); CVE-2026-34159 record at https://cveawg.mitre.org/api/cve/CVE-2026-34159 and advisory https://github.com/ggml-org/llama.cpp/security/advisories/GHSA-j8rj-fmpv-wcxw (read 2026-10-30; fixed in b8492; UCompute pins b11609 per engineering catalog/backends.json); engineering docs/security/THREAT_MODEL.md section 3 (secure defaults) and 2.13; ADR-0002 (supervised engine, pinned archives); capability snapshot 2026-10-23b sections 5, 8 and 9
+review: fact-check and reader review applied 2026-10-30 (journal/LOG.md "draft review"); dated update 2026-11-06 self-checked against the two MITRE records and the issue state
+sources: https://github.com/ggml-org/llama.cpp/blob/master/tools/rpc/README.md (read 2026-10-30); https://github.com/ggml-org/llama.cpp/blob/master/SECURITY.md (read 2026-10-30); CVE-2026-34159 record at https://cveawg.mitre.org/api/cve/CVE-2026-34159 and advisory https://github.com/ggml-org/llama.cpp/security/advisories/GHSA-j8rj-fmpv-wcxw (read 2026-10-30; fixed in b8492; UCompute pins b11609 per engineering catalog/backends.json); engineering docs/security/THREAT_MODEL.md section 3 (secure defaults) and 2.13; ADR-0002 (supervised engine, pinned archives); capability snapshot 2026-10-23b sections 5, 8 and 9; https://cveawg.mitre.org/api/cve/CVE-2026-78147 and -78148 (read 2026-11-06); https://github.com/ggml-org/llama.cpp/issues/25289 and 25299 (state read 2026-11-06)
 ---
 
 # What llama.cpp's own README says about its RPC backend, and what UCompute does instead
@@ -43,6 +44,8 @@ Read together, the two documents describe a tool for two processes that trust ea
 ## The advisory the project published
 
 The project's advisory GHSA-j8rj-fmpv-wcxw is dated 26 March 2026, and the CVE record (CVE-2026-34159, CVSS 3.1 base score 9.8, critical) 1 April 2026: in RPC builds up to b7991, a tensor deserialization path skipped bounds validation, and an unauthenticated attacker with TCP access to the RPC server port could read and write the process's memory and, combined with pointer leaks from other RPC messages, run code on the host. The CVE record names b8492 as the fixed build. The project found it, fixed it and documented it. What the advisory shows is that for this component, "whoever can reach the port" is the whole threat model, exactly as the README says. (The release UCompute pins, b11609, is later than that fix, and the Mesh path does not use the RPC backend, as described below.)
+
+*Update, 6 November 2026.* Two later CVE records, both assigned by VulDB and published 23 August 2026, concern the same RPC server at commit bec4772f6. [CVE-2026-78147](https://www.cve.org/CVERecord?id=CVE-2026-78147) reports a remotely reachable flaw in `deserialize_tensor` and says it is distinct from CVE-2026-34159. [CVE-2026-78148](https://www.cve.org/CVERecord?id=CVE-2026-78148) reports a remotely triggered null-pointer dereference in `rpc_server::graph_compute`. Neither record names a fixed build, and the GitHub issues they link were closed as not planned. This note has not reproduced either report. The boundary is the one above: keep that port off any network you do not fully control.
 
 ## What the warning means for a two-computer setup
 
