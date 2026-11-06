@@ -4,14 +4,14 @@ title: GitHub organization profile (ucompute/.github, profile/README.md)
 type: profile
 audience: all
 channel_intent: GitHub organization ucompute (on the owner's grant)
-claims: [no-release, license, transport]
+claims: [no-release, license, transport, device-sees-prompt, run-local]
 status: ready
 sources: charter/VOICE.md; research/SEARCH.md 5.4 (disambiguation sentence)
 ---
 
 # UCompute
 
-Open AI models on hardware you own, with work going only to devices you've paired. UCompute is in development. There is no public release or download yet. UCompute's code is licensed under Apache-2.0. The source has not been published yet.
+Open models on hardware you own, with work going only to devices you've paired. The device that runs a request processes the prompt, so pair only devices you control or trust. UCompute is in development. There is no public release or download yet. UCompute's code is licensed under Apache-2.0. The source has not been published yet.
 
 We write down how it works and what broke in the [engineering notes](https://ucompute.github.io/notes/). Shorter thoughts are on [Bluesky](https://bsky.app/profile/ucompute.org).
 

@@ -47,7 +47,7 @@ Developers who read, reply, follow, contribute or try the product. Post counts m
 ## Before and after
 | Instead of | Write |
 |---|---|
-| How two UCompute devices pair: a six-digit code, SPAKE2, and a confirmation bound to the TLS session and both device keys, so a relay in the middle fails. [link] | The SPAKE2 crate in our pairing flow is three years old, unaudited, and says itself it isn't constant-time. We took it because the secret lives 120 seconds and long-term trust sits on TLS 1.3 and pinned keys. |
+| How two UCompute devices pair: a six-digit code, SPAKE2, and a confirmation bound to the TLS session and both device keys, so a relay in the middle fails. [link] | The SPAKE2 crate in our pairing flow is three years old, unaudited, and says itself it's probably not constant-time. We took it because the secret lives 120 seconds and long-term trust sits on TLS 1.3 and pinned keys. |
 | Three common ways to run a prompt on your other computer: widen the bind, an SSH tunnel, a VPN overlay. What each one trusts, and what UCompute dev builds do instead. [link] | A shared API key tells a server someone has the key. It can't say which machine is asking, and you can't take it back from just one of them. |
 
 `scripts/voice_lint.py` catches the obvious. It can't tell whether a post is any good. That part is your job.

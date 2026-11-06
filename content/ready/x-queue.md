@@ -4,9 +4,9 @@ title: X queue (not live; no account exists)
 type: social-post
 audience: local-ai-developers, oss-infra
 channel_intent: X through Buffer drafts, only after channels/REGISTRY.md marks X AUTHORIZED
-claims: [no-release, transport, connect-by-address, catalog-fit, obs-keepalive, obs-soak-kills, obs-soak-miss, obs-dev-mac]
+claims: [no-release, run-local, mesh-pair-choose, connect-by-address, catalog-fit, obs-keepalive, obs-soak-kills, obs-soak-miss, obs-dev-mac]
 status: ready
-review: PENDING
+review: self-checked 2026-11-06 against the findings of the Bluesky queue's independent fact-check; run a fresh fact-check before activation
 sources: evidence/upstream/ (see each claim and observation id); charter/VOICE.md
 ---
 
@@ -14,15 +14,15 @@ Written for X, not copied from Bluesky: shorter, and the number comes first. Lim
 
 ## Post 1 (pinned)
 
-Open AI models on hardware you own, with work going only to devices you've paired. No release yet. Currently: soak tests and Wi-Fi surprises.
+Open models on hardware you own, and your own devices handing work to each other. No public release yet. Currently: soak tests and Wi-Fi surprises.
 
 ## Post 2
 
-SIGKILL the engine every 50 cycles for 24 hours. 2,607 kills. Back within a second each time.
+SIGKILL the engine every 50 cycles for 24 hours. 2,607 kills, one test machine, tiny test model. Back within a second each time.
 
 ## Post 3
 
-0.5% of burst requests dying with "connection closed before message completed". Cause: reusing idle connections to llama-server. After the fix, 0 in 43,000. Why the server closes them: still unknown.
+0.5% of burst requests dying with "connection closed before message completed". Cause: reusing idle connections to llama-server. After the fix, 0 in 43,000 on one test machine. Why the server closes them: still unknown.
 
 ## Post 4
 
@@ -38,7 +38,7 @@ Memory estimate vs measured peak: -4.6% to +8.9%, 14 model and context combinati
 
 ## Post 7
 
-2 requests in 5.3 million: no answer, no error. That fails our soak. Best theory is our own test client timed out first. Unproven.
+2 requests in 5.3 million: no answer, no error, within our test client's 120 s. That fails our soak. Best theory is the client timed out first. Unproven.
 
 ## Post 8
 

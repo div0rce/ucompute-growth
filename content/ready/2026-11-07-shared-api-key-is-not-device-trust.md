@@ -1,7 +1,7 @@
 ---
 id: 2026-11-07-shared-api-key-is-not-device-trust
 title: "A shared API key is not device trust"
-description: "Five local AI servers decide whether to answer a request in four ways. Their own documentation shows what a shared API key proves and what it does not."
+description: "Five local AI servers decide whether to answer a request in four ways. Their own words show what a shared API key proves and what it does not."
 type: explainer
 audience: multi-device-developers, local-ai-developers
 channel_intent: github-org (notes site), website-handoff, later syndication with canonical link
@@ -14,7 +14,7 @@ sources: Ollama authentication docs https://github.com/ollama/ollama/blob/main/d
 
 # A shared API key is not device trust
 
-Let a second computer use the model server on your desktop, and the server has to decide, for every request, whether to answer. Five local AI servers make that decision in four different ways. Their own docs are quoted below, as read on 5 November 2026 (exo's on 30 October). Docs change, so check before relying on them.
+Let a second computer use the model server on your desktop, and the server has to decide, for every request, whether to answer. Five local AI servers make that decision in four different ways. Their own words are quoted below, as read on 5 November 2026 (exo's on 30 October). Docs change, so check before relying on them.
 
 Ollama, llama-server, Jan and LM Studio all listen only on your own computer by default. That's the safe place to start, and everything here is about what happens when you leave it.
 
@@ -60,7 +60,7 @@ Instead of a key, devices pair. You pair your own devices with a short code and 
 
 After pairing, traffic is encrypted and both ends are authenticated: QUIC with TLS 1.3, with device keys pinned at pairing. Your device will not send work to a device you have not paired. The device that runs your request still processes your prompt, so pair only devices you control or trust.
 
-You can revoke one device without touching the others. In our two-machine tests (development builds, October 2026; a Mac paired with a Windows laptop and with a Linux desktop computer), its connection closed less than a tenth of a second after the revoke. Audit logs record each off-device request without the prompt or the response ([what the audit log records](2026-10-30-what-the-audit-log-records.md)).
+You can revoke a paired device at any time. In our two-machine tests (development builds, October 2026; a Mac paired with a Windows laptop and with a Linux desktop computer), its connection closed less than a tenth of a second after the revoke. Audit logs record each off-device request without the prompt or the response ([what the audit log records](2026-10-30-what-the-audit-log-records.md)).
 
 ### What this does not do
 
