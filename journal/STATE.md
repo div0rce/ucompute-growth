@@ -10,6 +10,7 @@ Updated: 2026-11-06 (local session: Growth & Community transition, voice revisio
 - **Funnel:** Discovery 0, Understanding 0, Qualified interest 0; Installation onward not reachable. Latest checkpoint: `analytics/weekly/2026-11-06-transition-checkpoint.md`.
 - **Held:** `content/drafts/split-run-held.md`, refreshed after the lab scored run-0820. Only the owner releases these.
 - **Experiments:** X-07 arm A evaluated negative, arm B running. X-03, X-05, X-06 running. X-01, X-02, X-04 waiting.
+- **Reported by Program Control, 2026-11-06:** the owner chose security@ucompute.org but it is untested, so keep hello@ucompute.org on every page until Program Control says Engineering has recorded the end-to-end test. The owner also approved in principle preparing a 3-5 person developer cohort. DevEx defines it; Growth sends no invitations and does no recruiting or outreach for it until that gate opens, and no public text mentions it.
 - **Coordination:** Program Control reads this repository. Open handoffs: Website link and claim review, docs pages (HO-005). If a P1 run is active, files only.
 
 ## Routine ids
