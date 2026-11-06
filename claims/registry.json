@@ -2,7 +2,7 @@
   "source": "evidence/upstream/capability-snapshot.md (engineering docs/capabilities/snapshot-2026-10-23b.md, draft 3) sections 8 and 9; website reference/claims.json; engineering docs/DECISIONS.md D-019..D-031",
   "snapshot": "2026-10-23b draft 3",
   "updated": "2026-11-06",
-  "rule": "Every public sentence about the product maps to one claim id below and keeps its qualifier beside it. Labels: verified = Verified reality on the named hardware; scope = committed engineering scope, not built; direction = strategic hypothesis, always introduced as direction.",
+  "rule": "Every public sentence about the product maps to one claim id below and keeps its qualifier beside it. Labels: verified = Verified reality on the named hardware; scope = committed engineering scope, not built; direction = strategic hypothesis, always introduced as direction. observation = a dated event from a committed engineering record, allowed by the owner's voice direction of 2026-11-06. It makes no capability, reliability or platform claim, generalizes to nothing, names no machine or person, and never covers running one model across devices.",
   "claims": {
     "no-release": {
       "label": "verified",
@@ -135,6 +135,42 @@
       "text": "Pairing uses a six-digit code that works once and is valid for 120 seconds, checked with a SPAKE2 exchange. The device handles one attempt at a time, and the sixth failure within 60 seconds closes the pairing endpoint for that window.",
       "qualifier": "Describes development builds, October 2026. A QR variant replaces the code with a one-time secret. Requirement F-02-02 is VERIFIED in the ledger; the wording sits in a design record, not in Website's claims.json, and is in Website's review queue (handoffs/2026-11-06-website-link-and-claim-review.md).",
       "evidence": "engineering docs/decisions/ADR-0003-peer-transport-and-pairing.md (mirrored), section 3 'Code' and section 9 steps; docs/REQUIREMENTS.csv F-02-02 VERIFIED"
+    },
+    "obs-keepalive": {
+      "label": "observation",
+      "text": "Burst requests to llama-server failed at about 0.5% with 'connection closed before message completed'. The daemon's client was reusing idle connections the engine had already closed. With no reuse: 0 failures in 43,092 admitted requests across two runs. Why llama-server closes them is not determined.",
+      "qualifier": "One test machine, development build, October 2026. Reproduced by a second, independent run with and without the fix. The link to the earlier soak's 0.51% is inferred, so never say this explains the soak.",
+      "evidence": "docs/evidence/burst-failures-linux-2026-10-31.md"
+    },
+    "obs-soak-kills": {
+      "label": "observation",
+      "text": "A 24-hour soak sends the engine SIGKILL every 50 cycles. In the third soak there were 2,607 kills, each recovered within a second.",
+      "qualifier": "One test machine, development build, 2026-10-31/11-01; the soak passed with documented interference.",
+      "evidence": "docs/evidence/linux-soak-2026-10-31.md; docs/PROGRESS.md"
+    },
+    "obs-soak-miss": {
+      "label": "observation",
+      "text": "The second 24-hour soak failed by its own rule: 2 requests out of 5.3 million got no answer and no typed error, with the engine alive. The better-fitting reading is that the test client's clock ran out before the daemon's own timeout could answer. That reading is not established.",
+      "qualifier": "One test machine, development build, October 2026. Always say it is unproven.",
+      "evidence": "docs/evidence/linux-soak-2026-10-29.md; docs/evidence/burst-failures-linux-2026-10-31.md; docs/PROGRESS.md"
+    },
+    "obs-wifi-drop": {
+      "label": "observation",
+      "text": "A test machine dropped off the local network overnight without rebooting, more than once. The likely cause is Ubuntu's default Wi-Fi power saving, which was turned off on 2026-10-29. An Ethernet cable is the fallback.",
+      "qualifier": "Likely, not proven. Never name the machine or say the problem is gone.",
+      "evidence": "docs/design/critical-path.md, 'Hardware availability'"
+    },
+    "obs-dev-mac": {
+      "label": "observation",
+      "text": "Development and many tests run on a MacBook Air (Apple M2) with 8 GB of unified memory.",
+      "qualifier": "No owner or location detail.",
+      "evidence": "capability snapshot 2026-10-23b, hardware list; P1 preflight record (1.05 GB free after a release build)"
+    },
+    "obs-spake2": {
+      "label": "observation",
+      "text": "Pairing uses the spake2 crate 0.4.0, which is three years old, unaudited and self-declared not constant-time. It protects a one-time, 120-second secret; long-term security rests on TLS 1.3 and pinned keys. A newer release is being tracked.",
+      "qualifier": "Design record and Cargo.lock at engineering HEAD on 2026-11-06. Re-check the version before posting.",
+      "evidence": "engineering docs/decisions/ADR-0003-peer-transport-and-pairing.md section 2 and risks; Cargo.lock"
     }
   },
   "numbers": {
@@ -157,6 +193,24 @@
         "model": "stories260K to qwen2.5-1.5b",
         "hardware": "Apple M2",
         "scope": "calibrated for llama.cpp b11609 on Apple Silicon"
+      },
+      {
+        "figure": "about 0.5%, 0 in 43,092",
+        "model": "stories15M test model",
+        "hardware": "one test machine",
+        "scope": "burst failure rate before and after, obs-keepalive"
+      },
+      {
+        "figure": "2,607 kills within 1 s",
+        "model": "stories15M test model",
+        "hardware": "one test machine",
+        "scope": "obs-soak-kills"
+      },
+      {
+        "figure": "2 in 5.3 million",
+        "model": "stories15M test model",
+        "hardware": "one test machine",
+        "scope": "obs-soak-miss"
       }
     ]
   },

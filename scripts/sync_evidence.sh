@@ -21,6 +21,11 @@ copy "$ENG" "$ENG_REF" docs/BLOCKERS.md engineering-BLOCKERS.md
 copy "$ENG" "$ENG_REF" docs/REQUIREMENTS.csv engineering-REQUIREMENTS.csv
 copy "$ENG" "$ENG_REF" docs/decisions/ADR-0003-peer-transport-and-pairing.md engineering-ADR-0003.md
 copy "$ENG" "$ENG_REF" README.md engineering-README.md
+copy "$ENG" "$ENG_REF" docs/PROGRESS.md engineering-PROGRESS.md
+copy "$ENG" "$ENG_REF" docs/design/critical-path.md engineering-critical-path.md
+for f in burst-failures-linux-2026-10-31 linux-soak-2026-10-29 linux-soak-2026-10-31 pool-two-machine-2026-11-06; do
+  copy "$ENG" "$ENG_REF" "docs/evidence/$f.md" "engineering-evidence-$f.md"
+done
 latest="$(git -C "$ENG" ls-tree --name-only "$ENG_REF" docs/capabilities/ | sort | tail -1)"
 [ -n "$latest" ] && copy "$ENG" "$ENG_REF" "$latest" "capability-snapshot.md"
 copy "$WEB" "$WEB_REF" reference/claims.json website-claims.json

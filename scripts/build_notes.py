@@ -17,10 +17,8 @@ SITE = "https://ucompute.github.io/notes/"
 INDEXNOW_KEY = "b1d8674aecd8b2fc96497ccb3c2cd26e"
 TYPES = {"engineering-note", "explainer", "comparison", "search-page", "tutorial"}
 FRONT = re.compile(r"^---\n(.*?)\n---\n", re.S)
-FOOTER = ("\n---\n\n*Published by the UCompute project. This note was drafted and checked by UCompute's automated "
-          "growth workstream against the project's engineering evidence. Corrections and questions: hello@ucompute.org. "
-          "Please send anything security-related there rather than posting it publicly. UCompute is in development. There "
-          "is no public release or download yet.*\n\n"
+FOOTER = ("\n---\n\n*Corrections and questions: hello@ucompute.org. Please send anything security-related there rather "
+          "than posting it publicly. UCompute is in development. There is no public release or download yet.*\n\n"
           "*Follow new notes: [Bluesky @ucompute.org](https://bsky.app/profile/ucompute.org) or the "
           f"[Atom feed]({SITE}feed.xml).*\n")
 

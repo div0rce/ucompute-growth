@@ -1,7 +1,7 @@
 name: bluesky-post
 on:
   schedule:
-    - cron: "37 15 * * *"   # daily 15:37 UTC, after the daily routine may have queued a post
+    - cron: "37 15 * * *"   # checks daily for a due post; most days nothing is due
   workflow_dispatch:
 permissions:
   contents: write

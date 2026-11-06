@@ -31,3 +31,7 @@ D-032's handoff says Growth takes public wording from `claims.json`. Audit on 20
 **Ask.** For each: add a row, say the wording stands, or say what must change. Exact text is in `claims/REGISTRY.md`.
 
 **Done when.** `claims.json` changes, or a line in `docs/LAUNCH.md` or `docs/VERIFICATION.md` records the outcome. Growth's mirror picks it up from `origin/stage-snapshot` the next day.
+
+## 3. Two things to know
+- **Two approved claims are close to going stale.** `mesh-pair-choose` ("does not split a model across devices") and `planned` ("None of these exists today") still follow the snapshot, and Growth keeps them. P1's first generating run passed on 2026-11-06, with F-03-01 still IMPLEMENTED_UNVERIFIED, so Growth changes nothing until your claims do (HO-A1). Growth's own prose on the RPC note was narrowed to stay true meanwhile, and Bluesky post 4 ("does not use RPC") is being corrected in a reply.
+- **New registry label, for your objection if you have one.** At the owner's direction, Growth may publish `observation` entries: dated events from committed engineering records, such as a bug and its fix, with no capability, reliability or platform claim, and nothing about running one model across devices. They are not capability claims and don't need rows in `claims.json`.

@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
 """Post the next queued UCompute post to Bluesky. Runs daily in GitHub Actions.
 
-Queue: the "## Post N ..." sections of content/ready/bluesky-first-posts.md, in file order. The section heading
-"Post 1 (pinned ...)" is pinned to the profile. Ledger: analytics/bluesky-posted.jsonl (one JSON line per post).
-Before posting: the account's profile carries the disclosure bio and the "bot" self-label (set if missing);
-caps hold (one post per UTC day, four per rolling 7 days); the text is at most 300 characters; every link answers
-HTTP 200; the text passes the claims lint. Credentials: BSKY_HANDLE and BSKY_APP_PASSWORD from the environment
+Queue: the "## Post N ..." sections of content/ready/bluesky-queue.md, in file order. Heading tokens: "pinned" pins the
+post, "reply to post-N" threads it under that ledger entry, "not before YYYY-MM-DD" is a floor, not an appointment.
+Ledger: analytics/bluesky-posted.jsonl (one JSON line per post).
+Before posting: the account's profile carries the queue's bio and the "bot" self-label (set if missing); caps hold
+(one post per UTC day, four per rolling 7 days; corrections and the pinned post skip the weekly cap); the text is at
+most 300 characters; every link, if there is one, answers HTTP 200; the text passes the claims and voice lints. Credentials: BSKY_HANDLE and BSKY_APP_PASSWORD from the environment
 (an app password stored as a repository secret by the owner; never printed). Without them it exits 0 with a notice.
 ponytail: stdlib urllib; no thumbnail upload for link cards.
 """
 import datetime as dt, json, os, pathlib, re, subprocess, sys, tempfile, urllib.request, urllib.error
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from voice_lint import findings as voice_findings
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-QUEUE = ROOT / "content" / "ready" / "bluesky-first-posts.md"
+QUEUE = ROOT / "content" / "ready" / "bluesky-queue.md"
 LEDGER = ROOT / "analytics" / "bluesky-posted.jsonl"
 PDS = "https://bsky.social/xrpc/"
 URL_RE = re.compile(r"https?://[^\s)]+")
@@ -34,11 +37,17 @@ def facets(text):
                     "features": [{"$type": "app.bsky.richtext.facet#link", "uri": m.group(0)}]})
     return out
 
-def caps_ok(ledger, now):
+def heading_meta(heading):
+    """(not_before, reply_to_post_id) from a queue heading."""
+    nb = re.search(r"not before (\d{4}-\d{2}-\d{2})", heading)
+    rp = re.search(r"reply to (post-\d+)", heading)
+    return (nb.group(1) if nb else ""), (rp.group(1) if rp else None)
+
+def caps_ok(ledger, now, exempt=False):
     ts = [dt.datetime.fromisoformat(e["at"]) for e in ledger]
     today = sum(1 for t in ts if t.date() == now.date())
     week = sum(1 for t in ts if now - t < dt.timedelta(days=7))
-    return today < DAY_CAP and week < WEEK_CAP
+    return today < DAY_CAP and (exempt or week < WEEK_CAP)
 
 def call(method, body=None, token=None, get=False):
     url = PDS + method
@@ -98,16 +107,23 @@ def main():
     _, changed = ensure_profile(token, did, bio)
     print(f"bsky_post: profile {'updated (bio, bot label)' if changed else 'already compliant'}")
     now = dt.datetime.now(dt.timezone.utc)
-    if not caps_ok(ledger, now):
-        print("bsky_post: cap reached (1/day, 4/week); nothing posted"); return 0
     for pid, heading, text in posts:
         if pid in done:
             continue
+        not_before, reply_to = heading_meta(heading)
+        if not_before > now.date().isoformat():
+            continue
+        if not caps_ok(ledger, now, exempt=bool(reply_to) or "pinned" in heading):
+            print("bsky_post: cap reached (1/day, 4/week); nothing posted"); return 0
         links = URL_RE.findall(text)
-        if len(text) > MAX_LEN or not lint_ok(text) or not all(link_ok(u) for u in links):
-            print(f"bsky_post: {pid} held (length {len(text)}, lint or a link not live yet)"); continue
+        if len(text) > MAX_LEN or voice_findings(text) or not lint_ok(text) or not all(link_ok(u) for u in links):
+            print(f"bsky_post: {pid} held (length {len(text)}, voice {voice_findings(text)}, lint or a link not live yet)"); continue
         rec = {"$type": "app.bsky.feed.post", "text": text, "createdAt": now.isoformat().replace("+00:00", "Z"),
                "langs": ["en"]}
+        if reply_to:
+            parent = next(e for e in ledger if e["id"] == reply_to)
+            ref = {"uri": parent["uri"], "cid": parent["cid"]}
+            rec["reply"] = {"root": ref, "parent": ref}
         if links:
             rec["facets"] = facets(text)
             rec["embed"] = {"$type": "app.bsky.embed.external",
@@ -124,7 +140,7 @@ def main():
                                 "url": f"https://bsky.app/profile/{handle}/post/{res['uri'].rsplit('/', 1)[-1]}"}) + "\n")
         print(f"bsky_post: posted {pid} -> https://bsky.app/profile/{handle}/post/{res['uri'].rsplit('/', 1)[-1]}")
         return 0
-    print("bsky_post: queue empty or all held"); return 0
+    print("bsky_post: nothing due"); return 0
 
 def selftest():
     t = "Résumé check https://ucompute.github.io/notes/x.html done"
@@ -138,6 +154,10 @@ def selftest():
     assert not caps_ok([{"at": "2026-11-02T01:00:00+00:00"}], now)
     week = [{"at": f"2026-10-{d}T10:00:00+00:00"} for d in (28, 29, 30, 31)]
     assert not caps_ok(week, now) and caps_ok(week[1:], now)
+    assert heading_meta(" (pinned; not before 2026-11-07)") == ("2026-11-07", None)
+    assert heading_meta(" (reply to post-4; correction)") == ("", "post-4")
+    assert caps_ok(week[1:], now) and not caps_ok(week, now) and caps_ok(week, now, exempt=True)
+    assert not caps_ok([{"at": "2026-11-02T01:00:00+00:00"}], now, exempt=True), "exempt skips the week, never the day"
     print("bsky_post selftest: ok")
 
 if __name__ == "__main__":

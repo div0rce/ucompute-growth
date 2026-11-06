@@ -63,7 +63,7 @@ UCompute keeps the engine local and puts the network behind a separate, authenti
 
 ## Planned, with no date
 
-Running one model across several devices is planned, with no date. It does not exist today. The engineering design that has been written for splitting one model between two devices keeps both ends of the RPC connection on loopback and carries the bytes only inside the same authenticated connection that pairing established, with policy checks on both devices. It is a design under test on one computer, not a feature. This note will be updated when that changes.
+Running one model across several devices is planned, with no date. It is not a feature of any build. The engineering design for splitting one model between two devices keeps both ends of the RPC connection on loopback and carries the bytes only inside the same authenticated connection that pairing established, with policy checks on both devices. It is a design under test. This note will be updated when that changes.
 
 ## If you want to use the RPC backend anyway
 

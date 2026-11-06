@@ -1,22 +1,22 @@
 ---
 id: 2026-11-07-shared-api-key-is-not-device-trust
-title: "A shared API key is not device trust: what local AI servers check, in their own words"
+title: "A shared API key is not device trust"
 description: "Five local AI servers decide whether to answer a request in four ways. Their own documentation shows what a shared API key proves and what it does not."
 type: explainer
 audience: multi-device-developers, local-ai-developers
 channel_intent: github-org (notes site), website-handoff, later syndication with canonical link
 claims: [no-release, mesh-pair-choose, transport, device-sees-prompt, local-only, revocation, audit, connect-by-address, platforms]
 status: ready
-review: independent fact-check (fresh subagent, scripts/prompts/factcheck.md) 2026-11-05, 15 findings (1 blocker, 4 major, 10 minor), all applied; LM Studio serve-on-network sentence quoted as rendered (source line 20 links 'authentication')
-publish_after: 2026-11-09
+review: independent fact-check (fresh subagent, scripts/prompts/factcheck.md) 2026-11-05, 15 findings (1 blocker, 4 major, 10 minor), all applied; LM Studio serve-on-network sentence quoted as rendered (source line 20 links 'authentication'); voice edit 2026-11-06 (opening and UCompute section; quotations untouched)
+publish_after: 2026-11-07
 sources: Ollama authentication docs https://github.com/ollama/ollama/blob/main/docs/api/authentication.mdx and FAQ https://github.com/ollama/ollama/blob/main/docs/faq.mdx (read 2026-11-05 via raw.githubusercontent.com, ollama/ollama main at a6d3325); llama.cpp server README https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md (read 2026-11-05 via raw.githubusercontent.com, ggml-org/llama.cpp master at 10d4846); Jan local API server docs https://github.com/janhq/jan/blob/main/docs/src/pages/docs/desktop/api-server.mdx (source of https://docs.jan.ai/desktop/api-server; read 2026-11-05 from a clone of janhq/jan at d7f72c4); LM Studio docs https://github.com/lmstudio-ai/docs files 1_developer/0_core/authentication.mdx and 1_developer/0_core/0_server/serve-on-network.mdx (sources of https://lmstudio.ai/docs/developer/core/authentication and .../server/serve-on-network; read 2026-11-05 from a clone at 8c7159b); exo issue https://github.com/exo-explore/exo/issues/1833 (quoted in research/raw/competitors-positioning.md, read 2026-10-30; github.com issue pages not reachable from this session on 2026-11-05); UCompute: claims/REGISTRY.md (no-release, mesh-pair-choose, transport, device-sees-prompt, local-only, revocation, audit, connect-by-address)
 ---
 
-# A shared API key is not device trust: what local AI servers check, in their own words
+# A shared API key is not device trust
 
-*Written 5 November 2026. Every quotation below is from the project's own documentation as read that day (one, from exo, was read on 30 October 2026); documentation changes, so check the current page before relying on it. UCompute is in development. There is no public release or download yet.*
+Let a second computer use the model server on your desktop, and the server has to decide, for every request, whether to answer. Five local AI servers make that decision in four different ways. Their own docs are quoted below, as read on 5 November 2026 (exo's on 30 October). Docs change, so check before relying on them.
 
-When you let a second computer use the model server on your desktop, the server has to decide, for every request, whether to answer. The five local AI servers quoted here make that decision in one of four ways. This note sets them side by side, quoting each project, and then says what each way can and cannot tell you. It does not rank the projects. Ollama, llama-server, Jan and LM Studio listen only on your own computer by default, and that is the safe starting point.
+Ollama, llama-server, Jan and LM Studio all listen only on your own computer by default. That's the safe place to start, and everything here is about what happens when you leave it.
 
 ## The four answers
 
@@ -52,21 +52,15 @@ None of this makes keys a bad idea. If you serve a model to other devices today,
 
 ---
 
-## How UCompute approaches the same question (development build, October 2026)
+## What UCompute does about this (development build, October 2026)
 
-*This section describes UCompute. UCompute is in development. There is no public release or download yet.*
+UCompute is in development. There is no public release or download yet.
 
-UCompute Mesh lets you pair your own devices with a short code and choose which one runs a request. Each request runs whole on one device; UCompute does not split a model across devices. (Tested with development builds between one Apple M2 Mac and one Windows 11 laptop (Intel Arc 140V) on the same Wi-Fi network or phone hotspot, and between that Mac and one Linux desktop computer (Ubuntu, processor only, a development build of the background program compiled and started by hand; no app or installer) on a home Wi-Fi network. Linux is a planned platform, not a supported one. Pairing between two Macs is not yet shown to work.)
+Instead of a key, devices pair. You pair your own devices with a short code and choose which one runs a request, and each request runs whole on one device. (Tested with development builds between one Apple M2 Mac and one Windows 11 laptop (Intel Arc 140V) on the same Wi-Fi network or phone hotspot, and between that Mac and one Linux desktop computer (Ubuntu, processor only, a development build of the background program compiled and started by hand; no app or installer) on a home Wi-Fi network. Linux is a planned platform, not a supported one. Pairing between two Macs is not yet shown to work.)
 
-**Who is on the other end.** Traffic between paired devices is encrypted and both ends are authenticated: QUIC with TLS 1.3 and device keys pinned at pairing. Your device will not send work to a device you have not paired. A device you have not paired cannot send you work; that was tested with several instances on one computer, not yet between two machines. Where a network blocks automatic discovery, as some campus Wi-Fi does, paired devices can still connect by address. An address alone is never trusted: the device must present the key it was paired with. Reconnecting by address was shown between one Mac and one Windows laptop on the same campus network, with development builds.
+After pairing, traffic is encrypted and both ends are authenticated: QUIC with TLS 1.3, with device keys pinned at pairing. Your device will not send work to a device you have not paired. The device that runs your request still processes your prompt, so pair only devices you control or trust.
 
-**The device that runs the request sees the prompt.** The device that runs your request processes your prompt. Pair only devices you control or trust.
-
-**Whether anything leaves at all.** Your prompts and responses stay on your device unless you pair another device and choose to run a request there. Local-only mode refuses every off-device request. Downloading a model or the engine uses the internet.
-
-**How to stop one device.** You can revoke a paired device at any time. In our two-machine tests (development builds, October 2026; a Mac paired with a Windows laptop and with a Linux desktop computer), its connection closed less than a tenth of a second after the revoke (between 0.002 s and 0.061 s in four runs), and its next request was refused.
-
-**What was asked from where.** Audit logs record each off-device request without the prompt or the response. ([What the audit log records](2026-10-30-what-the-audit-log-records.md).)
+You can revoke one device without touching the others. In our two-machine tests (development builds, October 2026; a Mac paired with a Windows laptop and with a Linux desktop computer), its connection closed less than a tenth of a second after the revoke. Audit logs record each off-device request without the prompt or the response ([what the audit log records](2026-10-30-what-the-audit-log-records.md)).
 
 ### What this does not do
 
@@ -74,4 +68,3 @@ UCompute Mesh lets you pair your own devices with a short code and choose which 
 - It has not been shown across the internet. The evidence covers devices on the same local network only.
 - No platform is declared supported yet. macOS 26.2 on Apple M2 and Windows 11 on an Intel Core Ultra 7 258V with Arc 140V are experimental; Linux, other GPUs and phones (as clients) are planned.
 
-Corrections and private security reports: hello@ucompute.org.
