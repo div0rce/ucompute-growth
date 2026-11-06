@@ -60,3 +60,6 @@ Cost: $0.
 - **X-05, second datapoint.** 14 days to 2026-11-06: public repository 0 views, 8 clones; `ucompute/notes` 0 views, 112 clones (48 unique); `.github` 0 views, 41 clones (28 unique); referrers none. No organic traffic. Decision: retain, read weekly from local sessions only.
 - **X-06, interim, T+4 days (final read 2026-11-16).** 4 posts, 0 followers, 0 replies, 0 reposts, 0 quotes, 1 like on post 1 from an unrelated account, within minutes of posting. A like is not in the metric, so nothing qualifies so far. Exact-match count corrected: the 2 earlier "mentions" were our own posts; the measurement now excludes our account and the log was cleaned.
 - **X-03.** Read tomorrow, as registered.
+
+## 2026-11-06: backlog item, owner directive "X/Twitter Distribution Research & Integration"
+Additive. Runs after the editorial overhaul and transition close, and changes no priority. Check Buffer's free plan first, then Typefully's, against current official documentation: X publishing, API access, scheduling limits, unattended use, automation permissions. Prefer Buffer if it genuinely works at $0. No paid dependency, no account, no publishing to X without authorization, no browser scripting or unofficial endpoints. If no compliant $0 route exists, document the evidence and keep the current strategy. Status: queued.
