@@ -20,3 +20,4 @@
 | 2026-11-06 08:31 UTC | Pages root (robots.txt, forwarding page) | GitHub org | https://ucompute.github.io/ (repo ucompute/ucompute.github.io, commit ef13c56) |
 | 2026-11-06 09:05 UTC | notes rebuild (footer, RPC note corrected, stale clause removed) | notes site | https://ucompute.github.io/notes/ |
 | 2026-11-06 09:05 UTC | organization profile rewritten | GitHub org | https://github.com/ucompute |
+| 2026-11-06 09:40 UTC | 2026-11-07-shared-api-key-is-not-device-trust | notes site | https://ucompute.github.io/notes/2026-11-07-shared-api-key-is-not-device-trust.html |

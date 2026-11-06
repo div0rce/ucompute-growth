@@ -1,7 +1,7 @@
 # Checkpoint, 2026-11-06: transition to Growth & Community
 
 ## Published work
-Ten notes on https://ucompute.github.io/notes/ with an eleventh due 2026-11-07, the organization profile, a new Pages root at https://ucompute.github.io/, and four Bluesky posts from 2026-11-02 to 2026-11-05. Today: every note gained a distinct meta description, a follow path and correct feed dates; the RPC note gained a dated CVE update and lost a stale sentence; the Bluesky bio, organization profile and queue were rewritten.
+Eleven notes on https://ucompute.github.io/notes/ (the eleventh published 2026-11-06), the organization profile, a new Pages root at https://ucompute.github.io/, and four Bluesky posts from 2026-11-02 to 2026-11-05. Today: every note gained a distinct meta description, a follow path and correct feed dates; the RPC note gained a dated CVE update and lost a stale sentence; the Bluesky bio, organization profile and queue were rewritten.
 
 ## Verified outcomes
 | Funnel stage | Result |

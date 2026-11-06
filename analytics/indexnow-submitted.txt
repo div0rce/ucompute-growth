@@ -9,3 +9,4 @@ https://ucompute.github.io/notes/2026-11-03-what-0000-exposes.html
 https://ucompute.github.io/notes/2026-11-04-other-computer-without-open-port.html
 https://ucompute.github.io/notes/2026-11-05-ucompute-and-nvidia-pair.html
 https://ucompute.github.io/notes/2026-11-06-windows-firewall-what-the-rule-covers.html
+https://ucompute.github.io/notes/2026-11-07-shared-api-key-is-not-device-trust.html

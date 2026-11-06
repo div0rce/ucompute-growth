@@ -6,7 +6,7 @@ Updated: 2026-11-06 (local session: Growth & Community transition, voice revisio
 - **Function:** UCompute Growth & Community. Charter `charter/CHARTER.md`, voice `charter/VOICE.md` (binding on everything public), recovery `runbook/RUNBOOK.md`.
 - **Product truth:** development builds only; private alpha 0.1.1 candidate 2 behind access control (D-031). Snapshot still 2026-10-23b draft 3. P1's first generating run passed on 2026-11-06 (D-033), partial, not claimable: F-03-01 is IMPLEMENTED_UNVERIFIED, and the Core Lab's scoring and P1.4 to P1.8 are owed. Linux stays planned.
 - **Channels:** AUTHORIZED: GitHub organization (profile, notes, Pages root) and Bluesky `@ucompute.org`. X is built and off (`distribution/X-INTEGRATION.md`, OWNER-ASKS 14). Assessment in `channels/REGISTRY.md`.
-- **Public:** 10 notes at https://ucompute.github.io/notes/, an eleventh due 2026-11-07. Bluesky queue `content/ready/bluesky-queue.md`: dates are floors, not appointments. Live so far: five posts, the last a correction under post 4 (2026-11-06). New bio live. Bot label off by the owner's instruction of 2026-11-06, and the job keeps it off. `bluesky-post` is enabled again.
+- **Public:** 11 notes at https://ucompute.github.io/notes/. Bluesky queue `content/ready/bluesky-queue.md`: dates are floors, not appointments. Live so far: five posts, the last a correction under post 4 (2026-11-06). New bio live. Bot label off by the owner's instruction of 2026-11-06, and the job keeps it off. `bluesky-post` is enabled again.
 - **Funnel:** Discovery 0, Understanding 0, Qualified interest 0; Installation onward not reachable. Latest checkpoint: `analytics/weekly/2026-11-06-transition-checkpoint.md`.
 - **Held:** `content/drafts/split-run-held.md`, refreshed after the lab scored run-0820. Only the owner releases these.
 - **Experiments:** X-07 arm A evaluated negative, arm B running. X-03, X-05, X-06 running. X-01, X-02, X-04 waiting.
@@ -22,7 +22,7 @@ Updated: 2026-11-06 (local session: Growth & Community transition, voice revisio
 - Hosts blocked from the cloud vary by run (github.com HTML, docs.jan.ai, lmstudio.ai, ucompute.github.io); use git clone and raw.githubusercontent.com.
 
 ## Next actions (ranked)
-1. **2026-11-07 daily: publish `2026-11-07-shared-api-key-is-not-device-trust`** through runbook section 6 (expect 11 notes), record the URL in `content/published/INDEX.md`. Read X-03 (7-day) and record it in `experiments/BACKLOG.md`. No post is needed for the note; post 14 links it later.
+1. **2026-11-07 daily: read X-03 (7-day)** from the Actions files and record it in `experiments/BACKLOG.md`, null or not. This is the first pre-registered read. No new note is due; the 11-07 note went out on 2026-11-06, and post 14 links it later.
 2. **2026-11-07 onward:** confirm the Actions job posted the new pin (post 10). Queue dates are floors. A new real development goes to the top, and a day with nothing due is fine.
 3. **2026-11-09 weekly (W46):** checkpoint in the required five headings; reread the week's posts against `charter/VOICE.md`; first `research/ECOSYSTEM.md` (research only, no outreach).
 4. **2026-11-13 and 2026-11-20: X-07 reads** (runbook section 7, each with a control). **2026-11-16: X-06 final read.** 2026-11-30: X-03 30-day read.

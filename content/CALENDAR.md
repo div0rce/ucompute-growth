@@ -41,8 +41,8 @@ Set by the transition checkpoint. Goal: move Discovery off zero. Measured by X-0
 
 | Date (UTC) | Notes site | Bluesky | Experiments and research |
 |---|---|---|---|
-| Fri 11-06 | **DONE** rebuild with descriptions; root site live | cap holds | X-07 arm A evaluated, arm B started |
-| Sat 11-07 | shared-API-key note, rewritten | new pinned post | **X-03 7-day read** |
+| Fri 11-06 | **DONE** rebuild with descriptions; root site live; shared-API-key note published | correction posted | X-07 arm A evaluated, arm B started |
+| Sat 11-07 | none due | new pinned post | **X-03 7-day read** |
 | Mon 11-09 | none required | queue dates are floors; expect two or three posts a week | W46 checkpoint; first `research/ECOSYSTEM.md` |
 | Fri 11-13 | — | — | **X-07 T+7 read** |
 | Mon 11-16 | — | — | **X-06 final read**, W47 checkpoint |
