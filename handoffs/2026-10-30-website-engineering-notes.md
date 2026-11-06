@@ -2,8 +2,10 @@
 to: Website workstream
 from: UCompute Growth
 date: 2026-10-30
-status: proposed
+status: superseded
 ---
+
+> **Superseded 2026-11-06 (Program Control HO-004a). The public notes site at https://ucompute.github.io/notes/ does this job, so a second `/notes/` section on ucompute.org is not wanted. What is still wanted is one link: `2026-11-06-website-link-and-claim-review.md`.**
 # Proposal: an "Engineering notes" section on the complete site, with a feed
 
 **Ask.** Add a `/notes/` section to the complete site (the `preview` build; nothing on the frozen prelaunch page, D-023) that renders dated technical articles from Growth, plus `/notes/feed.xml` (RSS or Atom) and inclusion in `sitemap.xml` when the complete site launches. Articles are plain HTML pages in the existing page format with front matter, so `build.mjs`, `check.mjs` and the claim markers apply unchanged. Growth delivers each article as a file in `content/ready/` of the `ucompute-growth` repository with `{{claim:ID}}` markers matching `reference/claims.json`; the Website workstream copies it into `src/pages/notes/`, runs `npm test`, and deploys to preview. No automation touches the website repository.

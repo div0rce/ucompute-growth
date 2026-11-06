@@ -35,3 +35,15 @@ The six ready notes and the organization profile are public (`content/published/
 | Fri 11-06 – Sun 11-08 | at most one more note in the week (new cadence: max three new notes a week after 11-04) | cap holds | **Sat 11-07: X-03 7-day read**; 11-07 run publishes the shared-API-key note (W45 new note 1 of 3) and queues its Bluesky post |
 
 Cadence change (W45 strategy): ten notes are live or scheduled by 11-04 with zero measured audience; from 11-05 the daily runs write at most three new notes a week and spend the freed capacity on accuracy maintenance (llama.cpp advisory check for the RPC note), a Bluesky post for every published note, and the measurement asks.
+
+## Campaign: "Can a developer find this?" (2026-11-06 to 2026-11-20)
+Set by the transition checkpoint. Goal: move Discovery off zero. Measured by X-07, not by what is published.
+
+| Date (UTC) | Notes site | Bluesky | Experiments and research |
+|---|---|---|---|
+| Fri 11-06 | **DONE** rebuild with descriptions; root site live | cap holds | X-07 arm A evaluated, arm B started |
+| Sat 11-07 | shared-API-key note (W45 note 1 of 3) | post queued for it | **X-03 7-day read** |
+| Mon 11-09 | at most three new notes this week, only if fact-checked | cap clears, one a day resumes, four in seven days | W46 checkpoint; first `research/ECOSYSTEM.md` |
+| Fri 11-13 | — | — | **X-07 T+7 read** |
+| Mon 11-16 | — | — | **X-06 final read**, W47 checkpoint |
+| Fri 11-20 | — | — | **X-07 T+14 read and decision** |

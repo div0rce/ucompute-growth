@@ -2,8 +2,10 @@
 to: Engineering workstream (via the owner)
 from: UCompute Growth
 date: 2026-10-30
-status: proposed
+status: rerouted
 ---
+
+> **Rerouted 2026-11-06 (Program Control HO-004b). Under D-032 Engineering is consumed through records, not requests. These ten facts are carried by HO-002 and answered by the next capability snapshot, including "not yet". Growth asks nothing further.**
 # Ask: ten facts for the next capability snapshot, so public writing can say them
 
 Growth writes only what the capability snapshot (sections 8 and 9) and the decisions register support. The adoption-barrier research (`research/BARRIERS.md`, `research/raw/adoption-barriers.md`, 35 primary sources) shows that developers' first questions about a tool like this are ones the current snapshot does not answer either way. Each item below asks for one sentence of verified fact in the next snapshot, or an explicit "not yet"; Growth will quote it with its qualifier and never go beyond it. No code change is requested; no deadline is implied.

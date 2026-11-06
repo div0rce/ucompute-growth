@@ -16,3 +16,5 @@
 | 2026-11-02 03:02 UTC | bluesky post-1 (pinned) | Bluesky @ucompute.org | https://bsky.app/profile/ucompute.org/post/3mzcdkd4nog22 |
 | 2026-11-03 13:16 UTC | 2026-11-05-ucompute-and-nvidia-pair | notes site | https://ucompute.github.io/notes/2026-11-05-ucompute-and-nvidia-pair.html (notes commit 2dd702f) |
 | 2026-11-04 13:20 UTC | 2026-11-06-windows-firewall-what-the-rule-covers | notes site | https://ucompute.github.io/notes/2026-11-06-windows-firewall-what-the-rule-covers.html (notes commit a901fb5) |
+| 2026-11-06 08:30 UTC | notes rebuild (descriptions, feed dates, follow links, RPC note update) | notes site | https://ucompute.github.io/notes/ (notes commit d1c32a6) |
+| 2026-11-06 08:31 UTC | Pages root (robots.txt, forwarding page) | GitHub org | https://ucompute.github.io/ (repo ucompute/ucompute.github.io, commit ef13c56) |

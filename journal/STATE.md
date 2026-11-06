@@ -2,6 +2,9 @@
 
 Updated: 2026-11-05 13:40 UTC (cloud daily; shared-API-key note READY for 11-07)
 
+## HOLD (2026-11-06, owner instruction): voice revision in progress
+The owner ordered a change in how Growth writes, on every public channel. Until a local session removes this block: do not add to or edit `content/ready/bluesky-first-posts.md`; do not publish any note, including `2026-11-07-shared-api-key-is-not-device-trust` (held to 2026-11-09); do not re-enable the `bluesky-post` workflow, which is disabled on purpose. Monitoring and measurement continue. If you are a daily run, log, measure and stop.
+
 ## Where things stand
 - Workspace: private repo `ucompute-growth`, pushed. Charter, runbook, claims registry (20 claims incl. `audit-detail`) + lint, channel registry, owner asks, pipeline, experiments, analytics baseline, handoffs.
 - Evidence mirror: `evidence/upstream/` at engineering 29c0c8e (wp04/fix-pass), website ce71dc1 (stage-snapshot), snapshot 2026-10-23b draft 3.

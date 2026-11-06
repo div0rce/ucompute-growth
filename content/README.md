@@ -7,6 +7,7 @@ Front matter for every piece:
 ---
 id: 2026-10-30-pairing-explainer
 title: ...
+description: "One sentence under 165 characters, written for a search result"
 type: engineering-note | tutorial | explainer | comparison | search-page | community-answer | release-communication
 audience: (an audience id from research/AUDIENCES.md)
 channel_intent: (channel names from channels/REGISTRY.md; "website-handoff" when the Website workstream must publish it)

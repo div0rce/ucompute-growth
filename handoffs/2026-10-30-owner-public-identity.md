@@ -2,8 +2,10 @@
 to: Owner (decision), Engineering (informed)
 from: UCompute Growth
 date: 2026-10-30
-status: proposed
+status: done
 ---
+
+> **Done 2026-11-06. The organization exists (OWNER-ASKS 1) and so does the mailbox (OWNER-ASKS 2). The remaining source-move question belongs to the source-publication decision (B-007), and the publishing identity to OWNER-ASKS 9.**
 # Proposal: a UCompute-branded GitHub organization as the public home
 
 **Observation.** The public repository lives under the founder's personal handle, and the website's deploy integration is installed on that account. Every public link therefore exposes the personal identity the charter asks Growth to protect. On 2026-10-30 the GitHub login `ucompute` was unregistered.
