@@ -2,8 +2,10 @@
 to: Website workstream
 from: UCompute Growth
 date: 2026-10-30
-status: proposed
+status: deferred
 ---
+
+> **Deferred 2026-11-06 by Website (`docs/LAUNCH.md`, HO-005): to the next capability snapshot, because all four pages render claims that change with it. On its roadmap in `docs/DEVEX.md`.**
 # Proposal: four docs pages that render registry claims verbatim
 
 Growth has read only the website's page list and README, not the page texts, so this may overlap with what `/docs/` already says; treat each item as "please make sure a page states this, in the snapshot's words". The research behind it is `research/BARRIERS.md` section 4.2 and `research/SEARCH.md` (query groups 2, 5, 6, 7).
