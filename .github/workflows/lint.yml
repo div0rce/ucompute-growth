@@ -13,7 +13,7 @@ jobs:
       - name: Lint self-tests
         run: python3 scripts/test_claims_lint.py && python3 scripts/measure_public.py --selftest && python3 scripts/bsky_post.py --selftest && python3 scripts/build_notes.py --selftest
       - name: Voice lint (unpublished posts)
-        run: python3 scripts/voice_lint.py --selftest && python3 scripts/voice_lint.py
+        run: python3 scripts/voice_lint.py --selftest && python3 scripts/voice_lint.py && python3 scripts/x_post.py --selftest
       - name: Claims lint (everything publishable)
         run: python3 scripts/claims_lint.py content --strict
       - name: Identity scan of handoffs and channel files

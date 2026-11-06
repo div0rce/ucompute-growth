@@ -44,6 +44,8 @@ def main():
         n += len(posts)
         bad += [f"{f.name} {p}: {x}" for p, b in posts for x in findings(b)]
         bad += [f"{f.name} {x}" for x in queue_findings(posts)]
+        if "x-queue" in f.name:
+            bad += [f"{f.name} {p}: {len(b)} characters, X allows 280" for p, b in posts if len(b) > 280]
     print("\n".join(bad + [f"voice_lint: {n} unpublished posts, {len(bad)} findings"]))
     return 1 if bad else 0
 

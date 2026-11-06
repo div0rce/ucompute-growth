@@ -1,0 +1,34 @@
+name: x-post
+# Off until activation: set the repository variable X_ENABLED to true after distribution/X-INTEGRATION.md's steps.
+# x_post.py also refuses unless channels/REGISTRY.md marks X AUTHORIZED, so the variable alone publishes nothing.
+on:
+  schedule:
+    - cron: "17 16 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: x-post
+  cancel-in-progress: false
+jobs:
+  post:
+    if: vars.X_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send the next due X post to Buffer
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_X_CHANNEL_ID: ${{ secrets.BUFFER_X_CHANNEL_ID }}
+          X_MODE: ${{ vars.X_MODE || 'draft' }}
+        run: python3 scripts/x_post.py
+      - name: Commit the ledger
+        run: |
+          git config user.name "UCompute Growth (x)"
+          git config user.email "growth-x@ucompute.invalid"
+          git add analytics/
+          git diff --cached --quiet && exit 0
+          git commit -m "$(date -u +%F): x post (actions)"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0; sleep 10; done
+          exit 1

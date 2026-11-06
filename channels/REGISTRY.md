@@ -14,7 +14,7 @@ Status vocabulary: AUTHORIZED · PREREQUISITE (owner action needed; listed in `j
 | Reddit (r/LocalLLaMA, r/selfhosted, r/homelab) | HUMAN_ONLY | Reddit's Responsible Builder Policy requires registered, App-labelled, single-purpose automated accounts and treats bots that promote content or products as spam (https://support.reddithelp.com/hc/en-us/articles/42728983564564-Responsible-Builder-Policy). Subreddit rules could not be read from the research tools (unverified); r/LocalLLaMA reportedly bans LLM-written posts. Only the owner's own words, in an owner-created account | Useful answers in the owner's words, after something is usable |
 | Bluesky (`@ucompute.org`) | **AUTHORIZED** | Owner's grant, 2026-11-01 (chat, verbatim): "Growth may publish ordinary content to Bluesky (@ucompute.org) within the claims registry". Account created by the owner 2026-10-31 (DID did:plc:w6gmfj3s5k3xwiwjwr35xpdv; handle verified by DNS TXT). Posting runs in GitHub Actions (`.github/workflows/bluesky.yml`, `scripts/bsky_post.py`) with an app password held as a repository secret; the automation self-label and the disclosure bio are set by the same job. Caps: one post a day, four a week; replies only to mentions and to replies on its own posts | Queue: `content/ready/bluesky-first-posts.md`; ledger `analytics/bluesky-posted.jsonl` |
 | Mastodon (Fosstodon) | PREREQUISITE (automated OK with disclosure) | Fosstodon allows a bot-flagged account if a human also monitors and interacts, and no commercial promotion; Hachyderm: project accounts are human-only and a separate bot is capped at 5 posts a day (`distribution/COMMUNITIES.md` §4). Second account to ask for | Same as Bluesky, bot flag on |
-| X / Twitter | REJECTED | No free API tier: $0.015 per post, $0.20 per post with a URL; scripting the website risks suspension (https://docs.x.com/x-api/getting-started/pricing). Conflicts with the $0 budget | Revisit only if the owner sets a budget |
+| X / Twitter | PREREQUISITE (owner account and grant, OWNER-ASKS 14) | Direct API rejected ($0.015 per post, $0.20 with a URL, no free tier). Buffer's free plan reaches X at $0 with an API. Draft mode only: a person releases each post, because unattended posting must publicly link a human-run account (`distribution/X-INTEGRATION.md`). Built, tested offline, off | Queue: `content/ready/x-queue.md` |
 | LinkedIn company page | REJECTED for now | Requires a personal profile as admin (identity exposure) | — |
 | dev.to (organization) | PREREQUISITE (human-written, AI-assisted posts disclosed) | Free API; AI-assisted posts must be disclosed and may not promote the author's own project (`distribution/COMMUNITIES.md` §6.1), so only the educational notes qualify, with canonical links to ucompute.org. Hashnode's API is Pro-only since May 2026: REJECTED at $0. Third account to ask for | Republish engineering notes with canonical links |
 | Newsletter | REJECTED for now | Collecting emails needs its own owner authorization (spec 29.5) and a provider; nothing to announce yet | Revisit at public release |
@@ -32,19 +32,32 @@ No status changed: no owner grant exists, so nothing is AUTHORIZED. No platform 
 - **Mastodon (Fosstodon) and dev.to:** rules could not be re-read (`getaddrinfo ENOTFOUND fosstodon.org` / `dev.to` from the cloud session). Status unchanged, PREREQUISITE. Fosstodon stays the next account to request (OWNER-ASKS 3), because it is the only remaining channel whose rules allow a disclosed automated project account and whose audience (FOSS developers) fits better than Bluesky's.
 - **Every other row:** no new evidence; unchanged. HUMAN_ONLY rows stay human-only; release-gated rows stay gated (no public source or release).
 
-## Channel strategy, 2026-11-06 (transition review)
-- **Evidence:** eight days of notes and four Bluesky posts produced no measured outside attention. Publishing more on these two channels is not the constraint; being findable is (X-07).
-- **Notes site:** keep as the home of the technical writing; the cadence stays at three new notes a week. Priority moves to discoverability.
-- **Bluesky:** keep, at the existing caps, through X-06's final read on 2026-11-16. The rule against search-and-reply stays: replying to strangers from an automated account to get attention is the behaviour the charter forbids.
-- **Next channel to ask for:** Fosstodon (OWNER-ASKS 3), still the only remaining venue whose rules allow a disclosed automated project account.
-- No status changed, and no new channel is AUTHORIZED.
+## Channel assessment, 2026-11-06
+**Why Bluesky came first:** it was the one place Growth could post automatically, for free, within the rules. Audience fit played no part in that choice, and four posts later it has 0 followers.
+
+**Recommendation: three channels.** The notes site as the home, X as the place the audience already is, and Bluesky kept cheaply. One human-submitted Hacker News or r/LocalLLaMA moment when something can be tried. Everything else is a distraction for now.
+
+| Channel | Audience fit | Our access | Cost | Rules | Call |
+|---|---|---|---|---|---|
+| Notes site | High once found; 0 search presence today | Live | $0 | Ours | **Keep.** Fix discovery (X-07) |
+| X | Highest: local-AI builders, llama.cpp, MLX and exo communities are here | None yet | $0 through Buffer, a tap per post | Automation allowed; unattended needs a public human link | **Add**, draft mode, OWNER-ASKS 14 |
+| Bluesky | Moderate: strong systems and Rust crowd, thin on local AI | Live | $0 | Label on; no search-and-reply | **Keep**, low volume. Re-judge after the 12-02 read |
+| Hacker News | Highest single event | Human only | Owner's time | No automated posting; Show HN needs something to try | **Hold** for a public release |
+| r/LocalLLaMA, r/selfhosted | Very high | Human only | Owner's time | Bots that promote are spam; LLM-written posts reportedly banned | **Hold.** Human, own words, after release |
+| Mastodon (Fosstodon) | Good FOSS audience, small | Needs account | $0; Buffer would cover it | Bot flag plus a human who monitors | **Skip for now.** A third feed before the first two work is busywork |
+| GitHub organization | Credibility surface | Live | $0 | Fine | **Keep.** Contributors wait for source (B-007) |
+| llama.cpp Discussions, project Discords | Very high | Human only | Owner's time | Human communities | **Owner's choice.** Never automated |
+| dev.to | Low to moderate | Needs account | $0 | Bars AI-assisted self-promotion | **Skip** |
+| Lobsters, LinkedIn, Product Hunt, Hashnode, Threads | Low or blocked | None | Varies | Invite-only, real-name or human-only | **Skip** |
+
+Success here is developers who read, reply, follow, contribute or try the product. Post counts are not a result.
 
 ## Prepared packages (publication is one step after a grant)
 - **GitHub organization `ucompute`:** `python3 scripts/build_notes.py` renders the five ready notes into `dist/notes/` (index, notes without front matter, Atom feed; the build re-lints and fails closed). Publish: create public repository `ucompute/notes`, push `dist/notes/` as its first commit; create `ucompute/.github` with `profile/README.md` from `content/ready/github-org-profile.md` (drop the front matter and the HTML comments); set the organization description from the comment in that file. Commit identity: author `UCompute <noreply@ucompute.org>`; pushes made with the owner's token appear in that account's public activity, so the owner chooses between that and a GitHub App identity (OWNER-ASKS 9).
-- **Bluesky `@ucompute.org`:** live since 2026-11-02 (post 1 pinned). Queue: `content/ready/bluesky-first-posts.md`, each under 300 characters, posted by the `bluesky-post` Actions job (1/day, 4/week). Add one post per newly published note.
+- **Bluesky `@ucompute.org`:** live since 2026-11-02 (post 1 pinned). Queue: `content/ready/bluesky-first-posts.md`, each under 300 characters, posted by the `bluesky-post` Actions job (1/day, 4/week). A new note does not need a post; post only if there is something to say about it (`charter/VOICE.md`).
 
 ## Publishing procedure (when a channel is AUTHORIZED)
-1. The piece sits in `content/ready/` with `claims:` front matter and passes `python3 scripts/claims_lint.py content/ready --strict`.
+1. The piece sits in `content/ready/` with `claims:` front matter, passes `python3 scripts/claims_lint.py content/ready --strict` and `python3 scripts/voice_lint.py`, and meets `charter/VOICE.md`.
 2. Check the channel's rule row in `distribution/COMMUNITIES.md` (frequency, disclosure, format).
 3. Publish; record the URL, timestamp, channel and piece id in `content/published/INDEX.md` and `journal/LOG.md`; move the file to `content/published/`.
 4. Schedule the measurement check in `analytics/` (7 and 30 days).

@@ -1,6 +1,6 @@
 # Distribution calendar
 
-Two channels are AUTHORIZED (`channels/REGISTRY.md`): the GitHub organization's notes site (one new note a day at most, released by `publish_after`) and Bluesky `@ucompute.org` (Actions job, 1 post a day, 4 a week). Everything else stays readiness-only. The table below is the historical readiness record; the current week's plan is the last section.
+Two channels are AUTHORIZED (`channels/REGISTRY.md`): the GitHub organization's notes site and Bluesky `@ucompute.org`. This file plans experiments and reads, not posts: nothing here is a quota, and caps are ceilings (`charter/VOICE.md`). Everything else stays readiness-only. The table below is the historical readiness record; the current week's plan is the last section.
 
 | Target state | Piece (content/ id) | Audience | Waits on | Ready by |
 |---|---|---|---|---|
@@ -42,8 +42,8 @@ Set by the transition checkpoint. Goal: move Discovery off zero. Measured by X-0
 | Date (UTC) | Notes site | Bluesky | Experiments and research |
 |---|---|---|---|
 | Fri 11-06 | **DONE** rebuild with descriptions; root site live | cap holds | X-07 arm A evaluated, arm B started |
-| Sat 11-07 | shared-API-key note (W45 note 1 of 3) | post queued for it | **X-03 7-day read** |
-| Mon 11-09 | at most three new notes this week, only if fact-checked | cap clears, one a day resumes, four in seven days | W46 checkpoint; first `research/ECOSYSTEM.md` |
+| Sat 11-07 | shared-API-key note, rewritten | new pinned post | **X-03 7-day read** |
+| Mon 11-09 | none required | queue dates are floors; expect two or three posts a week | W46 checkpoint; first `research/ECOSYSTEM.md` |
 | Fri 11-13 | — | — | **X-07 T+7 read** |
 | Mon 11-16 | — | — | **X-06 final read**, W47 checkpoint |
 | Fri 11-20 | — | — | **X-07 T+14 read and decision** |
