@@ -45,7 +45,7 @@ The five notes referred to below (all in `content/ready/`, claims-linted, canoni
 | Fosstodon (Mastodon) | AUTOMATED_OK_WITH_DISCLOSURE (bot flag, replies answered, non-commercial) | PREREQUISITE_OWNER_ACCOUNT; canonical URL for the notes | pairing note as a short thread |
 | Hachyderm (Mastodon) | HUMAN_ONLY for a Projects account (bots not allowed on it) | not pursued | none |
 | mastodon.social | REJECTED (accounts may not consist solely of AI-generated content) | — | none |
-| Bluesky | AUTOMATED_OK_WITH_DISCLOSURE (automation label) — **LIVE, AUTHORIZED 2026-11-01** (`channels/REGISTRY.md`) | none: `@ucompute.org` exists, bot label and disclosure bio set, post 1 pinned 2026-11-02 | done (post 1); queue in `content/ready/bluesky-first-posts.md`, 1/day, 4/week |
+| Bluesky | AUTOMATED_OK_WITH_DISCLOSURE (automation label) — **LIVE, AUTHORIZED 2026-11-01** (`channels/REGISTRY.md`) | none: `@ucompute.org` exists, bot label off by the owner's instruction of 2026-11-06 (voluntary on Bluesky), post 1 pinned 2026-11-02 | done (post 1); queue in `content/ready/bluesky-first-posts.md`, 1/day, 4/week |
 | dev.to (Organization) | AUTOMATED_OK_WITH_DISCLOSURE (AI assistance disclosed; no promotional AI-assisted articles) | PREREQUISITE_OWNER_ACCOUNT; canonical URL | base-URL note with disclosure and canonical link |
 | Hashnode | REJECTED for automation (API is Pro-only since 2026-05-13); manual only | — | none |
 | Medium | HUMAN_ONLY (programmatic posting is listed misuse); low priority | — | none |
