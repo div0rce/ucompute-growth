@@ -3,7 +3,7 @@ id: bluesky-queue
 title: Bluesky profile and queue (@ucompute.org)
 type: social-post
 audience: multi-device-developers, local-ai-developers, oss-infra
-channel_intent: Bluesky @ucompute.org (owner's grant; automation label on)
+channel_intent: Bluesky @ucompute.org (owner's grant)
 claims: [no-release, run-local, mesh-pair-choose, connect-by-address, catalog-fit, planned, split-design, pairing-code, obs-keepalive, obs-soak-kills, obs-soak-miss, obs-wifi-drop, obs-dev-mac, obs-spake2]
 status: ready
 review: independent fact-check 2026-11-06, 16 findings applied. Re-check "last run" (post 15) and the crate version (post 21) on their posting dates
@@ -16,7 +16,7 @@ Voice: `charter/VOICE.md`. Published posts are in `analytics/bluesky-posted.json
 
 Display name: UCompute
 Bio (256 characters max): Open models on hardware you own, and your own devices handing work to each other. In development, no public release yet. Learning more about Wi-Fi than we planned to. Notes: ucompute.github.io/notes
-Settings: Account → Automation label ON (keep it on).
+Settings: Account → Automation label OFF (owner's instruction, 2026-11-06). Never say or imply a human is at the keyboard.
 
 ## Post 9 (reply to post-4; correction)
 

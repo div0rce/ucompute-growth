@@ -29,7 +29,7 @@ Binding on every public channel, from the owner's direction of 2026-11-06. Write
 ## Truth is not negotiable
 - Every product statement keeps a claim id; every test anecdote keeps an `obs-` id (`claims/registry.json`). Lose the corporate qualifier paragraph, never the honest one. "On one test machine" stays; six clauses of hardware don't have to, unless dropping them changes what the sentence means.
 - Never invent a person, an experience, a result, a conversation or an opinion held by someone who doesn't exist. "We" means real project work that appears in a record.
-- We don't need to keep saying software helped write something. Keep platform labels accurate (the Bluesky bot label stays on) and never imply a human is at the keyboard. The organization profile carries the one standing disclosure.
+- We don't need to keep saying software helped write something. The Bluesky bot label is off by the owner's instruction of 2026-11-06; Bluesky calls it voluntary. Follow any label a platform actually requires, and never say or imply a human is at the keyboard. The organization profile carries the one standing disclosure.
 - Split and multi-device execution of one model stays unpublished until a `VERIFIED` ledger row and an updated `claims.json` exist, or the owner explicitly releases a run. Held drafts: `content/drafts/split-run-held.md`.
 - Wrong in public? Correct it in public, in a reply, in plain words. Never delete a public post without the owner's approval.
 

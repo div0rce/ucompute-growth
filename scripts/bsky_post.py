@@ -4,7 +4,8 @@
 Queue: the "## Post N ..." sections of content/ready/bluesky-queue.md, in file order. Heading tokens: "pinned" pins the
 post, "reply to post-N" threads it under that ledger entry, "not before YYYY-MM-DD" is a floor, not an appointment.
 Ledger: analytics/bluesky-posted.jsonl (one JSON line per post).
-Before posting: the account's profile carries the queue's bio and the "bot" self-label (set if missing); caps hold
+Before posting: the account's profile carries the queue's bio and no "bot" self-label (owner's instruction, 2026-11-06;
+Bluesky's label is voluntary); caps hold
 (one post per UTC day, four per rolling 7 days; corrections and the pinned post skip the weekly cap); the text is at
 most 300 characters; every link, if there is one, answers HTTP 200; the text passes the claims and voice lints. Credentials: BSKY_HANDLE and BSKY_APP_PASSWORD from the environment
 (an app password stored as a repository secret by the owner; never printed). Without them it exits 0 with a notice.
@@ -80,6 +81,9 @@ def lint_ok(text):
         return subprocess.run([sys.executable, str(ROOT / "scripts" / "claims_lint.py"), str(f)],
                               capture_output=True).returncode == 0
 
+def without_bot(vals):
+    return {"labels": {"$type": "com.atproto.label.defs#selfLabels", "values": [{"val": v} for v in vals if v != "bot"]}}
+
 def ensure_profile(token, did, bio):
     rec = call("com.atproto.repo.getRecord", {"repo": did, "collection": "app.bsky.actor.profile", "rkey": "self"}, token, get=True)
     value, cid = rec["value"], rec.get("cid")
@@ -87,8 +91,8 @@ def ensure_profile(token, did, bio):
     changed = False
     if bio and value.get("description") != bio:
         value["description"] = bio; changed = True
-    if "bot" not in vals:
-        value["labels"] = {"$type": "com.atproto.label.defs#selfLabels", "values": [{"val": v} for v in vals + ["bot"] if v]}
+    if "bot" in vals:
+        value.update(without_bot(vals)) if len(vals) > 1 else value.pop("labels", None)
         changed = True
     if changed:
         call("com.atproto.repo.putRecord", {"repo": did, "collection": "app.bsky.actor.profile", "rkey": "self",
@@ -105,7 +109,7 @@ def main():
     sess = call("com.atproto.server.createSession", {"identifier": handle, "password": pw})
     token, did = sess["accessJwt"], sess["did"]
     _, changed = ensure_profile(token, did, bio)
-    print(f"bsky_post: profile {'updated (bio, bot label)' if changed else 'already compliant'}")
+    print(f"bsky_post: profile {'updated (bio, labels)' if changed else 'unchanged'}")
     now = dt.datetime.now(dt.timezone.utc)
     for pid, heading, text in posts:
         if pid in done:
@@ -158,6 +162,7 @@ def selftest():
     assert heading_meta(" (reply to post-4; correction)") == ("", "post-4")
     assert caps_ok(week[1:], now) and not caps_ok(week, now) and caps_ok(week, now, exempt=True)
     assert not caps_ok([{"at": "2026-11-02T01:00:00+00:00"}], now, exempt=True), "exempt skips the week, never the day"
+    assert without_bot(["bot", "x"])["labels"]["values"] == [{"val": "x"}]
     print("bsky_post selftest: ok")
 
 if __name__ == "__main__":
