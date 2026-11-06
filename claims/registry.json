@@ -164,7 +164,7 @@
       "label": "observation",
       "text": "Development and many tests run on a MacBook Air (Apple M2) with 8 GB of unified memory.",
       "qualifier": "No owner or location detail.",
-      "evidence": "capability snapshot 2026-10-23b, hardware list; P1 preflight record (1.05 GB free after a release build)"
+      "evidence": "capability snapshot 2026-10-23b, hardware list; P1 preflight record (little free memory after a release build)"
     },
     "obs-spake2": {
       "label": "observation",
