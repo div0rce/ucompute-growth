@@ -1,6 +1,6 @@
 # State
 
-Updated: 2026-11-06 (local session: Growth & Community transition, voice revision, X research)
+Updated: 2026-11-06 13:30 UTC (cloud daily: checks only, nothing published; the local session of the same day set the state below)
 
 ## Where things stand
 - **Function:** UCompute Growth & Community. Charter `charter/CHARTER.md`, voice `charter/VOICE.md` (binding on everything public), recovery `runbook/RUNBOOK.md`.
@@ -18,7 +18,7 @@ Updated: 2026-11-06 (local session: Growth & Community transition, voice revisio
 - daily: `trig_018xkiTyQqoEVCLHrVgXYwWz` (13:00 UTC, idempotent)
 - daily retry: `trig_01Hr6VmMMhkG7RQZxahnrmRN` (21:00 UTC)
 - weekly: `trig_01Xxy1PgCyyTQAent7Ddfz2Q` (Mondays 14:00 UTC)
-- Health 2026-11-06: all ran on schedule through 11-05. Actions: `claims-lint`, `public-measurement`, `bluesky-post` active; `x-post` off.
+- Health 2026-11-06: all ran on schedule through 11-06 (cloud daily 11-06 ran, access PUSH_OK; no evidence commit after 08:29 UTC; the 12:30 sync commits only real changes, and its run was not checked from here). Actions: `claims-lint`, `public-measurement`, `bluesky-post` active; `x-post` off.
 - **Bluesky caution:** the cloud environment holds `BSKY_HANDLE` and `BSKY_APP_PASSWORD`. Never run `scripts/bsky_post.py` without `--selftest` in a routine; posting belongs to the Actions job.
 - Hosts blocked from the cloud vary by run (github.com HTML, docs.jan.ai, lmstudio.ai, ucompute.github.io); use git clone and raw.githubusercontent.com.
 
